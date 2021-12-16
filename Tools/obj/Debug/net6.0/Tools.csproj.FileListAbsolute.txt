@@ -1,0 +1,12 @@
+/Users/alanluiz/projects/cadmo/Tools/bin/Debug/net6.0/Tools.deps.json
+/Users/alanluiz/projects/cadmo/Tools/bin/Debug/net6.0/Tools.dll
+/Users/alanluiz/projects/cadmo/Tools/bin/Debug/net6.0/ref/Tools.dll
+/Users/alanluiz/projects/cadmo/Tools/bin/Debug/net6.0/Tools.pdb
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.csproj.AssemblyReference.cache
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.AssemblyInfoInputs.cache
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.AssemblyInfo.cs
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.csproj.CoreCompileInputs.cache
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.dll
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/ref/Tools.dll
+/Users/alanluiz/projects/cadmo/Tools/obj/Debug/net6.0/Tools.pdb

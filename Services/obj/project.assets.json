@@ -1,0 +1,130 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "Constracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Constracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Constracts.dll": {}
+        }
+      },
+      "Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Models.dll": {}
+        }
+      },
+      "Tools/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Tools.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Tools.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Constracts/1.0.0": {
+      "type": "project",
+      "path": "../Constracts/Constracts.csproj",
+      "msbuildProject": "../Constracts/Constracts.csproj"
+    },
+    "Models/1.0.0": {
+      "type": "project",
+      "path": "../Models/Models.csproj",
+      "msbuildProject": "../Models/Models.csproj"
+    },
+    "Tools/1.0.0": {
+      "type": "project",
+      "path": "../Tools/Tools.csproj",
+      "msbuildProject": "../Tools/Tools.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Constracts >= 1.0.0",
+      "Models >= 1.0.0",
+      "Tools >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/alanluiz/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/alanluiz/projects/cadmo/Services/Services.csproj",
+      "projectName": "Services",
+      "projectPath": "/Users/alanluiz/projects/cadmo/Services/Services.csproj",
+      "packagesPath": "/Users/alanluiz/.nuget/packages/",
+      "outputPath": "/Users/alanluiz/projects/cadmo/Services/obj/",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "/Users/alanluiz/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/Users/alanluiz/projects/cadmo/Constracts/Constracts.csproj": {
+              "projectPath": "/Users/alanluiz/projects/cadmo/Constracts/Constracts.csproj"
+            },
+            "/Users/alanluiz/projects/cadmo/Models/Models.csproj": {
+              "projectPath": "/Users/alanluiz/projects/cadmo/Models/Models.csproj"
+            },
+            "/Users/alanluiz/projects/cadmo/Tools/Tools.csproj": {
+              "projectPath": "/Users/alanluiz/projects/cadmo/Tools/Tools.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

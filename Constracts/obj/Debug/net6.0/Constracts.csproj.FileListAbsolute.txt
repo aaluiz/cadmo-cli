@@ -1,0 +1,12 @@
+/Users/alanluiz/projects/cadmo/Constracts/bin/Debug/net6.0/Constracts.deps.json
+/Users/alanluiz/projects/cadmo/Constracts/bin/Debug/net6.0/Constracts.dll
+/Users/alanluiz/projects/cadmo/Constracts/bin/Debug/net6.0/ref/Constracts.dll
+/Users/alanluiz/projects/cadmo/Constracts/bin/Debug/net6.0/Constracts.pdb
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.csproj.AssemblyReference.cache
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.AssemblyInfoInputs.cache
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.AssemblyInfo.cs
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.csproj.CoreCompileInputs.cache
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.dll
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/ref/Constracts.dll
+/Users/alanluiz/projects/cadmo/Constracts/obj/Debug/net6.0/Constracts.pdb
