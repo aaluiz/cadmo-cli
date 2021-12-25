@@ -1,6 +1,7 @@
 using NUnit.Framework;
-using Contracts.Interfaces;
 using Services.Startup;
+using Services.Tools;
+using Contracts.Interfaces;
 
 namespace Tests;
 
@@ -18,21 +19,32 @@ public class CommandServicesTests
 				new string[] {"cadmo-cli", "generate", "repository", "User" },
 				new string[] {"cadmo-cli", "generate", "service", "User" },
 				new string[] {"cadmo-cli", "generate", "controller", "User" },
-                new string[] {"cadmo-cli", "create", "endpoints"}
+								new string[] {"cadmo-cli", "create", "endpoints"}
 		};
 	ICommandLineUI _commandLineUI;
+	IShellCommandExecutor _shellCommandExecutor;
+	
 	[SetUp]
-    public void Setup()
-    {
+	public void Setup()
+	{
 		_commandLineUI = new CommandLineUI();
+		_shellCommandExecutor = new ShellCommandExecutor();
 	}
 
-    [Test]
-    [TestCaseSource(nameof(CommandCases))]
-    public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
-    {
+	[Test]
+	[TestCaseSource(nameof(CommandCases))]
+	public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
+	{
 		var result = _commandLineUI.ExecuteCommmand(args);
 
 		Assert.Greater(result, 0);
-    }
+	}
+
+	[Test]
+	public void ShellCommandExecutor_Result_True(){
+
+		var result = _shellCommandExecutor.ExecuteCommand("ls", " -ln");
+
+		Assert.AreEqual(result, true);
+	}
 }
