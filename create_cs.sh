@@ -8,6 +8,7 @@ then
   [ -d "Models/" ] && [ ! -L "Models" ] && rm -rf Models
   [ -d "Services/" ] && [ ! -L "Services" ] && rm -rf Services
   [ -d "Tools/" ] && [ ! -L "Tools" ] && rm -rf Tools 
+  [ -d "SourceGenerator/" ] && [ ! -L "SouceGenerator" ] && rm -rf SouceGenerator 
   [ -f "CadmoSolution.sln" ] && rm -rf CadmoSolution.sln
 fi
 dotnet new sln -n CadmoSolution
@@ -17,6 +18,7 @@ dotnet new classlib -o Constracts
 dotnet new classlib -o Models
 dotnet new classlib -o Services
 dotnet new classlib -o Tools
+dotnet new classlib -o SourceGenerator
 cd cadmo-cli
 dotnet add package Microsoft.Extensions.DependencyInjection --version 6.0.0
 dotnet add package Microsoft.Extensions.Hosting
@@ -26,6 +28,12 @@ dotnet add reference ../Services/Services.csproj
 dotnet add reference ../Tools/Tools.csproj
 cd ..
 cd Tests
+dotnet add reference ../Constracts/Constracts.csproj
+dotnet add reference ../Models/Models.csproj
+dotnet add reference ../Services/Services.csproj
+dotnet add reference ../Tools/Tools.csproj
+cd ..
+cd SouceGenerator
 dotnet add reference ../Constracts/Constracts.csproj
 dotnet add reference ../Models/Models.csproj
 dotnet add reference ../Services/Services.csproj

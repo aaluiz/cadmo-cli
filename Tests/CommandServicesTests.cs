@@ -3,12 +3,13 @@ using Services.Startup;
 using Services.Tools;
 using Contracts.Interfaces;
 
-namespace Tests;
-
-[TestFixture]
-public class CommandServicesTests
+namespace Tests
 {
-	static object[] CommandCases = {
+
+	[TestFixture]
+	public class CommandServicesTests
+	{
+		static object[] CommandCases = {
 				new string[] {"cadmo-cli", "new", "teste-api"},
 				new string[] {"cadmo-cli", "-g", "model", "User" },
 				new string[] {"cadmo-cli", "-g", "repository", "User" },
@@ -21,30 +22,32 @@ public class CommandServicesTests
 				new string[] {"cadmo-cli", "generate", "controller", "User" },
 								new string[] {"cadmo-cli", "create", "endpoints"}
 		};
-	ICommandLineUI _commandLineUI;
-	IShellCommandExecutor _shellCommandExecutor;
-	
-	[SetUp]
-	public void Setup()
-	{
-		_commandLineUI = new CommandLineUI();
-		_shellCommandExecutor = new ShellCommandExecutor();
-	}
+		ICommandLineUI _commandLineUI;
+		IShellCommandExecutor _shellCommandExecutor;
 
-	[Test]
-	[TestCaseSource(nameof(CommandCases))]
-	public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
-	{
-		var result = _commandLineUI.ExecuteCommmand(args);
+		[SetUp]
+		public void Setup()
+		{
+			_commandLineUI = new CommandLineUI();
+			_shellCommandExecutor = new ShellCommandExecutor();
+		}
 
-		Assert.Greater(result, 0);
-	}
+		[Test]
+		[TestCaseSource(nameof(CommandCases))]
+		public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			var result = _commandLineUI.ExecuteCommmand(args);
 
-	[Test]
-	public void ShellCommandExecutor_Result_True(){
+			Assert.Greater(result, 0);
+		}
 
-		var result = _shellCommandExecutor.ExecuteCommand("ls", " -ln");
+		[Test]
+		public void ShellCommandExecutor_Result_True()
+		{
 
-		Assert.AreEqual(result, true);
+			var result = _shellCommandExecutor.ExecuteCommand("ls", " -ln");
+
+			Assert.AreEqual(result, true);
+		}
 	}
 }

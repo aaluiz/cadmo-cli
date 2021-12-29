@@ -6,21 +6,21 @@ namespace corecli
 {
     class Program
     {
-        static Task Main(string[] args)
+        static void Main(string[] args)
         {
-            using (IHost host = CreateHostBuilder(args).Build())
-            {
-                using (IServiceScope serviceScope = host.Services.CreateScope())
-                {
-                    IServiceProvider provider = serviceScope.ServiceProvider;
-                   // ICommandLineUI commandLineUI = provider.GetRequiredService<ICommandLineUI>();
-                   // commandLineUI.ExecuteCommmand(args);
-                }
-                return host.StartAsync();
-            }
+            // using (IHost host = CreateHostBuilder(args).Build())
+            // {
+            //     using (IServiceScope serviceScope = host.Services.CreateScope())
+            //     {
+            //         IServiceProvider provider = serviceScope.ServiceProvider;
+            //        // ICommandLineUI commandLineUI = provider.GetRequiredService<ICommandLineUI>();
+            //        // commandLineUI.ExecuteCommmand(args);
+            //     }
+            //     return host.StartAsync();
+            // }
         }
 
-        static IHostBuilder CreateHostBuilder(string[] args) => 
+        //static IHostBuilder CreateHostBuilder(string[] args) => 
             //Host.CreateDefaultBuilder(args)
               //  .ConfigureServices((_, services) =>
                     // services.addtransient<icommandlineui, commandlineui>()

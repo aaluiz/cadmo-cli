@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{FCB65E62-ED5E-480E-9230-BEA2C1E4FEF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceGenerator", "SourceGenerator\SourceGenerator.csproj", "{6C323F94-F6BF-487A-937C-FE6DE191151B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{0D35C62D-B42E-4BED-B590-E9CC241A03BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{FCB65E62-ED5E-480E-9230-BEA2C1E4FEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB65E62-ED5E-480E-9230-BEA2C1E4FEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCB65E62-ED5E-480E-9230-BEA2C1E4FEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C323F94-F6BF-487A-937C-FE6DE191151B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C323F94-F6BF-487A-937C-FE6DE191151B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C323F94-F6BF-487A-937C-FE6DE191151B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C323F94-F6BF-487A-937C-FE6DE191151B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D35C62D-B42E-4BED-B590-E9CC241A03BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D35C62D-B42E-4BED-B590-E9CC241A03BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D35C62D-B42E-4BED-B590-E9CC241A03BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D35C62D-B42E-4BED-B590-E9CC241A03BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
