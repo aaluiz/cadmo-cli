@@ -175,9 +175,6 @@ namespace SourceGeneratorWeb
 			Assert.AreEqual(extensionCode, expectedExtensionCode);
 		}
 
-
-
-
 		private (string, string) GetGeneratedOutput(string source)
 		{
 			var outputCompilation = CreateCompilation(source);
@@ -222,8 +219,4 @@ namespace SourceGeneratorWeb
 			return outputCompilation;
 		}
 	}
-
-
-
-
 }

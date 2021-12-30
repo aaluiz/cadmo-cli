@@ -1,7 +1,7 @@
 using NUnit.Framework;
+using Contracts.Interfaces;
 using Services.Startup;
 using Services.Tools;
-using Contracts.Interfaces;
 
 namespace Tests
 {
