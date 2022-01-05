@@ -83,7 +83,8 @@ using Contracts.Interfaces;
 			}
 			else
 			{
-				var ns = methodSymbol.ContainingNamespace.Name.ToString();
+				var ns = methodSymbol.ContainingNamespace.ContainingNamespace.Name.ToString();
+				// var ns = methodSymbol.ContainingNamespace.Name.ToString();
 				code = $@"namespace {ns}
 {{
 {code}

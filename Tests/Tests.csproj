@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Tools\Tools.csproj" />
     <ProjectReference Include="..\SourceGenerator\SourceGenerator.csproj" />
     <ProjectReference Include="..\cadmo-cli\cadmo-cli.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>

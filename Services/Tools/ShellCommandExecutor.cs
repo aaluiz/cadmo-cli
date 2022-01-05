@@ -1,7 +1,9 @@
 using System.Diagnostics;
 using Contracts.Interfaces;
+using Microsoft.Extensions.Hosting;
+using Services;
 
-namespace Services.Tools
+namespace Services
 {	
 	public class ShellCommandExecutor: IShellCommandExecutor {
 		public bool ExecuteCommand(string command, string args)
@@ -20,6 +22,12 @@ namespace Services.Tools
 			};
 			return startInfo;
 		}
+
+				static IHostBuilder CreateHostBuilder(string[] args) =>
+				Host.CreateDefaultBuilder(args)
+					 .ConfigureServices((_, services) =>
+								services.AddServicesToDI()
+					 );
 	}
 		
 }
