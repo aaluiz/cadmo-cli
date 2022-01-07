@@ -10,6 +10,7 @@ namespace Services.Startup
 	{
 		public int ExecuteCommmand(string[] args)
 		{
+			Console.WriteLine("oi generators");
 			return 1;
 		}
 	}

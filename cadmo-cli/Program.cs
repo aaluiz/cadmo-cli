@@ -1,4 +1,6 @@
-﻿using Contracts.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using Contracts.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
@@ -12,6 +14,7 @@ namespace corecli
 		{
 			using (IHost host = CreateHostBuilder(args).Build())
 			{
+				
 				using (IServiceScope serviceScope = host.Services.CreateScope())
 				{
 					IServiceProvider provider = serviceScope.ServiceProvider;
@@ -26,6 +29,7 @@ namespace corecli
 				Host.CreateDefaultBuilder(args)
 					 .ConfigureServices((_, services) =>
 								services.AddServicesToDI()
+							   // services.Add(null)
 					 );
 	}
 }

@@ -51,7 +51,7 @@ using Services.Generators;
 using Services.Startup;
 using Contracts.Interfaces;
 
-namespace SourceGeneratorWeb
+namespace Services
 {
     public static class GeneratedServicesExtension
     {
@@ -108,7 +108,7 @@ using Services.Generators;
 using Services.Startup;
 using Contracts.Interfaces;
 
-namespace SourceGeneratorWeb
+namespace Services
 {
     public static class GeneratedServicesExtension
     {
@@ -151,7 +151,7 @@ using Services.Generators;
 using Services.Startup;
 using Contracts.Interfaces;
 
-namespace Service
+namespace Services
 {
     public static class GeneratedServicesExtension
     {
@@ -197,7 +197,7 @@ using Services.Generators;
 using Services.Startup;
 using Contracts.Interfaces;
 
-namespace SourceGeneratorWeb
+namespace Services
 {
     public static class GeneratedServicesExtension
     {
