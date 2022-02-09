@@ -4,7 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Services;
 
 namespace Services
-{	
+{
+	[AddService]	
 	public class ShellCommandExecutor: IShellCommandExecutor {
 		public bool ExecuteCommand(string command, string args)
 		{

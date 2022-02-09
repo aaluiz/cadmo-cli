@@ -14,12 +14,12 @@ namespace corecli
 		{
 			using (IHost host = CreateHostBuilder(args).Build())
 			{
-				
 				using (IServiceScope serviceScope = host.Services.CreateScope())
 				{
 					IServiceProvider provider = serviceScope.ServiceProvider;
 					ICommandLineUI commandLineUI = provider.GetRequiredService<ICommandLineUI>();
-					commandLineUI.ExecuteCommmand(args);
+				    var result = commandLineUI.ExecuteCommmand(args);
+					if (result ==  -1) System.Console.WriteLine(Commands());
 				}
 				return host.StartAsync();
 			}
@@ -29,7 +29,11 @@ namespace corecli
 				Host.CreateDefaultBuilder(args)
 					 .ConfigureServices((_, services) =>
 								services.AddServicesToDI()
-							   // services.Add(null)
 					 );
+
+		static string Commands(){
+			return @"command not found, try help";
+		}
+
 	}
 }
