@@ -41,7 +41,6 @@ namespace Tests
 
 			_shellCommandExecutor = mock.Object;
 
-
 			_createProjectService = new CreateProjectService(_shellCommandExecutor);
 			_helpService = new HelpService();
 			_commandLineUI = new CommandLineUI(_createProjectService, _helpService);

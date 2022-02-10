@@ -4,5 +4,7 @@ namespace Contracts.Interfaces
 	{
 		bool ExecuteCommand(string command,
 			string args);
+
+		bool ExecuteCommand(string command, string args, string executionPath);
 	}
 }
