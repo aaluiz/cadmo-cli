@@ -13,7 +13,7 @@ namespace Contracts.Abstractions
 	/// <summary>
 	/// Abstract Classs for the definition of struture that will be generate a c# class code content
 	/// </summary>
-	public abstract class ClassDefinerAbstract : IClassDefinition
+	public abstract class ClassDefintionAbstraction : IClassDefinition
 	{
 		private IBuilderClassDefinition? builder;
 

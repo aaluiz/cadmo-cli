@@ -56,18 +56,23 @@ namespace Tests
 		[TestCaseSource(nameof(CommandCases))]
 		public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
 		{
-			var result = _commandLineUI.ExecuteCommmand(args);
+			if (_commandLineUI != null)
+			{
+				var result = _commandLineUI.ExecuteCommmand(args);
 
-			Assert.Greater(result, 0);
+				Assert.Greater(result, 0);
+			}
 		}
 
 		[Test]
 		public void ShellCommandExecutor_Result_True()
 		{
+			if (_shellCommandExecutor != null)
+			{
+				var result = _shellCommandExecutor.ExecuteCommand("ls", " -ln");
 
-			var result = _shellCommandExecutor.ExecuteCommand("ls", " -ln");
-
-			Assert.AreEqual(result, true);
+				Assert.AreEqual(result, true);
+			}
 		}
 	}
 }

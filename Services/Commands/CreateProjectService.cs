@@ -1,6 +1,6 @@
 using System;
 using Contracts.Interfaces;
-using System.Linq;
+using Services.Commands.Tools;
 
 [AddService]
 public class CreateProjectService : AbstractService, ICreateProjectService
@@ -16,18 +16,30 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		if (!ValidateArgs(args)) return -1;
 
 		string currentDirectory = Environment.CurrentDirectory;
+		string apiDiretory = $"{currentDirectory}/Api";
+		string testsDiretory = $"{currentDirectory}/Tests";
+		string modelsDiretory = $"{currentDirectory}/Models";
+		string servicesDiretory = $"{currentDirectory}/Services";
+		string toolsDiretory = $"{currentDirectory}/Tools";
+		string repositoriesDiretory = $"{currentDirectory}/Repositories";
 
 		_shellCommandExecutor.ExecuteCommand("dotnet", $"new sln -n Solution{args[1]}");
 
 		ExecuteCommandsInArray(GetProjects());
-		ExecuteCommandsInArray(GetReferences("Api"), $"{currentDirectory}/Api");
-		ExecuteCommandsInArray(GetReferences("Tests"), $"{currentDirectory}/Tests");
+		ExecuteCommandsInArray(GetReferences("Api"), apiDiretory);
+
+		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
+		ExecuteCommandsInArray(PackagesCommands.PackagesForApi(), apiDiretory);
+		ExecuteCommandsInArray(PackagesCommands.PackagesForModels(), modelsDiretory);
+		ExecuteCommandsInArray(PackagesCommands.PackagesForRepository(), repositoriesDiretory);
+		ExecuteCommandsInArray(PackagesCommands.PackagesForServices(), servicesDiretory);
+		ExecuteCommandsInArray(PackagesCommands.PackagesForTools(), toolsDiretory);
 		return 1;
 	}
 
- 	override protected bool ValidateArgs(string[] args)
+	override protected bool ValidateArgs(string[] args)
 	{
 		if (!IsValidArgs(args)) return false;
 		return IsTheReserverWord("new", args);
@@ -40,6 +52,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		"new nunit -o Tests",
 		"new classlib -o Contracts",
 		"new classlib -o Models",
+		"new classlib -o Repositories",
 		"new classlib -o Services",
 		"new classlib -o Tools"};
 	}
@@ -66,6 +79,8 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 			$"sln {solutionName}.sln add Tests/Tests.csproj",
 	  };
 	}
+
+	
 	private void ExecuteCommandsInArray(string[] commands, string? workingPath = null)
 	{
 		foreach (string command in commands)
