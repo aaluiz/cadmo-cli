@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cadmo-cli", "cadmo-cli\cadmo-cli.csproj", "{F6C84593-A031-489D-A87B-2C0483EFA72C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constracts", "Constracts\Constracts.csproj", "{AAF8F355-9679-40B6-94F9-AB3B7CCB315A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constracts", "Contracts\Constracts.csproj", "{AAF8F355-9679-40B6-94F9-AB3B7CCB315A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{18BEF8D1-6ECE-46BD-9D0C-2BB36D3B1459}"
 EndProject

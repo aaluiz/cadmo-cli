@@ -22,15 +22,17 @@ namespace Tests
 				new string[] {"generate", "repository", "User" },
 				new string[] {"generate", "service", "User" },
 				new string[] {"generate", "controller", "User" },
-				new string[] {"create", "endpoints"},
+				new string[] {"-g", "ssl"},
+				new string[] {"generate", "ssl"},
 				new string[] {"help"}
 		};
-		ICommandLineUI _commandLineUI;
-		IShellCommandExecutor _shellCommandExecutor;
+		ICommandLineUI? _commandLineUI;
+		IShellCommandExecutor? _shellCommandExecutor;
 
-		ICreateProjectService _createProjectService;
+		ICreateProjectService? _createProjectService;
+		ICreateSSLCertificateService? _createSSLCertificateService;
 
-		IHelpService _helpService;
+		IHelpService? _helpService;
 
 		[SetUp]
 		public void Setup()
@@ -38,12 +40,16 @@ namespace Tests
 			var mock = new Mock<IShellCommandExecutor>();
 			mock.Setup(x => x.ExecuteCommand("ls", " -ln")).Returns(true);
 			mock.Setup(x => x.ExecuteCommand("dotnet", "new sln -n teste-api")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --clean")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --trust")).Returns(true);
 
 			_shellCommandExecutor = mock.Object;
 
 			_createProjectService = new CreateProjectService(_shellCommandExecutor);
 			_helpService = new HelpService();
-			_commandLineUI = new CommandLineUI(_createProjectService, _helpService);
+			_createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
+
+			_commandLineUI = new CommandLineUI(_createProjectService, _helpService, _createSSLCertificateService);
 		}
 
 		[Test]

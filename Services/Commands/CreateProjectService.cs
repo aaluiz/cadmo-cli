@@ -13,8 +13,8 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 	}
 	public int Execute(string[] args)
 	{
-		if (!IsValidArgs(args)) return -1;
-		if (args[0] != "new") return -1;
+		if (!ValidateArgs(args)) return -1;
+
 		string currentDirectory = Environment.CurrentDirectory;
 
 		_shellCommandExecutor.ExecuteCommand("dotnet", $"new sln -n Solution{args[1]}");
@@ -25,6 +25,12 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
 		return 1;
+	}
+
+ 	override protected bool ValidateArgs(string[] args)
+	{
+		if (!IsValidArgs(args)) return false;
+		return IsTheReserverWord("new", args);
 	}
 
 	private string[] GetProjects()
@@ -71,6 +77,12 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 
 			WaitOneSecond();
 		}
+	}
+
+	private void SetTrustCertificate()
+	{
+		_shellCommandExecutor.ExecuteCommand("dotnet", "dev-certs https --clean");
+		_shellCommandExecutor.ExecuteCommand("dotnet", "dev-certs https --trust");
 	}
 
 	private void WaitOneSecond()
