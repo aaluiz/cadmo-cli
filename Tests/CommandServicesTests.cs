@@ -2,9 +2,12 @@ using NUnit.Framework;
 using Contracts.Interfaces;
 using Services.Startup;
 using Services.Tools;
+using Models;
 using Services;
 using Moq;
 using Services.Coder;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Tests
 {
@@ -41,6 +44,7 @@ namespace Tests
 		IMethodDefinition? _methodDefinition;
 		IBuilderClassDefinition? _builderClassDefinition;
 		IBuilderMethodDefinition? _builderMethodDefinition;
+		IFileBuilder? _fileBuilder;
 
 		[SetUp]
 		public void Setup()
@@ -51,6 +55,33 @@ namespace Tests
 			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --clean")).Returns(true);
 			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --trust")).Returns(true);
 
+			var code = new FileCode
+			{
+				Code = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+    static void Main(string[] args)
+    {
+    }
+    }
+}",
+				FileName = "Novo.cs"
+			};
+
+			List<Models.FileCode> codes = new List<Models.FileCode>();
+			codes.Add(code);
+
+			var fileBuilderMock = new Mock<IFileBuilder>();
+			fileBuilderMock.Setup(x => x.WriteFile(code, "/user/path")).Returns(true);
+			fileBuilderMock.Setup(x => x.WriteFiles(codes.ToImmutableList(), "/user/path")).Returns(true);
+
 			_shellCommandExecutor = mock.Object;
 
 			_builderClassDefinition = new BuilderClassDefinition();
@@ -58,11 +89,11 @@ namespace Tests
 
 			_classDefinition = new ClassDefinition(_builderClassDefinition);
 			_methodDefinition = new MethodDefinition(_builderMethodDefinition);
-
+		
 			_createProjectService = new CreateProjectService(_shellCommandExecutor);
 			_helpService = new HelpService();
 			_createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
-			_createModelService = new CreateModelService(_classDefinition, _methodDefinition);
+			_createModelService = new CreateModelService(_classDefinition, _methodDefinition, fileBuilderMock.Object);
 
 			_commandLineUI = new CommandLineUI(
 				_createProjectService,

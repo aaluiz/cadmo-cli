@@ -1,4 +1,5 @@
 using Contracts.Interfaces;
+using Models;
 
 
 [AddService]
@@ -12,4 +13,6 @@ public class CreateModelService : AbstractGeneratorService, ICreateModelService
 	{
 		return 1;
 	}
+
+	private FileCode
 }
