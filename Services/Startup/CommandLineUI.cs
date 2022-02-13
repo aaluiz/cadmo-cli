@@ -11,12 +11,14 @@ namespace Services.Startup
 		private readonly ICreateProjectService _createProjectService;
 		private readonly IHelpService _helpService;
 		private readonly ICreateSSLCertificateService _createSSLCertificateService;
+		private readonly ICreateModelService _createModelService;
 
-		public CommandLineUI(ICreateProjectService createProjectService, IHelpService helpService, ICreateSSLCertificateService createSSLCertificateService)
+		public CommandLineUI(ICreateProjectService createProjectService, IHelpService helpService, ICreateSSLCertificateService createSSLCertificateService, ICreateModelService createModelService)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
 			_createSSLCertificateService = createSSLCertificateService;
+			_createModelService = createModelService;
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -48,6 +50,7 @@ namespace Services.Startup
 			switch (args[1])
 			{
 				case "ssl": return _createSSLCertificateService;
+				case "model": return _createModelService;
 				default:
 				return null;
 			}

@@ -22,7 +22,7 @@ namespace Services.Commands.Tools
 	};
 		}
 
-		public static string[] PackagesForModels()
+		public static string[] PackagesForEntities()
 		{
 			return new string[]{
 			GenerateAddPackageCommand("AutoMapper"),

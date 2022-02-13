@@ -4,6 +4,7 @@ using Services.Startup;
 using Services.Tools;
 using Services;
 using Moq;
+using Services.Coder;
 
 namespace Tests
 {
@@ -34,6 +35,13 @@ namespace Tests
 
 		IHelpService? _helpService;
 
+		ICreateModelService? _createModelService;
+
+		IClassDefinition? _classDefinition;
+		IMethodDefinition? _methodDefinition;
+		IBuilderClassDefinition? _builderClassDefinition;
+		IBuilderMethodDefinition? _builderMethodDefinition;
+
 		[SetUp]
 		public void Setup()
 		{
@@ -45,11 +53,22 @@ namespace Tests
 
 			_shellCommandExecutor = mock.Object;
 
+			_builderClassDefinition = new BuilderClassDefinition();
+			_builderMethodDefinition = new BuilderMethodDefinition();
+
+			_classDefinition = new ClassDefinition(_builderClassDefinition);
+			_methodDefinition = new MethodDefinition(_builderMethodDefinition);
+
 			_createProjectService = new CreateProjectService(_shellCommandExecutor);
 			_helpService = new HelpService();
 			_createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
+			_createModelService = new CreateModelService(_classDefinition, _methodDefinition);
 
-			_commandLineUI = new CommandLineUI(_createProjectService, _helpService, _createSSLCertificateService);
+			_commandLineUI = new CommandLineUI(
+				_createProjectService,
+				_helpService,
+				_createSSLCertificateService,
+				_createModelService);
 		}
 
 		[Test]
