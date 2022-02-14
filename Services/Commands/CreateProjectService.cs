@@ -27,10 +27,6 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		_shellCommandExecutor.ExecuteCommand("dotnet", $"new sln -n Solution{args[1]}");
 
 		ExecuteCommandsInArray(GetProjects());
-		ExecuteCommandsInArray(GetReferences("Api"), apiDiretory);
-
-		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
-		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
 		ExecuteCommandsInArray(PackagesCommands.PackagesForApi(), apiDiretory);
 		ExecuteCommandsInArray(PackagesCommands.PackagesForEntities(), entitiessDiretory);
@@ -38,6 +34,10 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		ExecuteCommandsInArray(PackagesCommands.PackagesForServices(), servicesDiretory);
 		ExecuteCommandsInArray(PackagesCommands.PackagesForTools(), toolsDiretory);
 
+		ExecuteCommandsInArray(GetReferences("Api"), apiDiretory);
+		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
+		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
+		
 		CreateDiretory("Entities", GetEntitiesDiretorys());
 		return 1;
 	}
