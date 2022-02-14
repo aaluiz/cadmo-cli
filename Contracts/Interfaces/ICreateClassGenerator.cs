@@ -15,8 +15,8 @@ namespace Contracts.Interfaces
 
         FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods);
 
-        FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> methods);
+        FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> properties);
 
-        FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, IImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties);
+        FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties);
     }
 }

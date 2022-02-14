@@ -15,7 +15,7 @@ namespace Contracts.Interfaces
 
         FileCode CreateInterface(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods);
 
-        FileCode CreateInterface(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> methods);
+        FileCode CreateInterface(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> properties);
 
         FileCode CreateInterface(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties);
     }

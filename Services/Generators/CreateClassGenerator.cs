@@ -1,12 +1,7 @@
 ﻿using Contracts.Interfaces;
 using Models;
 using Services.Abstract;
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -19,22 +14,54 @@ namespace Services
 
         public FileCode CreateClass(string name, string nameSpace)
         {
-            throw new NotImplementedException();
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
         }
 
         public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods)
         {
-            throw new NotImplementedException();
+
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
         }
 
-        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> methods)
+        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> properties)
         {
-            throw new NotImplementedException();
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name, true)
+                .Properties(properties)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
         }
 
-        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, IImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties)
+        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties)
         {
-            throw new NotImplementedException();
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name, true)
+                .Methods(methods)
+                .Properties(properties)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+        }
+        private static FileCode GetFileCode(string name, IClassDefinition builder)
+        {
+            return new FileCode { Code = builder.ClassCode, FileName = $"{name}.cs" };
         }
     }
 }

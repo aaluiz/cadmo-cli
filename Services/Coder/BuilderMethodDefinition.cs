@@ -63,7 +63,7 @@ namespace Services.Coder
                 {
                     if (!_isConstructor)
                     {
-                        if (_LogigContent == null)  throw new Exception(string.Format("Methods needs return {0} type", _ReturnDefinition));
+                        if (_LogigContent == null) throw new Exception(string.Format("Methods needs return {0} type", _ReturnDefinition));
                         if (!_LogigContent.Contains("return")) throw new Exception(string.Format("Methods needs return {0} type", _ReturnDefinition));
                     }
                 }
@@ -118,7 +118,7 @@ namespace Services.Coder
         /// <returns>Builder Object</returns>
         public IBuilderMethodDefinition ReturnDefinition(ReturnDefinition? returnDefinitions = null)
         {
-          
+
             if (returnDefinitions == null)
             {
                 _ReturnDefinition = "public void";

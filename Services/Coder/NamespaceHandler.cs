@@ -21,7 +21,7 @@ namespace Services
 
         public ImmutableList<Type> GetClasses()
         {
-         
+
             var types = AppDomain.CurrentDomain.GetAssemblies();
             var result = types
                 .SelectMany(t => t.GetTypes())
@@ -32,7 +32,7 @@ namespace Services
         public ImmutableList<MethodInfo> GetMethods(Type type)
         {
             var result = type.GetMethods()
-				.ToImmutableList();
+                .ToImmutableList();
             return result;
         }
     }

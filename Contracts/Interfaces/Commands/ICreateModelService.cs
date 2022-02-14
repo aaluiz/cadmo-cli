@@ -1,7 +1,7 @@
 namespace Contracts.Interfaces
 {
-    public interface ICreateModelService: ICommand
+    public interface ICreateModelService : ICommand
     {
-        
+
     }
 }

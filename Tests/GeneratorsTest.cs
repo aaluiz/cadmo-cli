@@ -5,63 +5,88 @@ using Services;
 using Services.Coder;
 using Models;
 using System.Collections.Generic;
+using Moq;
 
 namespace Tests
 {
-	[TestFixture]
-	public class GeneratorsTest
-	{
-		IClassDefinition? _classDefiner;
-		IMethodDefinition? _methodDefinition;
-		[SetUp]
-		public void Setup()
-		{
-			_classDefiner = new ClassDefinition(new BuilderClassDefinition());
-			_methodDefinition = new MethodDefinition(new BuilderMethodDefinition());
-		}
+    [TestFixture]
+    public class GeneratorsTest
+    {
+        IClassDefinition? _classDefiner;
+        IMethodDefinition? _methodDefinition;
+
+        ICreateClassGenerator? _createClassGenerator;
+        ICreateInterfaceGenerator? _interfaceGenerator;
 
 
-		[Test]
-		public void ClassBusinnesLayer_ReturnStringClassCode()
-		{
-			var Parameters = new List<Parameter>();
-			Parameters.Add(
-				new Parameter
-				{
-					Name = "message",
-					Type = "string"
-				}
-			);
 
-			var Method = _methodDefinition!.Builder
-			.Name("Write")
-			.Parameters(Parameters.ToImmutableList())
-			.LogiContent(@" Console.WriteLine($""you said '{message}!'"");")
-			.Create();
+        [SetUp]
+        public void Setup()
+        {
+            _classDefiner = new ClassDefinition(new BuilderClassDefinition());
+            _methodDefinition = new MethodDefinition(new BuilderMethodDefinition());
 
-			var Methods = new List<IMethodDefinition>();
-			Methods.Add(Method);
+            var fileBuilderMock = new Mock<IFileBuilder>();
+            fileBuilderMock.Setup(x => x.WriteFile(new FileCode(), "/user/path")).Returns(true);
+            fileBuilderMock.Setup(x => x.WriteFiles(new List<FileCode>().ToImmutableList(), "/user/path")).Returns(true);
 
-			//arrange
-			var imports = new string[] { "System", "Contracts" }.ToImmutableList();
-			var businnessLayerService = _classDefiner!.Builder
-				.Imports(imports)
-				.Namespace("RoslynCompileSample")
-				.Name("Writer")
+            _createClassGenerator = new CreateClassGenerator(_classDefiner, _methodDefinition, fileBuilderMock.Object);
+            _interfaceGenerator = new CreateInterfaceGenerator(_classDefiner, _methodDefinition, fileBuilderMock.Object);
+        }
+
+        [Test]
+        public void CreateClassGenerator_CreateClass_ReturnCode()
+        {
+            var result = _createClassGenerator!.CreateClass("Writer", "RoselynCompileSample");
+            var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+
+
+
+            Assert.AreEqual(result.FileName, "Writer.cs");
+            Assert.IsTrue(validation);
+        }
+
+        [Test]
+        public void ClassBusinnesLayer_ReturnStringClassCode()
+        {
+            var Parameters = new List<Parameter>();
+            Parameters.Add(
+                new Parameter
+                {
+                    Name = "message",
+                    Type = "string"
+                }
+            );
+
+            var Method = _methodDefinition!.Builder
+            .Name("Write")
+            .Parameters(Parameters.ToImmutableList())
+            .LogiContent(@" Console.WriteLine($""you said '{message}!'"");")
+            .Create();
+
+            var Methods = new List<IMethodDefinition>();
+            Methods.Add(Method);
+
+            //arrange
+            var imports = new string[] { "System", "Contracts" }.ToImmutableList();
+            var businnessLayerService = _classDefiner!.Builder
+                .Imports(imports)
+                .Namespace("RoslynCompileSample")
+                .Name("Writer")
                 .Methods(Methods.ToImmutableList())
-				.Create();
+                .Create();
 
-			//act
-			string result = businnessLayerService.ClassCode;
+            //act
+            string result = businnessLayerService.ClassCode;
 
-			var validation = CSharpCompiler.ValidateSourceCode(result);
+            var validation = CSharpCompiler.ValidateSourceCode(result);
 
 
-			Assert.IsTrue(validation);
-			//assert
-			Assert.IsTrue(result.Contains("class"));
-			Assert.IsTrue(result.Contains("}"));
-		}
+            Assert.IsTrue(validation);
+            //assert
+            Assert.IsTrue(result.Contains("class"));
+            Assert.IsTrue(result.Contains("}"));
+        }
 
-	}
+    }
 }

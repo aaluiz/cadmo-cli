@@ -35,9 +35,9 @@ namespace corecli
 				{
 					config.AddJsonStream(GetJsonInMemory());
 				})
-					 .ConfigureServices((_, services) =>
-								services.AddServicesToDI()
-					 );
+			    .ConfigureServices((_, services) =>
+					services.AddServicesToDI()
+				);
 
 		static string Commands()
 		{

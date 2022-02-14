@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    interface IInterfaceGeneratos: IGenerator
+    interface IInterfaceGeneratos : IGenerator
     {
     }
 }

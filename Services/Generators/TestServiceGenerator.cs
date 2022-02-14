@@ -15,8 +15,8 @@ namespace Services
 
         public override ImmutableList<FileCode> GenClasses()
         {
-			var result = new List<FileCode>();
-			return result.ToImmutableList();
+            var result = new List<FileCode>();
+            return result.ToImmutableList();
         }
 
         public override ImmutableList<FileCode> GenerateCode(ImmutableList<ClassElements> classElements)

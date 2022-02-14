@@ -14,10 +14,11 @@ namespace Services
         {
         }
 
-        public ImmutableList<FileCode> GetResultNull(){
-			List<FileCode> result = new List<FileCode>();
-			return result.ToImmutableList();
-		}
+        public ImmutableList<FileCode> GetResultNull()
+        {
+            List<FileCode> result = new List<FileCode>();
+            return result.ToImmutableList();
+        }
 
 
 
@@ -27,7 +28,7 @@ namespace Services
             if (_pathManager == null) return GetResultNull();
             if (_fileBuilder == null) return GetResultNull();
 
-			var result = GenerateCode(GetConfigurationToClasses(_namespaceHandler.GetClasses()));
+            var result = GenerateCode(GetConfigurationToClasses(_namespaceHandler.GetClasses()));
             _fileBuilder.WriteFiles(result, string.IsNullOrEmpty(_pathManager.GetPath()) ? "Controllers" : _pathManager.GetPath());
             return result;
         }
@@ -140,8 +141,8 @@ namespace Services
 
         private string GetGenericParameter(Type type)
         {
-			var baseType = type.BaseType!;
-			string result = baseType!.GenericTypeArguments!.FirstOrDefault()!.Name ;
+            var baseType = type.BaseType!;
+            string result = baseType!.GenericTypeArguments!.FirstOrDefault()!.Name;
             return result;
         }
 
@@ -204,10 +205,10 @@ namespace Services
 
         public override ImmutableList<MethodElements> GetConfigurationToMethods(ImmutableList<MethodInfo> methods)
         {
-			var nullReturn = new List<MethodElements>();
+            var nullReturn = new List<MethodElements>();
             if (_typeProcessor == null) return nullReturn.ToImmutableList();
 
-			var basicMethods = new string[] {
+            var basicMethods = new string[] {
                 "Dispose",
                 "Equals",
                 "GetHashCode",

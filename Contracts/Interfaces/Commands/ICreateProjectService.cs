@@ -1,9 +1,9 @@
 
 namespace Contracts.Interfaces
 {
-	public interface ICreateProjectService : ICommand
-	{
+    public interface ICreateProjectService : ICommand
+    {
 
-	}
+    }
 
 }

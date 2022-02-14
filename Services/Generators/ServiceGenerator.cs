@@ -62,8 +62,8 @@ namespace Services
 
         public override ImmutableList<MethodElements> GetConfigurationToMethods(ImmutableList<MethodInfo> methods)
         {
-			var result = new List<MethodElements>();
-			return result.ToImmutableList();
+            var result = new List<MethodElements>();
+            return result.ToImmutableList();
         }
     }
 }

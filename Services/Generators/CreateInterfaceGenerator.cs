@@ -1,14 +1,7 @@
-﻿
-using Contracts.Interfaces;
+﻿using Contracts.Interfaces;
 using Models;
 using Services.Abstract;
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Services
 {
     [AddService]
@@ -59,6 +52,7 @@ namespace Services
                 .Namespace(nameSpace)
                 .Name(name, true)
                 .Methods(methods)
+                .Properties(properties)
                 .Create();
             FileCode result = GetFileCode(name, builder);
 

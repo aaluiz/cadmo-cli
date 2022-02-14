@@ -11,6 +11,6 @@ namespace Contracts.Interfaces
     public interface IFileBuilder
     {
         bool WriteFiles(ImmutableList<FileCode> contents, string path);
-		bool WriteFile(FileCode filecode, string path);
-	}
+        bool WriteFile(FileCode filecode, string path);
+    }
 }

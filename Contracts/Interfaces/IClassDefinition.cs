@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces
 {
-    public  interface IClassDefinition
+    public interface IClassDefinition
     {
         string ClassCode { get; }
         IBuilderClassDefinition Builder { get; set; }

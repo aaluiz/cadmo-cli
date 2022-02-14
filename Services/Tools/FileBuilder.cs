@@ -4,8 +4,8 @@ using Models;
 
 namespace Services.Tools
 {
-	public class FileBuilder : IFileBuilder
-	{
+    public class FileBuilder : IFileBuilder
+    {
         public bool WriteFile(string? contents, string path, string? name)
         {
             try
@@ -20,21 +20,21 @@ namespace Services.Tools
             }
         }
 
-		public bool WriteFile(FileCode filecode, string path)
-		{
+        public bool WriteFile(FileCode filecode, string path)
+        {
             try
             {
-				Directory.CreateDirectory(path);
-				File.WriteAllText(string.Format("{0}{1}", path, filecode.FileName), filecode.Code);
-				return true;
-			}
+                Directory.CreateDirectory(path);
+                File.WriteAllText(string.Format("{0}{1}", path, filecode.FileName), filecode.Code);
+                return true;
+            }
             catch (System.Exception)
             {
-				return false;
-			}
-		}
+                return false;
+            }
+        }
 
-		public bool WriteFiles(ImmutableList<FileCode> contents, string path)
+        public bool WriteFiles(ImmutableList<FileCode> contents, string path)
         {
             try
             {
@@ -46,5 +46,5 @@ namespace Services.Tools
                 return false;
             }
         }
-	}
+    }
 }

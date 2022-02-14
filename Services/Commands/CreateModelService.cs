@@ -14,7 +14,7 @@ public class CreateModelService : AbstractGeneratorService, ICreateModelService
     {
         if (IsDefaultPath(args[0]))
         {
-          _fileBuilder!.WriteFile(BasicModel(args[0]), $"{CurrentDirectory}/Entities/Models");
+            _fileBuilder!.WriteFile(BasicModel(args[0]), $"{CurrentDirectory}/Entities/Models");
         }
         return 1;
     }

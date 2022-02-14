@@ -49,7 +49,7 @@ namespace Contracts.Interfaces
         /// </summary>
         /// <param name="name">Class name</param>
         /// <returns>Builder/returns>
-        IBuilderClassDefinition Name(string name, bool isInterface = false );
+        IBuilderClassDefinition Name(string name, bool isInterface = false);
         /// <summary>
         /// Build Ideftinition
         /// </summary>

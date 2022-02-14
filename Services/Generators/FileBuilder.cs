@@ -34,9 +34,9 @@ namespace Services
             }
         }
 
-		public bool WriteFile(FileCode filecode, string path)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public bool WriteFile(FileCode filecode, string path)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,7 +1,7 @@
 namespace Contracts.Interfaces
 {
-    public interface ICreateSSLCertificateService: ICommand 
+    public interface ICreateSSLCertificateService : ICommand
     {
-        
+
     }
 }
