@@ -39,7 +39,7 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
-                .Name(name, true)
+                .Name(name)
                 .Properties(properties)
                 .Create();
             FileCode result = GetFileCode(name, builder);
@@ -51,7 +51,7 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
-                .Name(name, true)
+                .Name(name)
                 .Methods(methods)
                 .Properties(properties)
                 .Create();
