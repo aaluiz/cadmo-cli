@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using Contracts.Interfaces;
+using Services.Abstract;
 using Services.Commands.Tools;
 
 [AddService]
