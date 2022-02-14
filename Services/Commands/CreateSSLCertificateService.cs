@@ -1,4 +1,5 @@
 using Contracts.Interfaces;
+using Services.Abstract;
 
 namespace Services
 {

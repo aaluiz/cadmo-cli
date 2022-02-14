@@ -44,7 +44,7 @@ namespace Tests
 		IMethodDefinition? _methodDefinition;
 		IBuilderClassDefinition? _builderClassDefinition;
 		IBuilderMethodDefinition? _builderMethodDefinition;
-		IFileBuilder? _fileBuilder;
+		//IFileBuilder? _fileBuilder;
 
 		[SetUp]
 		public void Setup()

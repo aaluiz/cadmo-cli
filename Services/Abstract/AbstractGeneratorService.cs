@@ -32,15 +32,6 @@ namespace Services.Abstract
             return !(path.Contains('\\') || path.Contains('/'));
         }
 
-        protected FileCode CreateBasicInterfaceFileOnlyProperties(string name, ImmutableList<string> imports, ImmutableList<Property> properties)
-        {
-            var builder = _classDefinition!.Builder.Namespace("Entities.Models").Name(name)
-                .Create();
-            var result = new FileCode { Code = builder.ClassCode, FileName = $"{name}.cs" };
-
-            return result;
-        }
-
         protected FileCode CreateBasicInterface(string name, string nameSpace)
         {
             var builder = _classDefinition!.Builder
