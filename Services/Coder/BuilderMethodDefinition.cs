@@ -49,9 +49,18 @@ namespace Services.Coder
         {
             IsNullOrEmptyCriticalFields();
             string code = !string.IsNullOrEmpty(_Annotations) ? GenCodeWithAnnotation() : GenCode();
-
-            return CreateMethod(code);
+			Clean();
+			return CreateMethod(code);
         }
+
+        private void Clean(){
+			_Name = null;
+			_LogigContent = null;
+			_Parameters = null;
+			_ReturnDefinition = null;
+			_Annotations = null;
+			_isConstructor = false;
+		}
 
         private string GenCode()
         {

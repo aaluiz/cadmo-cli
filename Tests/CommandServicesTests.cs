@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Contracts.Interfaces;
 using Services.Startup;
+using Services.Commands;
 using Services.Tools;
 using Models;
 using Services;
@@ -16,18 +17,20 @@ namespace Tests
     [TestFixture]
     public class CommandServicesTests
     {
-        static object[] CommandCases = {
-                new string[] {"new", "teste-api"},
-                new string[] {"-g", "model", "User" },
-                new string[] {"-g", "repository", "User" },
-                new string[] {"-g", "controller", "User" },
-                new string[] {"-g", "service", "User" },
-                new string[] {"-g", "model", "User" },
+		static object[] CommandCases = {
+				new string[] {"new", "teste-api"},
+				new string[] {"serve"},
+                new string[] {"build"},
+		        new string[] {"g", "model", "User" },
+                new string[] {"g", "repository", "User" },
+                new string[] {"g", "controller", "User" },
+                new string[] {"g", "service", "User" },
+                new string[] {"g", "model", "User" },
                 new string[] {"generate", "model", "User" },
                 new string[] {"generate", "repository", "User" },
                 new string[] {"generate", "service", "User" },
                 new string[] {"generate", "controller", "User" },
-                new string[] {"-g", "ssl"},
+                new string[] {"g", "ssl"},
                 new string[] {"generate", "ssl"},
                 new string[] {"help"}
         };
@@ -48,8 +51,9 @@ namespace Tests
         ICodeGenerator? _codeGenerator;
 		ICreateClassGenerator? _createClassGenerator;
 		ICreateInterfaceGenerator? _createInterfaceGenerator;
+		IBuildCommandService? _buildCommandSevice;
 		//IFileBuilder? _fileBuilder;
-
+		IServeCommandService? _serveCommandService;
 		[SetUp]
         public void Setup()
         {
@@ -103,12 +107,15 @@ namespace ConsoleApp1
 			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object);
             _createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator);
 			_createModelService = new CreateModelService(_codeGenerator);
-
-            _commandLineUI = new CommandLineUI(
+			_buildCommandSevice = new BuildCommandService(_shellCommandExecutor);
+			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
+			_commandLineUI = new CommandLineUI(
                 _createProjectService,
                 _helpService,
                 _createSSLCertificateService,
-                _createModelService);
+                _createModelService,
+                _buildCommandSevice,
+                _serveCommandService);
         }
 
         [Test]

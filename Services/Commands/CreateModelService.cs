@@ -19,16 +19,67 @@ public class CreateModelService : AbstractService, ICreateModelService
 
 		if (IsDefaultPath(args[0]))
 		{
-            _codeGenerator.FileBuilder!.WriteFile(BasicModel(args[0]), $"{CurrentDirectory}/Entities/Models");
+            _codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");
+            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
 		}
+		System.Console.WriteLine("Models and BasicViewModels created!");
+		System.Console.WriteLine($"{CurrentDirectory}/Entities/Models/{args[2]}.cs");
+		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}UpdateViewModel.cs");
+		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}NewViewModel.cs");
+		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}ViewModel.cs");
 		return 1;
 	}
 
 	private FileCode BasicModel(string name)
 	{
-		var result = _codeGenerator.ClassGenerator.CreateClass(name, "Entites.Models");
+		var property = new Property[]{
+			new Property{
+				Name = "Id",
+				Visibility = Visibility.Public,
+				hasGeterAndSeter = true,
+				TypeProperty = "int"
+			}
+		}.ToImmutableList();
+		var imports = new string[] {
+			"System.Collections.Generic",
+			"System.ComponentModel",
+			"System.ComponentModel.DataAnnotations",
+			"Entities.Interface"
+		}.ToImmutableList();
+
+		var inharitance = new string[] {
+			"IEntity"
+		}.ToImmutableList();
+
+		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.Models", property, inharitance);
 		return result;
 	}
+
+	private FileCode BasicViewModel(string name)
+	{
+		var property = new Property[]{
+			new Property{
+				Name = "Id",
+				Visibility = Visibility.Public,
+				hasGeterAndSeter = true,
+				TypeProperty = "int"
+			}
+		}.ToImmutableList();
+		var imports = new string[] {
+			"System.ComponentModel.DataAnnotations",
+			"Entities.Interface"
+		}.ToImmutableList();
+
+		var inharitance = new string[] {
+			"IEntityViewModel"
+		}.ToImmutableList();
+
+		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.Models", property, inharitance);
+		return result;
+	}
+
 
 	private ImmutableList<Property> GetPropertiesBasicModel()
 	{

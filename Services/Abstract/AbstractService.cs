@@ -13,12 +13,12 @@ namespace Services.Abstract
 
         protected bool IsValidArgs(string[] args)
         {
-            return (args.Length == 2 || args.Length == 3);
+            return (args.Length == 1|| args.Length == 2 || args.Length == 3);
         }
 
         protected bool IsTheReservedWord(string word, string[] args)
         {
-            if (args[0] == "-g" || args[0] == "generate") return (args[1] == word);
+            if (args[0] == "g" || args[0] == "generate") return (args[1] == word);
             return (args[0] == word);
         }
         protected static bool IsDefaultPath(string path)

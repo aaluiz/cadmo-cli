@@ -58,7 +58,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		var imports = new string[] { "System" }.ToImmutableList();
 		var properties = new Property[] { new Property {
 			Name = "Id",
-			TypeProperty = "string",
+			TypeProperty = "int",
 			Visibility = Visibility.Public,
 			hasGeterAndSeter = true
 		}}.ToImmutableList();

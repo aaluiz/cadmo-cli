@@ -40,7 +40,18 @@ namespace Services
 			result.AppendLine("    }");
 			result.AppendLine("}");
 
+			Clean();
+
 			return new ClassDefinition(this, result.ToString());
+		}
+
+		private void Clean(){
+			_Imports = null;
+			_Inheritances = null;
+			_Methods = null;
+			_Name = null;
+			_Namespace = null;
+			_Properties = null;
 		}
 
 		public IBuilderClassDefinition Imports(ImmutableList<string> imports)

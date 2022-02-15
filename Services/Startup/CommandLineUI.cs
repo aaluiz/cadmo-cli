@@ -12,14 +12,23 @@ namespace Services.Startup
         private readonly IHelpService _helpService;
         private readonly ICreateSSLCertificateService _createSSLCertificateService;
         private readonly ICreateModelService _createModelService;
+		private readonly IBuildCommandService _buildCommandSevice;
+		private readonly IServeCommandService _serveCommandService;
 
-        public CommandLineUI(ICreateProjectService createProjectService, IHelpService helpService, ICreateSSLCertificateService createSSLCertificateService, ICreateModelService createModelService)
+		public CommandLineUI(ICreateProjectService createProjectService,
+			IHelpService helpService,
+			ICreateSSLCertificateService createSSLCertificateService,
+			ICreateModelService createModelService,
+            IBuildCommandService buildCommandSevice,
+            IServeCommandService serveCommandService)
         {
             _createProjectService = createProjectService;
             _helpService = helpService;
             _createSSLCertificateService = createSSLCertificateService;
             _createModelService = createModelService;
-        }
+			_buildCommandSevice = buildCommandSevice;
+			_serveCommandService = serveCommandService;
+		}
 
         public int ExecuteCommmand(string[] args)
         {
@@ -36,7 +45,9 @@ namespace Services.Startup
                 {
                     case "new": return _createProjectService;
                     case "help": return _helpService;
-                    case "-g": return GetService(args);
+                    case "build": return _buildCommandSevice;
+                    case "serve": return _serveCommandService;
+					case "g": return GetService(args);
                     case "generate": return GetService(args);
                     default:
                         return null;

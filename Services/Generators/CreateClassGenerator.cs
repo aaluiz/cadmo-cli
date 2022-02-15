@@ -40,6 +40,7 @@ namespace Services
 
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Imports(imports)
                 .Name(name)
                 .Create();
             FileCode result = GetFileCode(name, builder);
@@ -51,6 +52,7 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Imports(imports)
                 .Inheritance(inheritance)
                 .Name(name)
                 .Create();
@@ -63,6 +65,7 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Imports(imports)
                 .Name(name)
                 .Properties(properties)
                 .Create();
@@ -74,7 +77,9 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Imports(imports)
                 .Name(name)
+                .Inheritance(inheritance)
                 .Properties(properties)
                 .Create();
             FileCode result = GetFileCode(name, builder);
@@ -86,6 +91,7 @@ namespace Services
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Imports(imports)
                 .Name(name)
                 .Methods(methods)
                 .Properties(properties)
@@ -99,6 +105,8 @@ namespace Services
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
                 .Name(name)
+                .Imports(imports)
+                .Inheritance(inheritance)
                 .Methods(methods)
                 .Properties(properties)
                 .Create();

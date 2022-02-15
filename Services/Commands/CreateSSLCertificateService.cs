@@ -3,8 +3,6 @@ using Services.Abstract;
 
 namespace Services
 {
-
-
     [AddService]
     public class CreateSSLCertificateService : AbstractService, ICreateSSLCertificateService
     {
@@ -16,7 +14,6 @@ namespace Services
         public int Execute(string[] args)
         {
             if (!ValidateArgs(args)) return -1;
-            _shellCommandExecutor.ExecuteCommand("dotnet", "dev-certs https --clean");
             _shellCommandExecutor.ExecuteCommand("dotnet", "dev-certs https --trust");
             return 1;
         }
