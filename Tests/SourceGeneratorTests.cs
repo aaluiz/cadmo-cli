@@ -44,6 +44,7 @@ internal class AddServiceAttribute : System.Attribute
 using Microsoft.Extensions.DependencyInjection;
 using Services.Coder;
 using Services.Startup;
+using Services.Generators;
 using Contracts.Interfaces;
 
 namespace Services
@@ -100,6 +101,7 @@ namespace SourceGeneratorWeb.Code
 using Microsoft.Extensions.DependencyInjection;
 using Services.Coder;
 using Services.Startup;
+using Services.Generators;
 using Contracts.Interfaces;
 
 namespace Services
@@ -142,6 +144,7 @@ namespace Service.Code
 using Microsoft.Extensions.DependencyInjection;
 using Services.Coder;
 using Services.Startup;
+using Services.Generators;
 using Contracts.Interfaces;
 
 namespace Services
@@ -187,6 +190,7 @@ namespace SourceGeneratorWeb.Code
 using Microsoft.Extensions.DependencyInjection;
 using Services.Coder;
 using Services.Startup;
+using Services.Generators;
 using Contracts.Interfaces;
 
 namespace Services

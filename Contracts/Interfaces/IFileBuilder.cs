@@ -13,4 +13,4 @@ namespace Contracts.Interfaces
         bool WriteFiles(ImmutableList<FileCode> contents, string path);
         bool WriteFile(FileCode filecode, string path);
     }
-}
+} 

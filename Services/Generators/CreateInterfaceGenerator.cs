@@ -7,7 +7,7 @@ namespace Services
     [AddService]
     public class CreateInterfaceGenerator : AbstractGeneratorService, ICreateInterfaceGenerator
     {
-        public CreateInterfaceGenerator(IClassDefinition classDefinition, IMethodDefinition methodDefinition, IFileBuilder fileBuilder) : base(classDefinition, methodDefinition, fileBuilder)
+        public CreateInterfaceGenerator(IClassDefinition classDefinition, IMethodDefinition methodDefinition) : base(classDefinition, methodDefinition)
         {
         }
 

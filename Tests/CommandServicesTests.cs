@@ -8,6 +8,7 @@ using Moq;
 using Services.Coder;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Services.Generators;
 
 namespace Tests
 {
@@ -44,9 +45,12 @@ namespace Tests
         IMethodDefinition? _methodDefinition;
         IBuilderClassDefinition? _builderClassDefinition;
         IBuilderMethodDefinition? _builderMethodDefinition;
-        //IFileBuilder? _fileBuilder;
+        ICodeGenerator? _codeGenerator;
+		ICreateClassGenerator? _createClassGenerator;
+		ICreateInterfaceGenerator? _createInterfaceGenerator;
+		//IFileBuilder? _fileBuilder;
 
-        [SetUp]
+		[SetUp]
         public void Setup()
         {
             var mock = new Mock<IShellCommandExecutor>();
@@ -90,10 +94,15 @@ namespace ConsoleApp1
             _classDefinition = new ClassDefinition(_builderClassDefinition);
             _methodDefinition = new MethodDefinition(_builderMethodDefinition);
 
-            _createProjectService = new CreateProjectService(_shellCommandExecutor);
+
             _helpService = new HelpService();
             _createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
-            _createModelService = new CreateModelService(_classDefinition, _methodDefinition, fileBuilderMock.Object);
+			_createClassGenerator = new CreateClassGenerator(_classDefinition, _methodDefinition);
+			_createInterfaceGenerator = new CreateInterfaceGenerator(_classDefinition, _methodDefinition);
+
+			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object);
+            _createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator);
+			_createModelService = new CreateModelService(_codeGenerator);
 
             _commandLineUI = new CommandLineUI(
                 _createProjectService,

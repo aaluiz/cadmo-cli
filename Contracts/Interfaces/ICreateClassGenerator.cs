@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace Contracts.Interfaces
 {
     public interface ICreateClassGenerator
-    {
-        FileCode CreateClass(string name, string nameSpace);
+    { 
+		FileCode CreateClass(string name, string nameSpace);
 
         FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods);
 

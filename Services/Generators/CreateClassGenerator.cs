@@ -8,14 +8,26 @@ namespace Services
     [AddService]
     public class CreateClassGenerator : AbstractGeneratorService, ICreateClassGenerator
     {
-        public CreateClassGenerator(IClassDefinition classDefinition, IMethodDefinition methodDefinition, IFileBuilder fileBuilder) : base(classDefinition, methodDefinition, fileBuilder)
+
+		public CreateClassGenerator(IClassDefinition classDefinition, IMethodDefinition methodDefinition ) : base(classDefinition, methodDefinition)
         {
-        }
+		}
 
         public FileCode CreateClass(string name, string nameSpace)
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
+                .Name(name)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+        }
+        public FileCode CreateClass(string name, string nameSpace, ImmutableList<string> inheritance)
+        {
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Inheritance(inheritance)
                 .Name(name)
                 .Create();
             FileCode result = GetFileCode(name, builder);
@@ -35,7 +47,30 @@ namespace Services
             return result;
         }
 
+        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<string> inheritance)
+        {
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Inheritance(inheritance)
+                .Name(name)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+        }
+
         public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> properties)
+        {
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name)
+                .Properties(properties)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+        }
+        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<Property> properties, ImmutableList<string> inheritance)
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)
@@ -48,6 +83,18 @@ namespace Services
         }
 
         public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties)
+        {
+            var builder = _classDefinition!.Builder
+                .Namespace(nameSpace)
+                .Name(name)
+                .Methods(methods)
+                .Properties(properties)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+        }
+        public FileCode CreateClass(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<IMethodDefinition> methods, ImmutableList<Property> properties, ImmutableList<string> inheritance)
         {
             var builder = _classDefinition!.Builder
                 .Namespace(nameSpace)

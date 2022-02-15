@@ -67,6 +67,7 @@ internal class AddServiceAttribute : System.Attribute
 using Microsoft.Extensions.DependencyInjection;
 using Services.Coder;
 using Services.Startup;
+using Services.Generators;
 using Contracts.Interfaces;
 
 " + code;

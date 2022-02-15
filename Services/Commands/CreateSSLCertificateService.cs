@@ -24,7 +24,7 @@ namespace Services
         protected override bool ValidateArgs(string[] args)
         {
             if (!IsValidArgs(args)) return false;
-            return IsTheReserverWord("ssl", args);
+            return IsTheReservedWord("ssl", args);
         }
 
     }

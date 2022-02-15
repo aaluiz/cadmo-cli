@@ -25,15 +25,25 @@ namespace Tests
 			_methodDefinition = new MethodDefinition(new BuilderMethodDefinition());
 
 			var fileBuilderMock = new Mock<IFileBuilder>();
-			fileBuilderMock.Setup(x => x.WriteFile(new FileCode(), "/user/path")).Returns(true);
-			fileBuilderMock.Setup(x => x.WriteFiles(new List<FileCode>().ToImmutableList(), "/user/path")).Returns(true);
 
-			_createClassGenerator = new CreateClassGenerator(_classDefiner, _methodDefinition, fileBuilderMock.Object);
-			_interfaceGenerator = new CreateInterfaceGenerator(_classDefiner, _methodDefinition, fileBuilderMock.Object);
+			fileBuilderMock.Setup(x => x.WriteFile(
+				new FileCode(), "/user/path")).Returns(true);
+			fileBuilderMock.Setup(x => x.WriteFiles(
+				new List<FileCode>().ToImmutableList(), "/user/path")).Returns(true);
+
+			_createClassGenerator = new CreateClassGenerator(
+				_classDefiner, 
+				_methodDefinition);
+
+			_interfaceGenerator = new CreateInterfaceGenerator(
+				_classDefiner, 
+				_methodDefinition);
 		}
 
+		// --------------------------------------------------------------------------------- Classes
+
 		[Test]
-		public void CreateClassGenerator_CreateClass_ReturnCode()
+		public void Class_CreateClassGenerator_CreateClass_ReturnCode()
 		{
 			var result = _createClassGenerator!.CreateClass("Writer", "RoselynCompileSample");
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
@@ -43,7 +53,7 @@ namespace Tests
 		}
 
 		[Test]
-		public void CreateClassGenerator_CreateClass_WithMethods_ReturnCode()
+		public void Class_CreateClassGenerator_CreateClass_WithMethods_ReturnCode()
 		{
 			var methods = new List<IMethodDefinition>();
 
@@ -51,7 +61,10 @@ namespace Tests
 			.Name("NovoMetodos")
 			.Create());
 
-			var result = _createClassGenerator!.CreateClass(new string[] { "System" }.ToImmutableList(), "Writer", "RoselynCompileSample", methods.ToImmutableList());
+			var result = _createClassGenerator!.CreateClass(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", "RoselynCompileSample", 
+				methods.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 
 			Assert.AreEqual(result.FileName, "Writer.cs");
@@ -59,7 +72,7 @@ namespace Tests
 		}
 
 		[Test]
-		public void CreateClassGenerator_Properties_Complete_ReturnCode()
+		public void Class_CreateClassGenerator_Properties_Complete_ReturnCode()
 		{
 			var properties = new List<Property>();
 			properties.Add(new Property
@@ -67,7 +80,10 @@ namespace Tests
 				Name = "Id",
 				TypeProperty = "int"
 			});
-			var result = _createClassGenerator!.CreateClass(new string[] { "System" }.ToImmutableList(), "Writer", "RoselynCompileSample", properties.ToImmutableList());
+			var result = _createClassGenerator!.CreateClass(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", "RoselynCompileSample", 
+				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 
 			Assert.AreEqual(result.FileName, "Writer.cs");
@@ -75,7 +91,7 @@ namespace Tests
 		}
 
 		[Test]
-		public void CreateClassGenerator_Complete_Properties_ReturnCode()
+		public void Class_CreateClassGenerator_Complete_ReturnCode()
 		{
 			var methods = new List<IMethodDefinition>();
 
@@ -89,12 +105,101 @@ namespace Tests
 				Name = "Id",
 				TypeProperty = "int"
 			});
-			var result = _createClassGenerator!.CreateClass(new string[] { "System" }.ToImmutableList(), "Writer", "RoselynCompileSample", methods.ToImmutableList(),properties.ToImmutableList());
+			var result = _createClassGenerator!.CreateClass(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", 
+				"RoselynCompileSample", 
+				methods.ToImmutableList(),
+				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 
 			Assert.AreEqual(result.FileName, "Writer.cs");
 			Assert.IsTrue(validation);
 		}
+
+		// -------------------------------------------------------------------------------- Interfaces
+		[Test]
+		public void Interface_CreateInterfaceGenerator_InterfaceClass_ReturnCode()
+		{
+			var result = _interfaceGenerator!.CreateInterface("Writer", "RoselynCompileSample");
+			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+
+			Assert.AreEqual(result.FileName, "Writer.cs");
+			Assert.IsTrue(validation);
+		}
+
+		[Test]
+		public void Interface_CreateInterfaceGenerator_CreateInterface_WithMethods_ReturnCode()
+		{
+			var methods = new List<IMethodDefinition>();
+
+			methods.Add(_methodDefinition!.Builder
+			.Name("NovoMetodos")
+			.InterfaceCreate());
+
+			var result = _interfaceGenerator!.CreateInterface(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", "RoselynCompileSample", 
+				methods.ToImmutableList());
+			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+
+			Assert.AreEqual(result.FileName, "Writer.cs");
+			Assert.IsTrue(validation);
+		}
+
+		[Test]
+		public void Interface_CreateInterfaceGenerator_Properties_Complete_ReturnCode()
+		{
+			var properties = new List<Property>();
+			properties.Add(new Property
+			{
+				Name = "Id",
+				TypeProperty = "int",
+				Visibility = Visibility.None,
+				hasGeterAndSeter = true
+		});
+			var result = _interfaceGenerator!.CreateInterface(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", "RoselynCompileSample", 
+				properties.ToImmutableList());
+			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+			System.Console.WriteLine(result.Code);
+
+			Assert.AreEqual(result.FileName, "Writer.cs");
+			Assert.IsTrue(validation);
+		}
+
+		[Test]
+		public void Interface_CreateInterfaceGenerator_Complete_ReturnCode()
+		{
+			var methods = new List<IMethodDefinition>();
+
+			methods.Add(_methodDefinition!.Builder
+				.Name("NovoMetodos")
+				.InterfaceCreate());
+
+			var properties = new List<Property>();
+			properties.Add(new Property
+			{
+				Name = "Id",
+				TypeProperty = "int",
+				Visibility = Visibility.None,
+				hasGeterAndSeter = true
+			});
+			var result = _interfaceGenerator!.CreateInterface(
+				new string[] { "System" }.ToImmutableList(), 
+				"Writer", 
+				"RoselynCompileSample", 
+				methods.ToImmutableList(),
+				properties.ToImmutableList());
+			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+
+			System.Console.WriteLine(result.Code);
+			Assert.AreEqual(result.FileName, "Writer.cs");
+			Assert.IsTrue(validation);
+		}
+
+		// -------------------------------------------------------------------------------------------------------------------------
 
 		[Test]
 		public void ClassBusinnesLayer_ReturnStringClassCode()
