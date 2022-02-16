@@ -20,9 +20,9 @@ public class CreateModelService : AbstractService, ICreateModelService
 		if (IsDefaultPath(args[0]))
 		{
             _codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");
-            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
-            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
-            _codeGenerator.FileBuilder!.WriteFile(BasicModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
 		}
 		System.Console.WriteLine("Models and BasicViewModels created!");
 		System.Console.WriteLine($"{CurrentDirectory}/Entities/Models/{args[2]}.cs");
@@ -76,7 +76,7 @@ public class CreateModelService : AbstractService, ICreateModelService
 			"IEntityViewModel"
 		}.ToImmutableList();
 
-		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.Models", property, inharitance);
+		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.ViewModels", property, inharitance);
 		return result;
 	}
 

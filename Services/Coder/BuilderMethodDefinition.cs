@@ -18,7 +18,9 @@ namespace Services.Coder
         private string? _ReturnDefinition;
         private string? _Annotations;
         private bool _isConstructor;
-        public IBuilderMethodDefinition Annotations(ImmutableList<string> annotations)
+
+		private string? _baseImplementation;
+		public IBuilderMethodDefinition Annotations(ImmutableList<string> annotations)
         {
             if (annotations != null) _Annotations = "\n\t" + string.Join("\n\t", annotations.Select(x => string.Format("[{0}]", x).TrimStart()).ToArray());
             return this;
@@ -59,6 +61,7 @@ namespace Services.Coder
 			_Parameters = null;
 			_ReturnDefinition = null;
 			_Annotations = null;
+			_baseImplementation = null;
 			_isConstructor = false;
 		}
 
@@ -81,8 +84,16 @@ namespace Services.Coder
             string sessionCodeBegin = string.Format("\t{0} {1}{2}", _ReturnDefinition, _Name, isProcedure(_Parameters));
 
             string sessionCodeEnd = "        }";
+			string resultFaseOne = "";
 
-            string resultFaseOne = sessionCodeBegin + "\n        {\n        " + _LogigContent + "\n" + sessionCodeEnd;
+			if(_baseImplementation != null){
+
+               resultFaseOne = sessionCodeBegin + $": base({_baseImplementation})" + "\n        {\n        " + _LogigContent + "\n" + sessionCodeEnd;
+            } else {
+
+               resultFaseOne = sessionCodeBegin + "\n        {\n        " + _LogigContent + "\n" + sessionCodeEnd;
+            }
+
 
             string result = resultFaseOne.Replace("\r", "");
 
@@ -94,6 +105,19 @@ namespace Services.Coder
         {
             return _Annotations + "\n" + GenCode();
         }
+
+        public IBuilderMethodDefinition BaseImplementationObjects(ImmutableList<string>? baseObjects){
+            if (baseObjects == null) {
+				_baseImplementation = "";
+				return this;
+			}
+
+			string results = string.Join(", ",
+			baseObjects.Select(x => x).ToArray());
+			_baseImplementation = results;
+
+			return this;
+		}
 
         public IBuilderMethodDefinition LogiContent(string logicContent)
         {

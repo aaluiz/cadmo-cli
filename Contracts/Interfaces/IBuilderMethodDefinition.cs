@@ -16,9 +16,10 @@ namespace Contracts.Interfaces
         IBuilderMethodDefinition Name(string name);
         IBuilderMethodDefinition Parameters(ImmutableList<Parameter>? parameters = null);
         IBuilderMethodDefinition Annotations(ImmutableList<string> annotations);
+		IBuilderMethodDefinition BaseImplementationObjects(ImmutableList<string>? baseObjects);
         IBuilderMethodDefinition ReturnDefinition(ReturnDefinition returnDefinitions);
         IBuilderMethodDefinition LogiContent(string logicContent);
         IMethodDefinition Create();
         IMethodDefinition InterfaceCreate();
-    }
+	}
 }

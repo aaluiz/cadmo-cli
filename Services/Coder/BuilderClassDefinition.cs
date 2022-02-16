@@ -118,7 +118,7 @@ namespace Services
 
 				if (!string.IsNullOrEmpty(x.Attribuition))
 				{
-					return string.Format("{0} {1} {2} = {3};", HandleVisibility(x), x.TypeProperty, x.Name, x.Attribuition);
+					return string.Format("{0} {1} {2} ={3};", HandleVisibility(x), x.TypeProperty, x.Name, x.Attribuition);
 				}
 				return string.Format("{0} {1} {2};", HandleVisibility(x), x.TypeProperty, x.Name, x.Attribuition); ;
 			}));

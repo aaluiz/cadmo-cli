@@ -18,7 +18,7 @@ namespace Services.Abstract
 
         protected bool IsTheReservedWord(string word, string[] args)
         {
-            if (args[0] == "g" || args[0] == "generate") return (args[1] == word);
+            if (args[0] == "g" || args[0] == "generate" || args[0] == "update") return (args[1] == word);
             return (args[0] == word);
         }
         protected static bool IsDefaultPath(string path)

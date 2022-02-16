@@ -15,12 +15,18 @@ namespace Services.Startup
 		private readonly IBuildCommandService _buildCommandSevice;
 		private readonly IServeCommandService _serveCommandService;
 
+		private readonly IDbContextCommandService _dbContextCommandService;
+
+		private readonly IAutoMapperCommandService _autoMapperCommandService;
+
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
 			ICreateSSLCertificateService createSSLCertificateService,
 			ICreateModelService createModelService,
             IBuildCommandService buildCommandSevice,
-            IServeCommandService serveCommandService)
+            IServeCommandService serveCommandService,
+            IAutoMapperCommandService autoMapperCommandService,
+            IDbContextCommandService dbContextCommandService)
         {
             _createProjectService = createProjectService;
             _helpService = helpService;
@@ -28,12 +34,13 @@ namespace Services.Startup
             _createModelService = createModelService;
 			_buildCommandSevice = buildCommandSevice;
 			_serveCommandService = serveCommandService;
+			_autoMapperCommandService = autoMapperCommandService;
+			_dbContextCommandService = dbContextCommandService;
 		}
 
         public int ExecuteCommmand(string[] args)
         {
             var command = GetCommand(args);
-
             return (command != null) ? command.Execute(args) : -1;
         }
 
@@ -49,7 +56,8 @@ namespace Services.Startup
                     case "serve": return _serveCommandService;
 					case "g": return GetService(args);
                     case "generate": return GetService(args);
-                    default:
+                    case "update": return GetService(args);
+					default:
                         return null;
                 }
             }
@@ -62,7 +70,9 @@ namespace Services.Startup
             {
                 case "ssl": return _createSSLCertificateService;
                 case "model": return _createModelService;
-                default:
+                case "automapper": return _autoMapperCommandService;
+                case "dbcontext": return _dbContextCommandService;
+				default:
                     return null;
             }
         }

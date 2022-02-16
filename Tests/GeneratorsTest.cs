@@ -32,11 +32,11 @@ namespace Tests
 				new List<FileCode>().ToImmutableList(), "/user/path")).Returns(true);
 
 			_createClassGenerator = new CreateClassGenerator(
-				_classDefiner, 
+				_classDefiner,
 				_methodDefinition);
 
 			_interfaceGenerator = new CreateInterfaceGenerator(
-				_classDefiner, 
+				_classDefiner,
 				_methodDefinition);
 		}
 
@@ -62,10 +62,11 @@ namespace Tests
 			.Create());
 
 			var result = _createClassGenerator!.CreateClass(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", "RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer", "RoselynCompileSample",
 				methods.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+			System.Console.WriteLine(result.Code);
 
 			Assert.AreEqual(result.FileName, "Writer.cs");
 			Assert.IsTrue(validation);
@@ -81,8 +82,8 @@ namespace Tests
 				TypeProperty = "int"
 			});
 			var result = _createClassGenerator!.CreateClass(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", "RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer", "RoselynCompileSample",
 				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 
@@ -97,6 +98,10 @@ namespace Tests
 
 			methods.Add(_methodDefinition!.Builder
 				.Name("NovoMetodos")
+				.ReturnDefinition(new ReturnDefinition{
+					Type = "void",
+					Visibility = Visibility.Public
+				})
 				.Create());
 
 			var properties = new List<Property>();
@@ -106,12 +111,14 @@ namespace Tests
 				TypeProperty = "int"
 			});
 			var result = _createClassGenerator!.CreateClass(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", 
-				"RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer",
+				"RoselynCompileSample",
 				methods.ToImmutableList(),
 				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
+
+			System.Console.WriteLine(result.Code);
 
 			Assert.AreEqual(result.FileName, "Writer.cs");
 			Assert.IsTrue(validation);
@@ -138,8 +145,8 @@ namespace Tests
 			.InterfaceCreate());
 
 			var result = _interfaceGenerator!.CreateInterface(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", "RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer", "RoselynCompileSample",
 				methods.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 
@@ -157,10 +164,10 @@ namespace Tests
 				TypeProperty = "int",
 				Visibility = Visibility.None,
 				hasGeterAndSeter = true
-		});
+			});
 			var result = _interfaceGenerator!.CreateInterface(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", "RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer", "RoselynCompileSample",
 				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
 			System.Console.WriteLine(result.Code);
@@ -187,13 +194,12 @@ namespace Tests
 				hasGeterAndSeter = true
 			});
 			var result = _interfaceGenerator!.CreateInterface(
-				new string[] { "System" }.ToImmutableList(), 
-				"Writer", 
-				"RoselynCompileSample", 
+				new string[] { "System" }.ToImmutableList(),
+				"Writer",
+				"RoselynCompileSample",
 				methods.ToImmutableList(),
 				properties.ToImmutableList());
 			var validation = CSharpCompiler.ValidateSourceCode(result.Code!);
-
 			System.Console.WriteLine(result.Code);
 			Assert.AreEqual(result.FileName, "Writer.cs");
 			Assert.IsTrue(validation);
@@ -215,9 +221,15 @@ namespace Tests
 
 			var Method = _methodDefinition!.Builder
 			.Name("Write")
+			.ReturnDefinition(new ReturnDefinition{
+				Visibility = Visibility.Public,
+				Type = "void"
+			})
 			.Parameters(Parameters.ToImmutableList())
 			.LogiContent(@" Console.WriteLine($""you said '{message}!'"");")
 			.Create();
+
+
 
 			var Methods = new List<IMethodDefinition>();
 			Methods.Add(Method);
@@ -233,7 +245,7 @@ namespace Tests
 
 			//act
 			string result = businnessLayerService.ClassCode;
-
+			System.Console.WriteLine(result);
 			var validation = CSharpCompiler.ValidateSourceCode(result);
 
 			Assert.IsTrue(validation);
