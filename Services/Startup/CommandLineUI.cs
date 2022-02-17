@@ -56,7 +56,6 @@ namespace Services.Startup
                     case "serve": return _serveCommandService;
 					case "g": return GetService(args);
                     case "generate": return GetService(args);
-                    case "update": return GetService(args);
 					default:
                         return null;
                 }

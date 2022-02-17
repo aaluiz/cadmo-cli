@@ -42,9 +42,20 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
-		CreateDiretory("Entities", GetEntitiesDiretorys());
+		CreateDiretory("Entities", GetEntitiesDiretories());
+		CreateDiretory("Contracts", GetContractDirectories());
+		_codeGenerator.FileBuilder.WriteFile(RepositoryAbstract(), $"{CurrentDirectory}/Contracts/Repository/Abstract");
+		_codeGenerator.FileBuilder.WriteFile(CodesForNewProject.GetLoggerFile(), $"{CurrentDirectory}/Contracts/Logger");
+		WriteServiceInterfaces();
 		GeneratedEntitiesIntefaces();
 		return 1;
+	}
+
+	private void WriteServiceInterfaces(){
+		CodesForNewProject.ServiceAbstractCodes().ForEach(x =>
+			_codeGenerator
+				.FileBuilder
+				.WriteFile(x, $"{CurrentDirectory}/Contracts/Service/Abstract"));
 	}
 
 	override protected bool ValidateArgs(string[] args)
@@ -86,7 +97,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		"new classlib -o Tools"};
 	}
 
-	private ImmutableList<string> GetEntitiesDiretorys()
+	private ImmutableList<string> GetEntitiesDiretories()
 	{
 		var result = new List<string>();
 		result.Add("AutoMapper");
@@ -96,6 +107,52 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		result.Add("Models/Enums");
 		result.Add("ViewModels");
 		return result.ToImmutableList();
+	}
+	private ImmutableList<string> GetContractDirectories(){
+		var result = new List<string>();
+		result.Add("Repository");
+		result.Add("Repository/Abstract");
+		result.Add("Service");
+		result.Add("Logger");
+		result.Add("Service/Abstract");
+		return result.ToImmutableList();
+	}
+
+	private FileCode RepositoryAbstract(){
+		var result = new FileCode();
+
+		result.Code = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+namespace Contratos.Repository.Abstract
+{
+    public interface IRepository<Model>
+    {
+        IEnumerable<Model> SelectAll();
+
+        Model SelectById(int RecordId);
+
+        IQueryable<Model> SelectByProperty(Expression<Func<Model, bool>> predicate);
+
+        bool Insert(Model NewModel);
+
+        Task<bool> InsertAsync(Model NewModel);
+
+        bool Update(Model ObjectModel);
+
+        Task<bool> UpdateAsync(Model ObjectModel);
+
+        bool Delete(int Id);
+
+        Task<bool> DeleteAsync(int Id);
+    }
+}
+";
+		result.FileName = "IRepository.cs";
+		return result;
 	}
 
 	private void CreateDiretory(string projectName, ImmutableList<string> directory)

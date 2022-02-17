@@ -30,8 +30,8 @@ namespace Tests
 				// new string[] {"generate", "service", "User" },
 				// new string[] {"generate", "controller", "User" },
 				// new string[] {"g", "ssl"},
-				new string[] {"update", "automapper"},
-				new string[] {"update", "dbcontext"},
+				new string[] {"g", "automapper"},
+				new string[] {"g", "dbcontext"},
 				// new string[] {"generate", "ssl"},
 				new string[] {"help"}
 		};
@@ -114,7 +114,7 @@ namespace ConsoleApp1
 			_buildCommandSevice = new BuildCommandService(_shellCommandExecutor);
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
-			_dbContextCommandService = new DbContextCommandService(_codeGenerator);
+			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
 			_commandLineUI = new CommandLineUI(
 				_createProjectService,
 				_helpService,

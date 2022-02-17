@@ -21,7 +21,7 @@ namespace Services.Commands
 			if (!ValidateArgs(args)) return -1;
 
 			_codeGenerator.FileBuilder.WriteFile(GetFileCodeAutoMapper(), $"{CurrentDirectory}/Entities/AutoMapper");
-			System.Console.WriteLine("Create/Update Entities/AutoMapper/AutoMapperProfile.cs");
+			System.Console.WriteLine("GENERATED ../Entities/AutoMapper/AutoMapperProfile.cs");
 
 			return 1;
 		}
@@ -63,7 +63,6 @@ namespace Services.Commands
 			return methods.ToImmutableList();
 		}
 
-
 		private IMethodDefinition MainContructorCreation(){
 			var constructor = _methodDefinition.Builder
 			.Name("AutoMapperProfile")
@@ -84,6 +83,7 @@ namespace Services.Commands
 			var result = string.Join("\n ",
 				Models.Select( x => {
 					StringBuilder content = new StringBuilder();
+					content.AppendLine($"//--------- Model {x}-----------------");
 					content.AppendLine($"CreateMap<{x}, {x}ViewModel>();");
 					content.AppendLine($"CreateMap<{x}NewViewModel, {x}>();");
 					content.AppendLine($"CreateMap<{x}UpdateViewModel, {x}>();\n");
