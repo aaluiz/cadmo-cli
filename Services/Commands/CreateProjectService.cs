@@ -66,7 +66,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		var models = new FileCode
 		{
 			Code = modelJson,
-			FileName = "models.json"
+			FileName = "ModelExample.json"
 		};
 
 		var codes = new FileCode[] { schemeFile, models }.ToImmutableList();

@@ -1,0 +1,13 @@
+{
+	"$schema": "./model.schema.json",
+	"Model": {
+			"Name": "Exemple",
+			"Fields": [
+				{
+					"Name": "FieldName",
+					"ViewModelVisibility": true,
+					"Type": "bool"
+				}
+			]
+	}
+}
