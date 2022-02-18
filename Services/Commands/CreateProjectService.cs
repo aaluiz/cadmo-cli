@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Reflection;
 using Contracts.Interfaces;
 using Models;
 using Services.Abstract;
@@ -48,10 +49,42 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		_codeGenerator.FileBuilder.WriteFile(CodesForNewProject.GetLoggerFile(), $"{CurrentDirectory}/Contracts/Logger");
 		WriteServiceInterfaces();
 		GeneratedEntitiesIntefaces();
+		WriteJsonSchemaModel();
 		return 1;
 	}
 
-	private void WriteServiceInterfaces(){
+	public void WriteJsonSchemaModel()
+	{
+		string schema = File.ReadAllText($"{GetAssemblyPath()}/Assets/model.schema.json");
+		var schemeFile = new FileCode
+		{
+			Code = schema,
+			FileName = "model.schema.json"
+		};
+
+		string modelJson = File.ReadAllText($"{GetAssemblyPath()}/Assets/models.json");
+		var models = new FileCode
+		{
+			Code = modelJson,
+			FileName = "models.json"
+		};
+
+		var codes = new FileCode[] { schemeFile, models }.ToImmutableList();
+
+		_codeGenerator.FileBuilder
+			.WriteFiles(codes, $"{CurrentDirectory}/Entities/JsonModelsDefinition");
+
+		System.Console.WriteLine("GENERATED Json Models Definitions Files");
+	}
+
+	public string GetAssemblyPath()
+	{
+		string codeBase = Assembly.GetExecutingAssembly().Location;
+		return Path.GetDirectoryName(codeBase)!;
+	}
+
+	private void WriteServiceInterfaces()
+	{
 		CodesForNewProject.ServiceAbstractCodes().ForEach(x =>
 			_codeGenerator
 				.FileBuilder
@@ -73,7 +106,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 			Visibility = Visibility.Public,
 			hasGeterAndSeter = true
 		}}.ToImmutableList();
-        
+
 		var IEntity = _codeGenerator.InterfaceGenerator
 		.CreateInterface(imports, "IEntity", "Entities.Interface", properties);
 
@@ -82,7 +115,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 
 		_codeGenerator.FileBuilder.WriteFile(IEntity, $"{CurrentDirectory}/Entities/Interface");
 		_codeGenerator.FileBuilder.WriteFile(IEntityViewModel, $"{CurrentDirectory}/Entities/Interface");
-		System.Console.WriteLine("Writed Entities/Interface files");
+		System.Console.WriteLine("GENERATED Entities/Interface files");
 	}
 
 	private string[] GetProjects()
@@ -106,9 +139,11 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		result.Add("Models");
 		result.Add("Models/Enums");
 		result.Add("ViewModels");
+		result.Add("JsonModelsDefinition");
 		return result.ToImmutableList();
 	}
-	private ImmutableList<string> GetContractDirectories(){
+	private ImmutableList<string> GetContractDirectories()
+	{
 		var result = new List<string>();
 		result.Add("Repository");
 		result.Add("Repository/Abstract");
@@ -118,7 +153,8 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		return result.ToImmutableList();
 	}
 
-	private FileCode RepositoryAbstract(){
+	private FileCode RepositoryAbstract()
+	{
 		var result = new FileCode();
 
 		result.Code = @"using System;

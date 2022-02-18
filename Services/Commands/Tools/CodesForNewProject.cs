@@ -187,5 +187,14 @@ namespace Contracts.Service.Abstract
 			IUpdate.FileName = "IUpdate.cs";
 			return IUpdate;
 		}
+
+
+		public static string JsonSchemaFile(){
+
+			return @"
+			
+			";
+
+		}
 	}
 }
