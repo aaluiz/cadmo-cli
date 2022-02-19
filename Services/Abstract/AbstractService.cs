@@ -13,7 +13,7 @@ namespace Services.Abstract
 
         protected bool IsValidArgs(string[] args)
         {
-            return (args.Length == 1|| args.Length == 2 || args.Length == 3);
+            return (args.Length <= 4);
         }
 
         protected bool IsTheReservedWord(string word, string[] args)

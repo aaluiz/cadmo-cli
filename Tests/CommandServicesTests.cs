@@ -17,23 +17,20 @@ namespace Tests
 	public class CommandServicesTests
 	{
 		static object[] CommandCases = {
-				// new string[] {"new", "teste-api"},
-				// new string[] {"serve"},
-				// new string[] {"build"},
 				new string[] {"g", "model", "User" },
 				new string[] {"g", "repository", "User" },
 				new string[] {"g", "controller", "User" },
 				new string[] {"g", "service", "User" },
+		};
+
+		static object[] ModelCommandCases = {
 				new string[] {"g", "model", "User" },
-				// new string[] {"generate", "model", "User" },
-				// new string[] {"generate", "repository", "User" },
-				// new string[] {"generate", "service", "User" },
-				// new string[] {"generate", "controller", "User" },
-				// new string[] {"g", "ssl"},
-				new string[] {"g", "automapper"},
-				new string[] {"g", "dbcontext"},
-				// new string[] {"generate", "ssl"},
-				new string[] {"help"}
+				new string[] {"g", "model", "--with-script", "User" },
+				new string[] {"generate", "model", "--with-script", "User" },
+				new string[] {"g", "model", "--with-all-scripts", "--force" },
+				new string[] {"g", "model", "--with-all-scripts", "--safety" },
+				new string[] {"generate", "model", "--with-all-scripts", "--force" },
+				new string[] {"generate", "model", "--with-all-scripts", "--safety" },
 		};
 		ICommandLineUI? _commandLineUI;
 		IShellCommandExecutor? _shellCommandExecutor;
@@ -58,6 +55,8 @@ namespace Tests
 
 		IAutoMapperCommandService? _autoMapperCommandService;
 		IDbContextCommandService? _dbContextCommandService;
+
+		IGenerateModelByScript? _generateModelByScript;
 		[SetUp]
 		public void Setup()
 		{
@@ -115,6 +114,7 @@ namespace ConsoleApp1
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
+			_generateModelByScript = new GenerateModelByScript(_codeGenerator, _methodDefinition);
 			_commandLineUI = new CommandLineUI(
 				_createProjectService,
 				_helpService,
@@ -123,12 +123,25 @@ namespace ConsoleApp1
 				_buildCommandSevice,
 				_serveCommandService,
 				_autoMapperCommandService,
-				_dbContextCommandService);
+				_dbContextCommandService,
+				_generateModelByScript);
 		}
 
+		// [Test]
+		// [TestCaseSource(nameof(CommandCases))]
+		// public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
+		// {
+		// 	if (_commandLineUI != null)
+		// 	{
+		// 		var result = _commandLineUI.ExecuteCommmand(args);
+
+		// 		Assert.Greater(result, 0);
+		// 	}
+		// }
 		[Test]
-		[TestCaseSource(nameof(CommandCases))]
-		public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
+
+		[TestCaseSource(nameof(ModelCommandCases))]
+		public void ExecuteCommmand_Models_ReturnExpect_MoreThanZero(string[] args)
 		{
 			if (_commandLineUI != null)
 			{

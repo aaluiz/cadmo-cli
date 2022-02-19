@@ -32,7 +32,6 @@ namespace Services.Commands
 
 		protected override bool ValidateArgs(string[] args)
 		{
-
 			if (!IsValidArgs(args)) return false;
 			return IsTheReservedWord("serve", args);
 		}

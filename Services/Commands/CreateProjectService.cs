@@ -62,7 +62,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 			FileName = "model.schema.json"
 		};
 
-		string modelJson = File.ReadAllText($"{GetAssemblyPath()}/Assets/models.json");
+		string modelJson = File.ReadAllText($"{GetAssemblyPath()}/Assets/ModelExample.json");
 		var models = new FileCode
 		{
 			Code = modelJson,
