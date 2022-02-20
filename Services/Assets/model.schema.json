@@ -17,10 +17,36 @@
                                 "type": "string"
                             },
                             "Required": {
-                                "type": "boolean"
+                                "type": "object",
+                                "properties": {
+                                    "ErrorMessage":{
+                                        "type":"string"
+                                    }
+                                },
+                                "required":["ErrorMessage"]
                             },
-                            "ErrorMessage": {
-                                "type": "string"
+                            "StringLength":{
+                                "type":"object",
+                                "properties": {
+                                    "MinimumLength":{
+                                        "type":"integer"
+                                    },
+                                    "MaximumLength":{
+                                        "type":"integer"
+                                    },
+                                    "ErrorMessage":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "Column":{
+                                "type":"object",
+                                "properties": {
+                                    "TypeName":{
+                                        "type":"string"
+                                    }
+                                },
+                                "required":["TypeName"]
                             },
                             "Type": {
                                 "enum": [

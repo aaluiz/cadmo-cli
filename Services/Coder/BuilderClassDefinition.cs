@@ -113,6 +113,9 @@ namespace Services
 			{
 				if (x.hasGeterAndSeter)
 				{
+					if (!string.IsNullOrEmpty(x.Annotations)){
+						return string.Format("{0} {1} {2} {3} {{get; set;}}", x.Annotations, HandleVisibility(x), x.TypeProperty, x.Name);
+					}
 					return string.Format("{0} {1} {2} {{get; set;}}", HandleVisibility(x), x.TypeProperty, x.Name);
 				}
 
@@ -124,5 +127,6 @@ namespace Services
 			}));
 			return this;
 		}
+
 	}
 }

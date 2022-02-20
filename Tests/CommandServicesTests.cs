@@ -25,8 +25,8 @@ namespace Tests
 
 		static object[] ModelCommandCases = {
 				new string[] {"g", "model", "User" },
-				new string[] {"g", "model", "--with-script", "User" },
-				new string[] {"generate", "model", "--with-script", "User" },
+				new string[] {"g", "model", "--with-script", "Categoria" },
+				new string[] {"generate", "model", "--with-script", "Categoria" },
 				new string[] {"g", "model", "--with-all-scripts", "--force" },
 				new string[] {"g", "model", "--with-all-scripts", "--safety" },
 				new string[] {"generate", "model", "--with-all-scripts", "--force" },

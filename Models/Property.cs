@@ -12,6 +12,7 @@ namespace Models
         public string? Name { get; set; }
         public string? TypeProperty { get; set; }
         public string? Attribuition { get; set; }
+        public string? Annotations { get; set; }
 
 		public bool hasGeterAndSeter;
 	}

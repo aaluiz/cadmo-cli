@@ -1,0 +1,44 @@
+{
+    "Model": {
+        "Name": "Categoria",
+        "Fields": [
+            {
+                "Name": "Descricao",
+                "ViewModelVisibility": true,
+                "Type": "string",
+                "StringLength": {
+                    "MinimumLength": 200,
+                    "ErrorMessage": "Campo {0} deve ter {1} caracteres"
+                },
+                "RequiredField": {
+                    "ErrorMessage": "Descrição não informada"
+                },
+                "DataType": "Text"
+            },
+            {
+                "Name": "Instrucao",
+                "DataType":"Text",
+                "ViewModelVisibility": true,
+                "Type": "string"
+            },
+            {
+                "Name": "Ordem",
+                "ViewModelVisibility": true,
+                "Type": "string",
+                "DataType": "Text",
+                "RequiredField": {
+                    "ErrorMessage": "Ordem não informada"
+                }
+            },
+            {
+                "Name": "Subcategoria",
+                "ViewModelVisibility": false,
+                "ForeignKey": {
+                    "ModelName": "SubCategoria",
+                    "Relationship": "OneToMany"
+                },
+                "Type":"foreign_key"
+            }
+        ]
+    }
+}

@@ -1,0 +1,51 @@
+{
+	"$schema": "./model.schema.json",
+	"Model": {
+		"Name": "SubCategoria",
+		"Fields": [
+			{
+				"Name": "CategoriaId",
+				"ViewModelVisibility": true,
+				"Type": "int",
+				"Required": {
+					"ErrorMessage": "Categoria não informada"
+				}
+			},
+			{
+				"Name": "Descricao",
+				"DataType": "Text",
+				"ViewModelVisibility": true,
+				"Required": {
+					"ErrorMessage": "Descrição não informada"
+				},
+				"StringLength": {
+					"MaximumLength": 200,
+					"ErrorMessage": "Campo {0} deve ter {1} caracteres"
+				},
+				"Type": "string"
+			},
+			{
+				"Name": "Instrucao",
+				"ViewModelVisibility": true,
+				"Type": "string",
+				"DataType": "Text"
+			},
+			{
+				"Name": "Ordem",
+				"ViewModelVisibility": false,
+				"Type": "short",
+				"Required": {
+					"ErrorMessage": "Ordem não informada"
+				}
+			},
+			{
+				"Name": "Ativo",
+				"ViewModelVisibility": false,
+				"Type": "bool",
+				"Required": {
+					"ErrorMessage": ""
+				}
+			}
+		]
+	}
+}
