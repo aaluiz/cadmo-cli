@@ -15,11 +15,20 @@ namespace Services.Commands
 	{
 		private readonly ICodeGenerator _codeGenerator;
 		private readonly IMethodDefinition _methodDefinition;
+		private readonly IAutoMapperCommandService _autoMapperCommandService;
+		private readonly IDbContextCommandService _dbContextCommandService;
 
-		public GenerateModelByScript(ICodeGenerator codeGenerator, IMethodDefinition methodDefinition)
+		public GenerateModelByScript(
+			ICodeGenerator codeGenerator,
+			IMethodDefinition methodDefinition,
+			IAutoMapperCommandService autoMapperCommandService,
+			IDbContextCommandService dbContextCommandService)
 		{
 			_codeGenerator = codeGenerator;
 			_methodDefinition = methodDefinition;
+			_autoMapperCommandService = autoMapperCommandService;
+			_dbContextCommandService = dbContextCommandService;
+
 		}
 
 		public int Execute(string[] args)
@@ -59,6 +68,8 @@ namespace Services.Commands
 			SaveFileOnDisk(GenerateViewModel(scriptModelName), "ViewModels");
 			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, true), "ViewModels");
 			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, false), "ViewModels");
+			_autoMapperCommandService.Execute(new string[] { "g", "automapper" });
+			_dbContextCommandService.Execute(new string[] { "g", "dbcontext" });
 			return 1;
 		}
 
@@ -94,13 +105,9 @@ namespace Services.Commands
 			"System.ComponentModel.DataAnnotations"
 			}.ToImmutableList();
 
-			var inharitance = new string[] {
-			"IEntity"
-			}.ToImmutableList();
-
 			var result = _codeGenerator
 				.ClassGenerator
-				.CreateClass(imports, modelName, "Entities.ViewModels", properties.ToImmutableList(), inharitance);
+				.CreateClass(imports, $"{modelName}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
 			return result;
 
 		}
@@ -130,13 +137,9 @@ namespace Services.Commands
 			"System.ComponentModel.DataAnnotations"
 			}.ToImmutableList();
 
-			var inharitance = new string[] {
-			"IEntity"
-			}.ToImmutableList();
-
 			var result = _codeGenerator
 				.ClassGenerator
-				.CreateClass(imports, $"{((update)? "Update": "New")}" + modelName, "Entities.ViewModels", properties.ToImmutableList(), inharitance);
+				.CreateClass(imports, $"{modelName}{((update) ? "Update" : "New")}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
 			return result;
 
 		}

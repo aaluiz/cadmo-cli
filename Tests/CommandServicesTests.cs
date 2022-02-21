@@ -114,7 +114,11 @@ namespace ConsoleApp1
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
-			_generateModelByScript = new GenerateModelByScript(_codeGenerator, _methodDefinition);
+			_generateModelByScript = new GenerateModelByScript(
+						_codeGenerator, 
+						_methodDefinition,
+						_autoMapperCommandService,
+						_dbContextCommandService);
 			_commandLineUI = new CommandLineUI(
 				_createProjectService,
 				_helpService,
