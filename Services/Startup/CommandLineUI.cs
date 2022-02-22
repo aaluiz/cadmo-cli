@@ -19,6 +19,7 @@ namespace Services.Startup
 
 		private readonly IAutoMapperCommandService _autoMapperCommandService;
 		private readonly IGenerateModelByScript _generateModelByScript;
+		private readonly ICreateRepositoryService _createRepositoryService;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -28,7 +29,8 @@ namespace Services.Startup
 			IServeCommandService serveCommandService,
 			IAutoMapperCommandService autoMapperCommandService,
 			IDbContextCommandService dbContextCommandService,
-            IGenerateModelByScript generateModelByScript)
+			IGenerateModelByScript generateModelByScript,
+			ICreateRepositoryService createRepositoryService)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -39,6 +41,7 @@ namespace Services.Startup
 			_autoMapperCommandService = autoMapperCommandService;
 			_dbContextCommandService = dbContextCommandService;
 			_generateModelByScript = generateModelByScript;
+			_createRepositoryService = createRepositoryService;
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -65,7 +68,7 @@ namespace Services.Startup
 			}
 			return null;
 		}
-        
+
 		private ICommand? GetService(string[] args)
 		{
 			switch (args.Length)
@@ -75,22 +78,24 @@ namespace Services.Startup
 					{
 						case "ssl": return _createSSLCertificateService;
 						case "model": return _createModelService;
+						case "repository": return _createRepositoryService;
 						case "automapper": return _autoMapperCommandService;
 						case "dbcontext": return _dbContextCommandService;
 						default:
 							return null;
 					};
-                case 4:
-                    switch (args[1])
-                    {
-                        case "model":
-                            switch (args[2]){
-                                case "--with-script": return _generateModelByScript;
-                                case "--with-all-scripts": return _generateModelByScript;
+				case 4:
+					switch (args[1])
+					{
+						case "model":
+							switch (args[2])
+							{
+								case "--with-script": return _generateModelByScript;
+								case "--with-all-scripts": return _generateModelByScript;
 								default:
 									return null;
 							}
-                        default:
+						default:
 							return null;
 					}
 				default:

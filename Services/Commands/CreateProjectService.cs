@@ -45,8 +45,10 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 
 		CreateDiretory("Entities", GetEntitiesDiretories());
 		CreateDiretory("Contracts", GetContractDirectories());
+		CreateDiretory("Repositories", GetRepositoriesDirectory());
 		_codeGenerator.FileBuilder.WriteFile(RepositoryAbstract(), $"{CurrentDirectory}/Contracts/Repository/Abstract");
 		_codeGenerator.FileBuilder.WriteFile(CodesForNewProject.GetLoggerFile(), $"{CurrentDirectory}/Contracts/Logger");
+		_codeGenerator.FileBuilder.WriteFile(CodesForNewProject.GetReposityAbstract(), $"{CurrentDirectory}/Repositories/Abstract");
 		WriteServiceInterfaces();
 		GeneratedEntitiesIntefaces();
 		WriteJsonSchemaModel();
@@ -141,6 +143,12 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		result.Add("ViewModels");
 		result.Add("JsonModelsDefinition");
 		return result.ToImmutableList();
+	}
+
+	private ImmutableList<string> GetRepositoriesDirectory(){
+		return new string[] { 
+			"Abstract",
+		}.ToImmutableList();
 	}
 	private ImmutableList<string> GetContractDirectories()
 	{

@@ -17,6 +17,8 @@ public class CreateModelService : AbstractService, ICreateModelService
 	{
         if (!ValidateArgs(args)) return -1;
 
+		if (args[2].Contains("-")) return -1;
+
 		if (IsDefaultPath(args[0]))
 		{
             _codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");

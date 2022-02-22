@@ -17,10 +17,10 @@ namespace Tests
 	public class CommandServicesTests
 	{
 		static object[] CommandCases = {
-				new string[] {"g", "model", "User" },
-				new string[] {"g", "repository", "User" },
-				new string[] {"g", "controller", "User" },
-				new string[] {"g", "service", "User" },
+			//	new string[] {"g", "model", "User" },
+				new string[] {"g", "repository", "Categoria" },
+			//	new string[] {"g", "controller", "User" },
+			//	new string[] {"g", "service", "User" },
 		};
 
 		static object[] ModelCommandCases = {
@@ -57,6 +57,7 @@ namespace Tests
 		IDbContextCommandService? _dbContextCommandService;
 
 		IGenerateModelByScript? _generateModelByScript;
+		ICreateRepositoryService? _createRepositoryService;
 		[SetUp]
 		public void Setup()
 		{
@@ -114,6 +115,8 @@ namespace ConsoleApp1
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
+			_createRepositoryService = new CreateRepositoryService();
+
 			_generateModelByScript = new GenerateModelByScript(
 						_codeGenerator, 
 						_methodDefinition,
@@ -128,20 +131,21 @@ namespace ConsoleApp1
 				_serveCommandService,
 				_autoMapperCommandService,
 				_dbContextCommandService,
-				_generateModelByScript);
+				_generateModelByScript,
+				_createRepositoryService);
 		}
 
-		// [Test]
-		// [TestCaseSource(nameof(CommandCases))]
-		// public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
-		// {
-		// 	if (_commandLineUI != null)
-		// 	{
-		// 		var result = _commandLineUI.ExecuteCommmand(args);
+		[Test]
+		[TestCaseSource(nameof(CommandCases))]
+		public void ExecuteCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+				var result = _commandLineUI.ExecuteCommmand(args);
 
-		// 		Assert.Greater(result, 0);
-		// 	}
-		// }
+				Assert.Greater(result, 0);
+			}
+		}
 		[Test]
 
 		[TestCaseSource(nameof(ModelCommandCases))]
