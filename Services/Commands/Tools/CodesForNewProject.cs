@@ -264,7 +264,7 @@ namespace Repositories.Abstract
         /// <returns></returns>
         public virtual Model SelectById(int id)
         {
-            return _context.Set<Model>().Find(id);
+            return _context.Set<Model>().Find(id)!;
         }
 
         /// <summary>

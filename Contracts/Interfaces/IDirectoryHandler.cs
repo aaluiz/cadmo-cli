@@ -6,5 +6,7 @@ namespace Contracts.Interfaces
 	{
 		bool ModelExist(string currentDirectory, string[] args);
 		ImmutableList<string> GetModelNames(string currentDirectory);
+
+		string GetFileFromAsset(string fileName);
 	}
 }

@@ -21,6 +21,7 @@ namespace Tests
 			//	new string[] {"g", "model", "User" },
 				new string[] {"g", "repository", "Categoria" },
 				new string[] {"repository-di"},
+				new string[] {"new", "App"},
 			//	new string[] {"g", "controller", "User" },
 			//	new string[] {"g", "service", "User" },
 		};
@@ -118,8 +119,9 @@ namespace ConsoleApp1
 			_createClassGenerator = new CreateClassGenerator(_classDefinition, _methodDefinition);
 			_createInterfaceGenerator = new CreateInterfaceGenerator(_classDefinition, _methodDefinition);
 
+			_directoryHandler = new DirectoryHandler();
 			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object);
-			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator);
+			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator, _directoryHandler);
 			_createModelService = new CreateModelService(_codeGenerator);
 			_buildCommandSevice = new BuildCommandService(_shellCommandExecutor);
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
@@ -127,7 +129,6 @@ namespace ConsoleApp1
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
 			_createRepositoryService = new CreateRepositoryService(_codeGenerator, _methodDefinition);
 
-			_directoryHandler = new DirectoryHandler();
 
 			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
 

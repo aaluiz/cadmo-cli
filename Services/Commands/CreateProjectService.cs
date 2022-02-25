@@ -7,15 +7,18 @@ using Services.Abstract;
 using Services.Commands.Tools;
 
 [AddService]
-public class CreateProjectService : AbstractService, ICreateProjectService
+public partial class CreateProjectService : AbstractService, ICreateProjectService
 {
 	string path = Environment.SystemDirectory;
 	private readonly IShellCommandExecutor _shellCommandExecutor;
 	private readonly ICodeGenerator _codeGenerator;
-	public CreateProjectService(IShellCommandExecutor shellCommandExecutor, ICodeGenerator codeGenerator)
+	private readonly IDirectoryHandler _directoryHandler;
+
+	public CreateProjectService(IShellCommandExecutor shellCommandExecutor, ICodeGenerator codeGenerator, IDirectoryHandler directoryHandler )
 	{
 		_shellCommandExecutor = shellCommandExecutor;
 		_codeGenerator = codeGenerator;
+		_directoryHandler = directoryHandler;
 	}
 	public int Execute(string[] args)
 	{
@@ -54,6 +57,8 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		GeneratedEntitiesIntefaces();
 		WriteJsonSchemaModel();
 		WriteEnum();
+		WriteApiBasicFiles();
+		WriteEntitiesBasicFiles();
 		return 1;
 	}
 
@@ -75,6 +80,17 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 			.FileBuilder
 				.WriteFile(file,
 				 $"{CurrentDirectory}/Entities/Models/Enums/");
+	}
+
+	public void WriteApiBasicFiles(){
+		WriteFileFromAsset("Program.txt", "Program.cs", "/Api/");
+		WriteFileFromAsset("RepositoryExtensions.txt", "RepositoryExtensions.cs", "/Api/");
+		System.Console.WriteLine("GENERETED Basic API Files.");
+	}
+	
+	public void WriteEntitiesBasicFiles(){
+		WriteFileFromAsset("ApiDbContext.txt", "ApiDbContext.cs", "/Entities/Data/");
+		System.Console.WriteLine("GENERETED Basic Enetitis Files.");
 	}
 
 	public void WriteJsonSchemaModel()
@@ -285,6 +301,10 @@ namespace Contracts.Repository.Abstract
 	private void WaitOneSecond()
 	{
 		Thread.Sleep(1000);
+	}
+
+	public  string GetAssetContent( string fileName){
+		return _directoryHandler.GetFileFromAsset(fileName);
 	}
 }
 

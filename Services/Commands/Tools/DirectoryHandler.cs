@@ -1,25 +1,27 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using Contracts.Interfaces;
 
 namespace Services.Commands.Tools
 {
 
-    [AddService]
+	[AddService]
 	public class DirectoryHandler : IDirectoryHandler
 	{
-		public ImmutableList<string> GetModelNames(string currentDirectory){
-            return Directory
+		public ImmutableList<string> GetModelNames(string currentDirectory)
+		{
+			return Directory
 				.GetFiles($"{currentDirectory}/Entities/Models/")
 				.Select(x => Path.GetFileNameWithoutExtension(x))
 				.ToImmutableList();
 		}
 
-		public bool ModelExist(string currentDirectory ,string[] args)
+		public bool ModelExist(string currentDirectory, string[] args)
 		{
 			var models = Directory
 				.GetFiles($"{currentDirectory}/Entities/Models/")
-				    .Select(x => Path.GetFileNameWithoutExtension(x))
-				        .ToList();
+					.Select(x => Path.GetFileNameWithoutExtension(x))
+						.ToList();
 
 			bool result = models.Contains(args[2]);
 
@@ -27,5 +29,13 @@ namespace Services.Commands.Tools
 
 			return result;
 		}
+
+		public string GetFileFromAsset(string fileName)
+		{
+			string codeBase = Assembly.GetExecutingAssembly().Location;
+			string assemblyPath = Path.GetDirectoryName(codeBase)!;
+			return $"{assemblyPath}/Assets/{fileName}";
+		}
+
 	}
 }
