@@ -19,6 +19,8 @@ namespace Services
 		private string? _Namespace;
 		private string? _Properties;
 
+		public bool IsStatic { get; set; } = false;
+
 		public IClassDefinition Create()
 		{
 			StringBuilder result = new StringBuilder();
@@ -45,7 +47,8 @@ namespace Services
 			return new ClassDefinition(this, result.ToString());
 		}
 
-		private void Clean(){
+		private void Clean()
+		{
 			_Imports = null;
 			_Inheritances = null;
 			_Methods = null;
@@ -80,7 +83,15 @@ namespace Services
 		public IBuilderClassDefinition Name(string name, bool isInterface = false)
 		{
 			string type = (isInterface) ? "interface" : "class";
-			_Name = string.Format("public {0} {1}", type, name).Trim();
+			if (IsStatic)
+			{
+
+				_Name = string.Format("public static {0} {1}", type, name).Trim();
+			}
+			else
+			{
+				_Name = string.Format("public {0} {1}", type, name).Trim();
+			}
 			return this;
 		}
 
@@ -113,7 +124,8 @@ namespace Services
 			{
 				if (x.hasGeterAndSeter)
 				{
-					if (!string.IsNullOrEmpty(x.Annotations)){
+					if (!string.IsNullOrEmpty(x.Annotations))
+					{
 						return string.Format("{0} {1} {2} {3} {{get; set;}}", x.Annotations, HandleVisibility(x), x.TypeProperty, x.Name);
 					}
 					return string.Format("{0} {1} {2} {{get; set;}}", HandleVisibility(x), x.TypeProperty, x.Name);

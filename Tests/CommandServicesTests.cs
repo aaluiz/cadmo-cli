@@ -9,6 +9,7 @@ using Services.Coder;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Services.Generators;
+using Services.Commands.Tools;
 
 namespace Tests
 {
@@ -19,6 +20,13 @@ namespace Tests
 		static object[] CommandCases = {
 			//	new string[] {"g", "model", "User" },
 				new string[] {"g", "repository", "Categoria" },
+				new string[] {"repository-di"},
+			//	new string[] {"g", "controller", "User" },
+			//	new string[] {"g", "service", "User" },
+		};
+		static object[] CommandCasesFails = {
+			//	new string[] {"g", "model", "User" },
+				new string[] {"g", "repository", "Categoriax" },
 			//	new string[] {"g", "controller", "User" },
 			//	new string[] {"g", "service", "User" },
 		};
@@ -58,6 +66,8 @@ namespace Tests
 
 		IGenerateModelByScript? _generateModelByScript;
 		ICreateRepositoryService? _createRepositoryService;
+		IGenerateRepositoryExtensions? _generateRepositoryExtensions;
+		IDirectoryHandler? _directoryHandler;
 		[SetUp]
 		public void Setup()
 		{
@@ -115,7 +125,11 @@ namespace ConsoleApp1
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
-			_createRepositoryService = new CreateRepositoryService();
+			_createRepositoryService = new CreateRepositoryService(_codeGenerator, _methodDefinition);
+
+			_directoryHandler = new DirectoryHandler();
+
+			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
 
 			_generateModelByScript = new GenerateModelByScript(
 						_codeGenerator, 
@@ -132,7 +146,8 @@ namespace ConsoleApp1
 				_autoMapperCommandService,
 				_dbContextCommandService,
 				_generateModelByScript,
-				_createRepositoryService);
+				_createRepositoryService,
+				_generateRepositoryExtensions);
 		}
 
 		[Test]
@@ -144,6 +159,19 @@ namespace ConsoleApp1
 				var result = _commandLineUI.ExecuteCommmand(args);
 
 				Assert.Greater(result, 0);
+			}
+		}
+
+		
+		[Test]
+		[TestCaseSource(nameof(CommandCasesFails))]
+		public void Fail_ExecuteCommmand(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+				var result = _commandLineUI.ExecuteCommmand(args);
+
+				Assert.AreEqual(result, -1);
 			}
 		}
 		[Test]

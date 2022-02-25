@@ -20,6 +20,7 @@ namespace Services.Startup
 		private readonly IAutoMapperCommandService _autoMapperCommandService;
 		private readonly IGenerateModelByScript _generateModelByScript;
 		private readonly ICreateRepositoryService _createRepositoryService;
+		private readonly IGenerateRepositoryExtensions _generateRepositoyExtensions;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -30,7 +31,8 @@ namespace Services.Startup
 			IAutoMapperCommandService autoMapperCommandService,
 			IDbContextCommandService dbContextCommandService,
 			IGenerateModelByScript generateModelByScript,
-			ICreateRepositoryService createRepositoryService)
+			ICreateRepositoryService createRepositoryService,
+			IGenerateRepositoryExtensions repositoryExtensions)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -42,6 +44,7 @@ namespace Services.Startup
 			_dbContextCommandService = dbContextCommandService;
 			_generateModelByScript = generateModelByScript;
 			_createRepositoryService = createRepositoryService;
+			_generateRepositoyExtensions = repositoryExtensions;
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -60,6 +63,7 @@ namespace Services.Startup
 					case "help": return _helpService;
 					case "build": return _buildCommandSevice;
 					case "serve": return _serveCommandService;
+					case "repository-di": return _generateRepositoyExtensions;
 					case "g": return GetService(args);
 					case "generate": return GetService(args);
 					default:

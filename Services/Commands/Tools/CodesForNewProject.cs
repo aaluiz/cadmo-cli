@@ -181,7 +181,7 @@ namespace Contracts.Service.Abstract
 {
     public interface IUpdate<ViewModel>
     {
-        bool Atualizar(ViewModel ViewModel);
+        bool Update(ViewModel ViewModel);
     }
 }
 			";
@@ -204,7 +204,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace RepositoryLgpd.Abstract
+namespace Repositories.Abstract
 {
     public class RepositoryAbstract<Model>
     where Model : class, new()
@@ -216,7 +216,7 @@ namespace RepositoryLgpd.Abstract
         /// 
 		/// Collection name in DataBase
         /// </summary>
-        public string ColllectionFromDataBase { get; set; }
+        public string? ColllectionFromDataBase { get; set; }
 
         /// <summary>
         /// Context
@@ -226,7 +226,7 @@ namespace RepositoryLgpd.Abstract
         /// <summary>
         /// Name's database 
         /// </summary>
-        protected readonly string DataBaseName;
+        protected readonly string? DataBaseName;
 
         /// <summary>
         /// Schema's database
@@ -317,7 +317,7 @@ namespace RepositoryLgpd.Abstract
         /// </summary>
         /// <param name=""record""></param>
         /// <returns></returns>
-        public virtual bool Atualizar(Model record)
+        public virtual bool Update(Model record)
         {
             _context.Set<Model>().Update(record);
             _context.SaveChanges();
@@ -332,7 +332,7 @@ namespace RepositoryLgpd.Abstract
         /// </summary>
         /// <param name=""record""></param>
         /// <returns></returns>
-        public async Task<bool> AtualizarAsync(Model record)
+        public async Task<bool> UpdateAsync(Model record)
         {
             SetUpdateDate(record);
             _context.Set<Model>().Update(record);
@@ -348,9 +348,9 @@ namespace RepositoryLgpd.Abstract
         /// </summary>
         /// <param name=""Id""></param>
         /// <returns></returns>
-        public virtual bool Deletar(int Id)
+        public virtual bool Delete(int Id)
         {
-            var model = this.CapturarPeloId(Id);
+            var model = this.SelectById(Id);
 
             _context.Set<Model>().Remove(model);
             _context.SaveChanges();
@@ -359,9 +359,9 @@ namespace RepositoryLgpd.Abstract
             return true;
         }
 
-        public virtual async Task<bool> DeletarAsync(int Id)
+        public virtual async Task<bool> DeleteAsync(int Id)
         {
-            var model = this.CapturarPeloId(Id);
+            var model = this.SelectById(Id);
 
             _context.Set<Model>().Remove(model);
             await _context.SaveChangesAsync();
@@ -378,7 +378,7 @@ namespace RepositoryLgpd.Abstract
             var propertyUpdateDate = record.GetType().GetProperty(""UpdateDate"");
             if (propertyUpdateDate != null)
             {
-                record.GetType().GetProperty(""UpdateDate"").SetValue(record, DateTime.Now);
+                record.GetType().GetProperty(""UpdateDate"")!.SetValue(record, DateTime.Now);
             }
         }
 
@@ -401,7 +401,7 @@ namespace RepositoryLgpd.Abstract
         /// <returns></returns>
         protected T GetPropertyValue<T>(string Name, object Obj)
         {
-            T result = (T)Obj.GetType().GetProperty(Name).GetValue(Obj);
+            T result = (T)Obj.GetType().GetProperty(Name)!.GetValue(Obj)!;
 
             return result;
         }
@@ -410,13 +410,13 @@ namespace RepositoryLgpd.Abstract
         {
             Type type = inputObject.GetType();
 
-            System.Reflection.PropertyInfo propertyInfo = type.GetProperty(propertyName);
+            System.Reflection.PropertyInfo propertyInfo = type.GetProperty(propertyName)!;
 
             if (propertyInfo != null)
             {
                 var targetType = IsNullableType(propertyInfo.PropertyType) ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
-                propertyVal = Convert.ChangeType(propertyVal, targetType);
+                propertyVal = Convert.ChangeType(propertyVal, targetType!);
 
                 propertyInfo.SetValue(inputObject, propertyVal, null);
             }
@@ -434,5 +434,11 @@ namespace RepositoryLgpd.Abstract
 			FileName = "RepositoryAbstract.cs"
 		};
 
+		public static FileCode GetRepositoryDapperAbstraction() => new FileCode
+		{
+			Code = @"",
+			FileName = ""
+		};
 	}
+
 }

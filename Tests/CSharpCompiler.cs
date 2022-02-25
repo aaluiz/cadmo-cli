@@ -19,7 +19,7 @@ namespace Tests
             string assemblyName = Path.GetRandomFileName();
             var refPaths = new[] {
                 typeof(Models.ClassElements).GetTypeInfo().Assembly.Location,
-                typeof(Tools.Class1).GetTypeInfo().Assembly.Location,
+               // typeof(Tools.Class1).GetTypeInfo().Assembly.Location,
                 typeof(Services.ClassDefinition).GetTypeInfo().Assembly.Location,
                 typeof(Contracts.Abstractions.ClassDefintionAbstraction).GetTypeInfo().Assembly.Location,
                 typeof(System.Object).GetTypeInfo().Assembly.Location,

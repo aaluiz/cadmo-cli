@@ -41,6 +41,7 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 
 		ExecuteCommandsInArray(GetReferences("Api"), apiDiretory);
 		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
+		ExecuteCommandsInArray(GetReferencesRepoitory("Repositories"), repositoriesDiretory);
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
 		CreateDiretory("Entities", GetEntitiesDiretories());
@@ -52,7 +53,28 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		WriteServiceInterfaces();
 		GeneratedEntitiesIntefaces();
 		WriteJsonSchemaModel();
+		WriteEnum();
 		return 1;
+	}
+
+	public void WriteEnum()
+	{
+		var file = new FileCode
+		{
+			Code = @"namespace Entities.Models.Enums
+{
+    public enum Template
+    {
+        
+    }
+}",
+			FileName = "enumExample.cs"
+		};
+
+		_codeGenerator
+			.FileBuilder
+				.WriteFile(file,
+				 $"{CurrentDirectory}/Entities/Models/Enums/");
 	}
 
 	public void WriteJsonSchemaModel()
@@ -145,8 +167,9 @@ public class CreateProjectService : AbstractService, ICreateProjectService
 		return result.ToImmutableList();
 	}
 
-	private ImmutableList<string> GetRepositoriesDirectory(){
-		return new string[] { 
+	private ImmutableList<string> GetRepositoriesDirectory()
+	{
+		return new string[] {
 			"Abstract",
 		}.ToImmutableList();
 	}
@@ -171,7 +194,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Contratos.Repository.Abstract
+namespace Contracts.Repository.Abstract
 {
     public interface IRepository<Model>
     {
@@ -211,17 +234,28 @@ namespace Contratos.Repository.Abstract
 		string[] refereces = new string[]{
 		$"add reference {currentPath}/Contracts/Contracts.csproj",
 		$"add reference {currentPath}/Entities/Entities.csproj",
+		$"add reference {currentPath}/Repositories/Repositories.csproj",
 		$"add reference {currentPath}/Services/Services.csproj",
 		$"add reference {currentPath}/Tools/Tools.csproj"};
 		return refereces;
 	}
 
+	private string[] GetReferencesRepoitory(string folder)
+	{
+		string currentPath = Environment.CurrentDirectory;
+		string[] refereces = new string[]{
+		$"add reference {currentPath}/Contracts/Contracts.csproj",
+		$"add reference {currentPath}/Entities/Entities.csproj",
+		$"add reference {currentPath}/Tools/Tools.csproj"};
+		return refereces;
+	}
 	private string[] GetProjectsToSolution(string solutionName)
 	{
 		return new string[]{
 			$"sln {solutionName}.sln add Api/Api.csproj",
 			$"sln {solutionName}.sln add Contracts/Contracts.csproj",
 			$"sln {solutionName}.sln add Entities/Entities.csproj",
+			$"sln {solutionName}.sln add Repositories/Repositories.csproj",
 			$"sln {solutionName}.sln add Services/Services.csproj",
 			$"sln {solutionName}.sln add Tools/Tools.csproj",
 			$"sln {solutionName}.sln add Tests/Tests.csproj",

@@ -13,6 +13,7 @@ namespace Contracts.Interfaces
 	/// </summary>
 	public interface IBuilderClassDefinition
 	{
+		public bool IsStatic { get; set; }
 		/// <summary>
 		/// Return the using block of code
 		/// </summary>
