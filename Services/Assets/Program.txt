@@ -1,28 +1,41 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
 
-using Api.Extensions;
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.ConfigureRepository();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace Api
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            try
+            {
+                //   logger.Debug("init main");
+                var host = CreateHostBuilder(args).Build();
+                host.Run();
+            }
+            catch (System.Exception)
+            {
+                // logger.Error(ex, "Program stopped.");
+                // throw ex;
+            }
+            finally
+            {
+            //  NLog.LogManager.Shutdown();
+            }
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+        {
+            // webBuilder.UseStartup<Startup>().ConfigureLogging(logging =>
+            // {
+            //     logging.ClearProviders();
+            //     logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+            // }).UseNLog();
+            webBuilder.UseStartup<Startup>();
+        });
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

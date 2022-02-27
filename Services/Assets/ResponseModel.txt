@@ -1,0 +1,12 @@
+
+using System.Collections.Generic;
+
+namespace Api.Models
+{
+    public class ResponseModel
+    {
+        public bool Operacao { get; set; }
+        public List<string>? Menssagem { get; set; }
+        public object? Dado { get; set; }
+    }
+}

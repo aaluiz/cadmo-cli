@@ -13,12 +13,18 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 	private readonly IShellCommandExecutor _shellCommandExecutor;
 	private readonly ICodeGenerator _codeGenerator;
 	private readonly IDirectoryHandler _directoryHandler;
+	private readonly IAutoMapperCommandService _autoMapperService;
 
-	public CreateProjectService(IShellCommandExecutor shellCommandExecutor, ICodeGenerator codeGenerator, IDirectoryHandler directoryHandler )
+	public CreateProjectService(
+		IShellCommandExecutor shellCommandExecutor, 
+		ICodeGenerator codeGenerator, 
+		IDirectoryHandler directoryHandler,
+		IAutoMapperCommandService autoMapperCommandService )
 	{
 		_shellCommandExecutor = shellCommandExecutor;
 		_codeGenerator = codeGenerator;
 		_directoryHandler = directoryHandler;
+		_autoMapperService = autoMapperCommandService;
 	}
 	public int Execute(string[] args)
 	{
@@ -38,6 +44,7 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 
 		ExecuteCommandsInArray(PackagesCommands.PackagesForApi(), apiDiretory);
 		ExecuteCommandsInArray(PackagesCommands.PackagesForEntities(), entitiessDiretory);
+		WaitOneSecond();
 		ExecuteCommandsInArray(PackagesCommands.PackagesForRepository(), repositoriesDiretory);
 		ExecuteCommandsInArray(PackagesCommands.PackagesForServices(), servicesDiretory);
 		ExecuteCommandsInArray(PackagesCommands.PackagesForTools(), toolsDiretory);
@@ -45,6 +52,7 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 		ExecuteCommandsInArray(GetReferences("Api"), apiDiretory);
 		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
 		ExecuteCommandsInArray(GetReferencesRepoitory("Repositories"), repositoriesDiretory);
+		ExecuteCommandsInArray(GetReferencesRepoitory("Repositories"), servicesDiretory);
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
 		CreateDiretory("Entities", GetEntitiesDiretories());
@@ -59,6 +67,11 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 		WriteEnum();
 		WriteApiBasicFiles();
 		WriteEntitiesBasicFiles();
+		WriteServiceBasicFiles();
+		SetupTools();
+		WriteApiAsset();
+		WaitOneSecond();
+		_autoMapperService.Execute(new string[] { "g", "automapper" });
 		return 1;
 	}
 
@@ -85,12 +98,18 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 	public void WriteApiBasicFiles(){
 		WriteFileFromAsset("Program.txt", "Program.cs", "/Api/");
 		WriteFileFromAsset("RepositoryExtensions.txt", "RepositoryExtensions.cs", "/Api/");
-		System.Console.WriteLine("GENERETED Basic API Files.");
+		System.Console.WriteLine("GENERATED Basic API Files.");
 	}
 	
 	public void WriteEntitiesBasicFiles(){
 		WriteFileFromAsset("ApiDbContext.txt", "ApiDbContext.cs", "/Entities/Data/");
-		System.Console.WriteLine("GENERETED Basic Enetitis Files.");
+		System.Console.WriteLine("GENERATED Basic Entities Files.");
+	}
+
+	public void WriteServiceBasicFiles(){
+		WriteFileFromAsset("ServiceCrudAbstract.txt", "ServiceCrudAbstract.cs", "/Services/Abstract");
+		WriteFileFromAsset("LoggerManager.txt", "LoggerManager.cs", "/Services/");
+		System.Console.WriteLine("GENERATED Basic Service Files.");
 	}
 
 	public void WriteJsonSchemaModel()
@@ -110,6 +129,7 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 		};
 
 		var codes = new FileCode[] { schemeFile, models }.ToImmutableList();
+
 
 		_codeGenerator.FileBuilder
 			.WriteFiles(codes, $"{CurrentDirectory}/Entities/JsonModelsDefinition");

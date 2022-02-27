@@ -76,7 +76,16 @@ namespace Services.Startup
 		private ICommand? GetService(string[] args)
 		{
 			switch (args.Length)
-			{
+			{	case 2: 
+					switch (args[1])
+					{
+						case "ssl": return _createSSLCertificateService;
+						case "automapper": return _autoMapperCommandService;
+						case "dbcontext": return _dbContextCommandService;
+						default:
+							return null;
+					};
+				
 				case 3:
 					switch (args[1])
 					{

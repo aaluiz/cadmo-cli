@@ -19,9 +19,10 @@ namespace Tests
 	{
 		static object[] CommandCases = {
 			//	new string[] {"g", "model", "User" },
-				new string[] {"g", "repository", "Categoria" },
-				new string[] {"repository-di"},
-				new string[] {"new", "App"},
+				// new string[] {"g", "repository", "Categoria" },
+				// new string[] {"repository-di"},
+				// new string[] {"new", "App"},
+				new string[] {"g", "ssl"},
 			//	new string[] {"g", "controller", "User" },
 			//	new string[] {"g", "service", "User" },
 		};
@@ -113,19 +114,19 @@ namespace ConsoleApp1
 			_classDefinition = new ClassDefinition(_builderClassDefinition);
 			_methodDefinition = new MethodDefinition(_builderMethodDefinition);
 
+			_createClassGenerator = new CreateClassGenerator(_classDefinition, _methodDefinition);
 
 			_helpService = new HelpService();
 			_createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
-			_createClassGenerator = new CreateClassGenerator(_classDefinition, _methodDefinition);
 			_createInterfaceGenerator = new CreateInterfaceGenerator(_classDefinition, _methodDefinition);
 
-			_directoryHandler = new DirectoryHandler();
 			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object);
-			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator, _directoryHandler);
+			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
+			_directoryHandler = new DirectoryHandler();
+			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator, _directoryHandler, _autoMapperCommandService);
 			_createModelService = new CreateModelService(_codeGenerator);
 			_buildCommandSevice = new BuildCommandService(_shellCommandExecutor);
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
-			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
 			_createRepositoryService = new CreateRepositoryService(_codeGenerator, _methodDefinition);
 
