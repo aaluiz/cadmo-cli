@@ -118,5 +118,18 @@ namespace Services
 
             return result;
 		}
+
+		public FileCode CreateInterface(ImmutableList<string> imports, string name, string nameSpace, ImmutableList<string> inheritance)
+		{
+            var builder = _classDefinition!.Builder
+                .Imports(imports)
+                .Namespace(nameSpace)
+                .Name(name, true)
+                .Inheritance(inheritance)
+                .Create();
+            FileCode result = GetFileCode(name, builder);
+
+            return result;
+		}
 	}
 }

@@ -16,10 +16,10 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 	private readonly IAutoMapperCommandService _autoMapperService;
 
 	public CreateProjectService(
-		IShellCommandExecutor shellCommandExecutor, 
-		ICodeGenerator codeGenerator, 
+		IShellCommandExecutor shellCommandExecutor,
+		ICodeGenerator codeGenerator,
 		IDirectoryHandler directoryHandler,
-		IAutoMapperCommandService autoMapperCommandService )
+		IAutoMapperCommandService autoMapperCommandService)
 	{
 		_shellCommandExecutor = shellCommandExecutor;
 		_codeGenerator = codeGenerator;
@@ -34,6 +34,7 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 		string apiDiretory = $"{currentDirectory}/Api";
 		string testsDiretory = $"{currentDirectory}/Tests";
 		string entitiessDiretory = $"{currentDirectory}/Entities";
+		string contractsDiretory = $"{currentDirectory}/Contracts";
 		string servicesDiretory = $"{currentDirectory}/Services";
 		string toolsDiretory = $"{currentDirectory}/Tools";
 		string repositoriesDiretory = $"{currentDirectory}/Repositories";
@@ -53,6 +54,7 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 		ExecuteCommandsInArray(GetReferences("Tests"), testsDiretory);
 		ExecuteCommandsInArray(GetReferencesRepoitory("Repositories"), repositoriesDiretory);
 		ExecuteCommandsInArray(GetReferencesRepoitory("Repositories"), servicesDiretory);
+		ExecuteCommandsInArray(GetReferencesContracts("Contracts"), contractsDiretory);
 		ExecuteCommandsInArray(GetProjectsToSolution($"Solution{args[1]}"));
 
 		CreateDiretory("Entities", GetEntitiesDiretories());
@@ -95,18 +97,21 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 				 $"{CurrentDirectory}/Entities/Models/Enums/");
 	}
 
-	public void WriteApiBasicFiles(){
+	public void WriteApiBasicFiles()
+	{
 		WriteFileFromAsset("Program.txt", "Program.cs", "/Api/");
-		WriteFileFromAsset("RepositoryExtensions.txt", "RepositoryExtensions.cs", "/Api/");
+		WriteFileFromAsset("RepositoryExtensions.txt", "RepositoryExtensions.cs", "/Api/Extensions");
 		System.Console.WriteLine("GENERATED Basic API Files.");
 	}
-	
-	public void WriteEntitiesBasicFiles(){
+
+	public void WriteEntitiesBasicFiles()
+	{
 		WriteFileFromAsset("ApiDbContext.txt", "ApiDbContext.cs", "/Entities/Data/");
 		System.Console.WriteLine("GENERATED Basic Entities Files.");
 	}
 
-	public void WriteServiceBasicFiles(){
+	public void WriteServiceBasicFiles()
+	{
 		WriteFileFromAsset("ServiceCrudAbstract.txt", "ServiceCrudAbstract.cs", "/Services/Abstract");
 		WriteFileFromAsset("LoggerManager.txt", "LoggerManager.cs", "/Services/");
 		System.Console.WriteLine("GENERATED Basic Service Files.");
@@ -285,6 +290,13 @@ namespace Contracts.Repository.Abstract
 		$"add reference {currentPath}/Tools/Tools.csproj"};
 		return refereces;
 	}
+	private string[] GetReferencesContracts(string folder)
+	{
+		string currentPath = Environment.CurrentDirectory;
+		string[] refereces = new string[]{
+		$"add reference {currentPath}/Entities/Entities.csproj"};
+		return refereces;
+	}
 	private string[] GetProjectsToSolution(string solutionName)
 	{
 		return new string[]{
@@ -323,7 +335,8 @@ namespace Contracts.Repository.Abstract
 		Thread.Sleep(1000);
 	}
 
-	public  string GetAssetContent( string fileName){
+	public string GetAssetContent(string fileName)
+	{
 		return _directoryHandler.GetFileFromAsset(fileName);
 	}
 }

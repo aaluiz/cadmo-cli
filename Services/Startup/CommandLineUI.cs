@@ -14,13 +14,12 @@ namespace Services.Startup
 		private readonly ICreateModelService _createModelService;
 		private readonly IBuildCommandService _buildCommandSevice;
 		private readonly IServeCommandService _serveCommandService;
-
 		private readonly IDbContextCommandService _dbContextCommandService;
-
 		private readonly IAutoMapperCommandService _autoMapperCommandService;
 		private readonly IGenerateModelByScript _generateModelByScript;
 		private readonly ICreateRepositoryService _createRepositoryService;
 		private readonly IGenerateRepositoryExtensions _generateRepositoyExtensions;
+		private readonly ICreateServiceCrudService _createServiceCrudService;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -32,7 +31,8 @@ namespace Services.Startup
 			IDbContextCommandService dbContextCommandService,
 			IGenerateModelByScript generateModelByScript,
 			ICreateRepositoryService createRepositoryService,
-			IGenerateRepositoryExtensions repositoryExtensions)
+			IGenerateRepositoryExtensions repositoryExtensions,
+			ICreateServiceCrudService createServiceCrudService)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -45,6 +45,8 @@ namespace Services.Startup
 			_generateModelByScript = generateModelByScript;
 			_createRepositoryService = createRepositoryService;
 			_generateRepositoyExtensions = repositoryExtensions;
+			_createServiceCrudService = createServiceCrudService;
+
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -100,6 +102,7 @@ namespace Services.Startup
 				case 4:
 					switch (args[1])
 					{
+						case "service-crud": return _createServiceCrudService;
 						case "model":
 							switch (args[2])
 							{

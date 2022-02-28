@@ -19,13 +19,19 @@ namespace Tests
 	{
 		static object[] CommandCases = {
 			//	new string[] {"g", "model", "User" },
-				// new string[] {"g", "repository", "Categoria" },
-				// new string[] {"repository-di"},
-				// new string[] {"new", "App"},
+				 new string[] {"g", "repository", "Categoria" },
+				 new string[] {"repository-di"},
+			    new string[] {"new", "App"},
 				new string[] {"g", "ssl"},
 			//	new string[] {"g", "controller", "User" },
 			//	new string[] {"g", "service", "User" },
 		};
+		static object[] CommandServices = {
+				new string[] {"g", "service-crud", "--models", "ModelExample,Categoria"},
+				new string[] {"generate", "service-crud", "--models", "ModelExample"},
+		};
+
+		
 		static object[] CommandCasesFails = {
 			//	new string[] {"g", "model", "User" },
 				new string[] {"g", "repository", "Categoriax" },
@@ -70,6 +76,7 @@ namespace Tests
 		ICreateRepositoryService? _createRepositoryService;
 		IGenerateRepositoryExtensions? _generateRepositoryExtensions;
 		IDirectoryHandler? _directoryHandler;
+		private ICreateServiceCrudService? _createServiceCrudService;
 		[SetUp]
 		public void Setup()
 		{
@@ -132,6 +139,7 @@ namespace ConsoleApp1
 
 
 			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
+			_createServiceCrudService = new CreateServiceCrudService(_codeGenerator, _methodDefinition, _directoryHandler);
 
 			_generateModelByScript = new GenerateModelByScript(
 						_codeGenerator, 
@@ -149,7 +157,19 @@ namespace ConsoleApp1
 				_dbContextCommandService,
 				_generateModelByScript,
 				_createRepositoryService,
-				_generateRepositoryExtensions);
+				_generateRepositoryExtensions,
+				_createServiceCrudService);
+		}
+		[Test]
+		[TestCaseSource(nameof(CommandServices))]
+		public void ServiceCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+				var result = _commandLineUI.ExecuteCommmand(args);
+
+				Assert.Greater(result, 0);
+			}
 		}
 
 		[Test]

@@ -31,10 +31,6 @@ namespace Contracts
 			var result = new List<FileCode>();
 			FileCode IUpdate = CreateIUpdate();
 			result.Add(IUpdate);
-			FileCode ISelectOne = CreateISelectOne();
-			result.Add(ISelectOne);
-			FileCode ISelectAll = CreateISelectAll();
-			result.Add(ISelectAll);
 			FileCode ISelectAllView = CreaateISelectAllView();
 			result.Add(ISelectAllView);
 			FileCode ISelectOneView = CreateISelectOneView();
@@ -51,7 +47,7 @@ namespace Contracts
 		private static FileCode CreateIInsert()
 		{
 			var IInsert = new FileCode();
-			IInsert.Code = @"namespace Contratos.Service.Abstract
+			IInsert.Code = @"namespace Contracts.Service.Abstract
 {
     public interface IInsert<ViewModel>
     {
@@ -121,58 +117,21 @@ namespace Contracts.Service.Abstract
 
 namespace Contracts.Service.Abstract
 {
-    public interface ISelectAllView<ViewGetModel>
+    public interface ISelectAllViews<ViewGetModel>
     {
-        List<ViewGetModel> SelectAllView();
+        List<ViewGetModel> SelectAllViews();
     }
 
     public interface ISelectAllWithDependencyView<ViewGetModel>
     {
-        List<ViewGetModel> SelectAllView(int RelationId);
+        List<ViewGetModel> SelectAllViews(int RelationId);
     }
 }
 			";
-			ISelectAllView.FileName = "ISelectAllViw.cs";
+			ISelectAllView.FileName = "ISelectAllViews.cs";
 			return ISelectAllView;
 		}
 
-		private static FileCode CreateISelectAll()
-		{
-			var ISelectAll = new FileCode();
-			ISelectAll.Code = @"using System.Collections.Generic;
-
-namespace Contracts.Service.Abstract
-{
-    public interface ISelectAll<Model>
-    {
-        List<Model> SelectAll();
-    }
-
-    public interface ISelectAllWithDependency<Model>
-    {
-        List<Model> SelectAll(int RelationId);
-    }
-}
-			";
-			ISelectAll.FileName = "ISelectAll.cs";
-			return ISelectAll;
-		}
-
-		private static FileCode CreateISelectOne()
-		{
-			var ISelectOne = new FileCode();
-			ISelectOne.Code = @"
-			namespace Contracts.Service.Abstract
-{
-    public interface ISelectOne<Model>
-    {
-        Model SelectById(int Id);
-    }
-}
-			";
-			ISelectOne.FileName = "ISelectOne.cs";
-			return ISelectOne;
-		}
 
 		private static FileCode CreateIUpdate()
 		{
