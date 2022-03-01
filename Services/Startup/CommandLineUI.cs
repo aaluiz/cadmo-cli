@@ -20,6 +20,7 @@ namespace Services.Startup
 		private readonly ICreateRepositoryService _createRepositoryService;
 		private readonly IGenerateRepositoryExtensions _generateRepositoyExtensions;
 		private readonly ICreateServiceCrudService _createServiceCrudService;
+		private readonly ICreateControllerService _createControllerService;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -32,7 +33,8 @@ namespace Services.Startup
 			IGenerateModelByScript generateModelByScript,
 			ICreateRepositoryService createRepositoryService,
 			IGenerateRepositoryExtensions repositoryExtensions,
-			ICreateServiceCrudService createServiceCrudService)
+			ICreateServiceCrudService createServiceCrudService,
+			ICreateControllerService createControllerService)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -46,6 +48,7 @@ namespace Services.Startup
 			_createRepositoryService = createRepositoryService;
 			_generateRepositoyExtensions = repositoryExtensions;
 			_createServiceCrudService = createServiceCrudService;
+			_createControllerService = createControllerService;
 
 		}
 
@@ -103,6 +106,7 @@ namespace Services.Startup
 					switch (args[1])
 					{
 						case "service-crud": return _createServiceCrudService;
+						case "controller-crud": return _createControllerService;
 						case "model":
 							switch (args[2])
 							{
@@ -111,6 +115,13 @@ namespace Services.Startup
 								default:
 									return null;
 							}
+						default:
+							return null;
+					}
+				case 5:
+					switch (args[1])
+					{
+						case "controller-crud": return _createControllerService;
 						default:
 							return null;
 					}

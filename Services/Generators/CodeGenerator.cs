@@ -11,11 +11,14 @@ namespace Services.Generators
 
 		public IFileBuilder FileBuilder { get; }
 
-	public CodeGenerator(ICreateClassGenerator createClassGenerator, ICreateInterfaceGenerator interfaceGenerator, IFileBuilder fileBuilder)
+		public IBuilderClassDefinition BuilderCustonClass { get; }
+
+		public CodeGenerator(ICreateClassGenerator createClassGenerator, ICreateInterfaceGenerator interfaceGenerator, IFileBuilder fileBuilder, IBuilderClassDefinition builderClassDefinition)
         {
 			this.ClassGenerator = createClassGenerator;
 			this.InterfaceGenerator = interfaceGenerator;
 			this.FileBuilder = fileBuilder;
+			this.BuilderCustonClass = builderClassDefinition;
 		}
 	}
 }

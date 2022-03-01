@@ -37,5 +37,18 @@ namespace Services.Commands.Tools
 			return $"{assemblyPath}/Assets/{fileName}";
 		}
 
+		public ImmutableList<string> GetServiceNames(string currentDirectory)
+		{
+			return Directory
+				.GetFiles($"{currentDirectory}/Services/")
+				.Where(y => !y.Contains("csproj"))
+				.Select(x => Path.GetFileNameWithoutExtension(x))
+				.ToImmutableList();
+		}
+
+		public void DeleteClass1File(string currentDirectory, string path)
+		{
+			File.Delete($"{currentDirectory}/{path}/Class1.cs");
+		}
 	}
 }

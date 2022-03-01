@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LgpdApi.Controllers.Abstract
+namespace Api.Controllers.Abstract
 {
     public class ControllerAbstract : Controller
     {
@@ -55,12 +55,11 @@ namespace LgpdApi.Controllers.Abstract
             return default(T)!;
         }
 
-        protected IActionResult RespostaAction(object Resposta, bool Erro, List<string>? Mensagens = null)
+        protected IActionResult ResponseAction(object response, bool erro, List<string>? messages = null)
         {
-            return Ok(Erro ? new ResponseModel()
-            {Operacao = false, Menssagem = Mensagens} : new ResponseModel()
-            {Operacao = true, Menssagem = new List<string>()
-            {"Sucesso"}, Dado = Resposta});
+            return Ok(erro ? new ResponseModel()
+            {Operation = false, Messages = messages} : new ResponseModel()
+            {Operation = true, Messages = new List<string>()
+            {"Success"}, Data = response});
         }
-    }
 }

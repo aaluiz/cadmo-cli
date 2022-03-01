@@ -44,6 +44,8 @@ namespace Contracts
 			return result.ToImmutableList();
 		}
 
+        
+
 		private static FileCode CreateIInsert()
 		{
 			var IInsert = new FileCode();
@@ -85,7 +87,7 @@ namespace Contracts.Service.Abstract
     {
         bool HasErro { get; }
 
-        List<string> ErroMessage { get; }
+        List<string> ErroMessages { get; }
     }
 }
 

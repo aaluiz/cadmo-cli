@@ -19,6 +19,8 @@ namespace Services
 		private string? _Namespace;
 		private string? _Properties;
 
+		private string? _Annotations;
+
 		public bool IsStatic { get; set; } = false;
 
 		public IClassDefinition Create()
@@ -30,6 +32,7 @@ namespace Services
 			result.AppendLine("");
 			result.AppendLine(string.Format("{0}", _Namespace).Trim());
 			result.AppendLine("{");
+			result.AppendLine(_Annotations);
 			result.AppendLine(string.Format("    {0}{1}", _Name, _Inheritances).Trim());
 			result.AppendLine("    {");
 			if (!string.IsNullOrEmpty(_Properties))
@@ -55,6 +58,12 @@ namespace Services
 			_Name = null;
 			_Namespace = null;
 			_Properties = null;
+			_Annotations = null;
+		}
+
+		public IBuilderClassDefinition Annotations(string annotations){
+			_Annotations = annotations;
+			return this;
 		}
 
 		public IBuilderClassDefinition Imports(ImmutableList<string> imports)

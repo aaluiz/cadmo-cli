@@ -15,7 +15,7 @@ namespace Services.Abstract
 
         protected bool IsValidArgs(string[] args)
         {
-            return (args.Length <= 4);
+            return (args.Length <= 5);
         }
 
         protected bool IsTheReservedWord(string word, string[] args)

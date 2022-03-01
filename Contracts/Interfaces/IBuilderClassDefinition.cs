@@ -14,6 +14,7 @@ namespace Contracts.Interfaces
 	public interface IBuilderClassDefinition
 	{
 		public bool IsStatic { get; set; }
+		IBuilderClassDefinition Annotations(string annotations);
 		/// <summary>
 		/// Return the using block of code
 		/// </summary>

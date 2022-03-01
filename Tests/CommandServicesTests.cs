@@ -18,22 +18,24 @@ namespace Tests
 	public class CommandServicesTests
 	{
 		static object[] CommandCases = {
-			//	new string[] {"g", "model", "User" },
-				 new string[] {"g", "repository", "Categoria" },
-				 new string[] {"repository-di"},
+				new string[] {"g", "repository", "Categoria" },
+				new string[] {"repository-di"},
 			    new string[] {"new", "App"},
 				new string[] {"g", "ssl"},
-			//	new string[] {"g", "controller", "User" },
-			//	new string[] {"g", "service", "User" },
 		};
 		static object[] CommandServices = {
 				new string[] {"g", "service-crud", "--models", "ModelExample,Categoria"},
 				new string[] {"generate", "service-crud", "--models", "ModelExample"},
 		};
-
+		static object[] CommandControllers = {
+				new string[] {"generate", "controller-crud", "--model", "ModelExample"},
+				new string[] {"generate", "controller-crud", "--model", "ModelExample", "--secure"},
+		};
 		
 		static object[] CommandCasesFails = {
 			//	new string[] {"g", "model", "User" },
+				new string[] {"generate", "controller-crud", "--models", "ModelExample"},
+				new string[] {"generate", "controller-crud", "--model", "ModelExample", "--secures"},
 				new string[] {"g", "repository", "Categoriax" },
 			//	new string[] {"g", "controller", "User" },
 			//	new string[] {"g", "service", "User" },
@@ -77,6 +79,8 @@ namespace Tests
 		IGenerateRepositoryExtensions? _generateRepositoryExtensions;
 		IDirectoryHandler? _directoryHandler;
 		private ICreateServiceCrudService? _createServiceCrudService;
+
+		ICreateControllerService? _createControllerService;
 		[SetUp]
 		public void Setup()
 		{
@@ -127,7 +131,7 @@ namespace ConsoleApp1
 			_createSSLCertificateService = new CreateSSLCertificateService(_shellCommandExecutor);
 			_createInterfaceGenerator = new CreateInterfaceGenerator(_classDefinition, _methodDefinition);
 
-			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object);
+			_codeGenerator = new CodeGenerator(_createClassGenerator, _createInterfaceGenerator, fileBuilderMock.Object, _builderClassDefinition);
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_directoryHandler = new DirectoryHandler();
 			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator, _directoryHandler, _autoMapperCommandService);
@@ -140,7 +144,7 @@ namespace ConsoleApp1
 
 			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
 			_createServiceCrudService = new CreateServiceCrudService(_codeGenerator, _methodDefinition, _directoryHandler);
-
+			_createControllerService = new CreateControllerService(_codeGenerator, _methodDefinition, _directoryHandler);
 			_generateModelByScript = new GenerateModelByScript(
 						_codeGenerator, 
 						_methodDefinition,
@@ -158,11 +162,25 @@ namespace ConsoleApp1
 				_generateModelByScript,
 				_createRepositoryService,
 				_generateRepositoryExtensions,
-				_createServiceCrudService);
+				_createServiceCrudService,
+				_createControllerService
+				);
 		}
 		[Test]
 		[TestCaseSource(nameof(CommandServices))]
 		public void ServiceCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+				var result = _commandLineUI.ExecuteCommmand(args);
+
+				Assert.Greater(result, 0);
+			}
+			}
+		
+		[Test]
+		[TestCaseSource(nameof(CommandControllers))]
+		public void ControllerCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
 		{
 			if (_commandLineUI != null)
 			{
