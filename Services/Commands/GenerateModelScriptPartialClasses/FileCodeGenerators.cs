@@ -3,8 +3,8 @@ using Models;
 
 namespace Services.Commands
 {
-    public partial class GenerateModelByScript
-    {
+	public partial class GenerateModelByScript
+	{
 		private FileCode GenerateViewModel(string modelName)
 		{
 			ModelJson modelJson = GetContentJsonFile(modelName);
@@ -25,14 +25,14 @@ namespace Services.Commands
 
 			properties.AddRange(propertiesFromJson);
 
-			var imports = new string[] {
-			"System.ComponentModel",
-			"System.ComponentModel.DataAnnotations"
-			}.ToImmutableList();
+			var extraDependencies = new List<string>();
+			var imports = new List<string>();
+			imports = GenExtraDependencies(modelJson, ref extraDependencies);
+
 
 			var result = _codeGenerator
 				.ClassGenerator
-				.CreateClass(imports, $"{modelName}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
+				.CreateClass(imports.ToImmutableList(), $"{modelName}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
 			return result;
 
 		}
@@ -57,17 +57,44 @@ namespace Services.Commands
 
 			properties.AddRange(propertiesFromJson);
 
-			var imports = new string[] {
-			"System.ComponentModel",
-			"System.ComponentModel.DataAnnotations",
-			"System.ComponentModel.DataAnnotations.Schema",
-			}.ToImmutableList();
+			var extraDependencies = new List<string>();
+			var imports = new List<string>();
+			imports = GenExtraDependencies(modelJson, ref extraDependencies);
 
 			var result = _codeGenerator
 				.ClassGenerator
-				.CreateClass(imports, $"{modelName}{((update) ? "Update" : "New")}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
+				.CreateClass(imports.ToImmutableList(), $"{modelName}{((update) ? "Update" : "New")}ViewModel", "Entities.ViewModels", properties.ToImmutableList());
 			return result;
 
+		}
+
+		private static List<string> GenExtraDependencies(ModelJson modelJson, ref List<string> extraDependencies)
+		{
+			List<string> imports;
+			if (modelJson.Model!.Dependencies != null)
+			{
+				extraDependencies = modelJson.Model.Dependencies.Select(x => x.Package).ToList()!;
+				imports = new string[] {
+					"System.ComponentModel",
+					"System.ComponentModel.DataAnnotations",
+					"System.ComponentModel.DataAnnotations.Schema",
+					"Entities.Models",
+				}.ToList();
+				imports.AddRange(extraDependencies);
+
+
+			}
+			else
+			{
+				imports = new string[] {
+					"System.ComponentModel",
+					"System.ComponentModel.DataAnnotations",
+					"System.ComponentModel.DataAnnotations.Schema",
+					"Entities.Models",
+				}.ToList();
+			}
+
+			return imports;
 		}
 
 		private FileCode GeneraBasicModelCode(string modelName)
@@ -90,13 +117,10 @@ namespace Services.Commands
 
 			properties.AddRange(propertiesFromJson);
 
-			var imports = new string[] {
-			"System.Collections.Generic",
-			"System.ComponentModel",
-			"System.ComponentModel.DataAnnotations",
-			"System.ComponentModel.DataAnnotations.Schema",
-			"Entities.Interface"
-			}.ToImmutableList();
+			var extraDependencies = new List<string>();
+			var imports = new List<string>();
+			imports = GenExtraDependencies(modelJson, ref extraDependencies);
+			imports.Add("Entities.Interface");
 
 			var inharitance = new string[] {
 			"IEntity"
@@ -104,9 +128,9 @@ namespace Services.Commands
 
 			var result = _codeGenerator
 				.ClassGenerator
-				.CreateClass(imports, modelName, "Entities.Models", properties.ToImmutableList(), inharitance);
+				.CreateClass(imports.ToImmutableList(), modelName, "Entities.Models", properties.ToImmutableList(), inharitance);
 			return result;
 
 		}
-    }
+	}
 }

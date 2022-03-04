@@ -8,6 +8,17 @@
                 "Name": {
                     "type": "string"
                 },
+                "Dependencies":{
+                    "type":"array",
+                    "items": {
+                        "type":"object",
+                        "properties": {
+                            "Package":{
+                                "type":"string"
+                            }
+                        }
+                    }
+                },
                 "Fields": {
                     "type": "array",
                     "items": {
@@ -72,6 +83,14 @@
                                     "string",
                                     "string?",
                                     "DateTime",
+                                    "LocalDateTime",
+                                    "LocalDateTime?",
+                                    "LocalDate",
+                                    "LocalTime",
+                                    "LocalDate?",
+                                    "LocalTime?",
+                                    "Instant",
+                                    "Instant?",
                                     "foreign_key"
                                 ]
                             },

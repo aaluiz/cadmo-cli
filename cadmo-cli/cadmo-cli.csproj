@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.3-alpha</Version>
+    <Version>1.0.5-alpha</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,10 +12,10 @@
     <Nullable>enable</Nullable>
 
 
-    <PackageId>Cadmo-Cli</PackageId>
+    <PackageId>cadmo-cli</PackageId>
     <Autors>Alan Alves Luiz</Autors>
     <Company>Probity Tech</Company>
-    <Description>cli tool for low-code generation .net web api</Description>
+    <Description>Cli tool for low-code generation .net web api.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>api, asp.net, cli, low-code</PackageTags>
     <RepositoryUrl>https://github.com/aaluiz/cadmo-clidot</RepositoryUrl>
