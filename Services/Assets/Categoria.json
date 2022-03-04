@@ -1,20 +1,13 @@
 {
-    "$schema" : 
-    "./model.schema.json" , 
-    "Model" : 
-    {
-        "Name" : 
-        "Cadegoria" , 
-        "Fields" : 
-            [
-        {
-            "Name" : 
-            "FieldName" , 
-            "ViewModelVisibility" : 
-            true , 
-            "Type" : 
-            "bool"
-        } ]
-
+    "$schema": "./model.schema.json",
+    "Model": {
+        "Name": "Cadegoria",
+        "Fields": [
+            {
+                "Name": "FieldName",
+                "ViewModelVisibility": true,
+                "Type": "bool"
+            }
+        ]
     }
 }

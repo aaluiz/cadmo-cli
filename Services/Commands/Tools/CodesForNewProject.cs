@@ -87,7 +87,7 @@ namespace Contracts.Service.Abstract
     {
         bool HasErro { get; }
 
-        List<string> ErroMessages { get; }
+        List<string>? ErrorMessages { get; }
     }
 }
 

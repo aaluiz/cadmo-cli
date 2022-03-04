@@ -119,26 +119,8 @@ public partial class CreateProjectService : AbstractService, ICreateProjectServi
 
 	public void WriteJsonSchemaModel()
 	{
-		string schema = File.ReadAllText($"{GetAssemblyPath()}/Assets/model.schema.json");
-		var schemeFile = new FileCode
-		{
-			Code = schema,
-			FileName = "model.schema.json"
-		};
-
-		string modelJson = File.ReadAllText($"{GetAssemblyPath()}/Assets/ModelExample.json");
-		var models = new FileCode
-		{
-			Code = modelJson,
-			FileName = "ModelExample.json"
-		};
-
-		var codes = new FileCode[] { schemeFile, models }.ToImmutableList();
-
-
-		_codeGenerator.FileBuilder
-			.WriteFiles(codes, $"{CurrentDirectory}/Entities/JsonModelsDefinition");
-
+		WriteFileDiretct("model.schema.json", "model.schema.json", "/Entities/JsonModelsDefinition/");
+		WriteFileDiretct("ModelExample.json", "ModelExample.json", "/Entities/JsonModelsDefinition/");
 		System.Console.WriteLine("GENERATED Json Models Definitions Files");
 	}
 

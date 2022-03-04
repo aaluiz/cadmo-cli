@@ -19,34 +19,38 @@
                             "Required": {
                                 "type": "object",
                                 "properties": {
-                                    "ErrorMessage":{
-                                        "type":"string"
+                                    "ErrorMessage": {
+                                        "type": "string"
                                     }
                                 },
-                                "required":["ErrorMessage"]
+                                "required": [
+                                    "ErrorMessage"
+                                ]
                             },
-                            "StringLength":{
-                                "type":"object",
+                            "StringLength": {
+                                "type": "object",
                                 "properties": {
-                                    "MinimumLength":{
-                                        "type":"integer"
+                                    "MinimumLength": {
+                                        "type": "integer"
                                     },
-                                    "MaximumLength":{
-                                        "type":"integer"
+                                    "MaximumLength": {
+                                        "type": "integer"
                                     },
-                                    "ErrorMessage":{
-                                        "type":"string"
+                                    "ErrorMessage": {
+                                        "type": "string"
                                     }
                                 }
                             },
-                            "Column":{
-                                "type":"object",
+                            "Column": {
+                                "type": "object",
                                 "properties": {
-                                    "TypeName":{
-                                        "type":"string"
+                                    "TypeName": {
+                                        "type": "string"
                                     }
                                 },
-                                "required":["TypeName"]
+                                "required": [
+                                    "TypeName"
+                                ]
                             },
                             "Type": {
                                 "enum": [
@@ -66,6 +70,8 @@
                                     "short",
                                     "ushort",
                                     "string",
+                                    "string?",
+                                    "DateTime",
                                     "foreign_key"
                                 ]
                             },

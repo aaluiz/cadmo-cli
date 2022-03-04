@@ -16,6 +16,11 @@ public partial class CreateProjectService
 				$"{CurrentDirectory}{pathDestiny}");
 	}
 
+	private void WriteFileDiretct(string fileNameAsset, string filenNameDestiny, string pathDestiny){
+		string content = File.ReadAllText(_directoryHandler.GetFileFromAsset(fileNameAsset));
+		File.WriteAllText($"{CurrentDirectory}{pathDestiny}/{filenNameDestiny}", content);
+	}
+
 
 	private void WriteApiAsset()
 	{
@@ -49,8 +54,9 @@ public partial class CreateProjectService
 		WriteFileFromAsset("ViewModel.txt", "ViewModel.cs", 
 							"/Entities/ViewModels/");
 
-		WriteFileFromAsset("nlog.config", "nlog.config", "/API/");
+		WriteFileDiretct("nlog.config", "nlog.config", "/API/");
 		WriteFileFromAsset("Startup.txt", "Startup.cs", "/API/");
+		WriteFileFromAsset("NlogSetup.txt", "NlogSetup.cs", "/API/");
 
 		System.Console.WriteLine("GENERATED Api initial files.");
 	}

@@ -59,7 +59,8 @@ namespace Services.Commands
 
 			var imports = new string[] {
 			"System.ComponentModel",
-			"System.ComponentModel.DataAnnotations"
+			"System.ComponentModel.DataAnnotations",
+			"System.ComponentModel.DataAnnotations.Schema",
 			}.ToImmutableList();
 
 			var result = _codeGenerator
@@ -93,6 +94,7 @@ namespace Services.Commands
 			"System.Collections.Generic",
 			"System.ComponentModel",
 			"System.ComponentModel.DataAnnotations",
+			"System.ComponentModel.DataAnnotations.Schema",
 			"Entities.Interface"
 			}.ToImmutableList();
 

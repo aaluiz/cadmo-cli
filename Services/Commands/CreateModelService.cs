@@ -48,6 +48,7 @@ public class CreateModelService : AbstractService, ICreateModelService
 			"System.Collections.Generic",
 			"System.ComponentModel",
 			"System.ComponentModel.DataAnnotations",
+			"System.ComponentModel.DataAnnotations.Schema",
 			"Entities.Interface"
 		}.ToImmutableList();
 
@@ -71,7 +72,9 @@ public class CreateModelService : AbstractService, ICreateModelService
 		}.ToImmutableList();
 		var imports = new string[] {
 			"System.ComponentModel.DataAnnotations",
-			"Entities.Interface"
+			"System.ComponentModel.DataAnnotations.Schema",
+			"Entities.Models",
+			"Entities.Interface",
 		}.ToImmutableList();
 
 		var inharitance = new string[] {
@@ -104,6 +107,7 @@ public class CreateModelService : AbstractService, ICreateModelService
 		"System.Collections.Generic",
 		"System.ComponentModel",
 		"System.ComponentModel.DataAnnotations",
+		"System.ComponentModel.DataAnnotations.Schema",
 		}.ToImmutableList();
 	}
 

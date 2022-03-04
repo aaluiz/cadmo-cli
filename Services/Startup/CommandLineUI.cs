@@ -21,6 +21,8 @@ namespace Services.Startup
 		private readonly IGenerateRepositoryExtensions _generateRepositoyExtensions;
 		private readonly ICreateServiceCrudService _createServiceCrudService;
 		private readonly ICreateControllerService _createControllerService;
+		private readonly IEntityFrameworkService _entityFrameworkService;
+		private readonly IAddPackageService _addPackageService;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -34,7 +36,9 @@ namespace Services.Startup
 			ICreateRepositoryService createRepositoryService,
 			IGenerateRepositoryExtensions repositoryExtensions,
 			ICreateServiceCrudService createServiceCrudService,
-			ICreateControllerService createControllerService)
+			ICreateControllerService createControllerService,
+			IEntityFrameworkService entityFrameworkService,
+			IAddPackageService addPackageService)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -49,7 +53,8 @@ namespace Services.Startup
 			_generateRepositoyExtensions = repositoryExtensions;
 			_createServiceCrudService = createServiceCrudService;
 			_createControllerService = createControllerService;
-
+			_entityFrameworkService = entityFrameworkService;
+			_addPackageService = addPackageService;
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -70,6 +75,8 @@ namespace Services.Startup
 					case "serve": return _serveCommandService;
 					case "repository-di": return _generateRepositoyExtensions;
 					case "g": return GetService(args);
+					case "ef": return GetService(args);
+					case "add": return _addPackageService;
 					case "generate": return GetService(args);
 					default:
 						return null;
@@ -87,6 +94,9 @@ namespace Services.Startup
 						case "ssl": return _createSSLCertificateService;
 						case "automapper": return _autoMapperCommandService;
 						case "dbcontext": return _dbContextCommandService;
+						case "remove-migration": return _entityFrameworkService;
+						case "update-database": return _entityFrameworkService;
+						case "list-migration": return _entityFrameworkService;
 						default:
 							return null;
 					};
@@ -95,6 +105,7 @@ namespace Services.Startup
 					switch (args[1])
 					{
 						case "ssl": return _createSSLCertificateService;
+						case "add-migration": return _entityFrameworkService;
 						case "model": return _createModelService;
 						case "repository": return _createRepositoryService;
 						case "automapper": return _autoMapperCommandService;

@@ -41,9 +41,9 @@ namespace Services.Commands
 			{
 				Visibility = Visibility.Public,
 				TypeProperty = (field.ForeignKey!.Relationship == "OneToOne")
-					? $"{field.ForeignKey.ModelName} "
+					? $"{field.ForeignKey.ModelName}? "
 					: $"ICollection<{field.ForeignKey.ModelName}>? ",
-				Name = field.ForeignKey.PropertyName
+				Name = field.Name
 			};
 			return result;
 		}

@@ -17,10 +17,22 @@ namespace Tests
 	[TestFixture]
 	public class CommandServicesTests
 	{
+		#region Properties And Cases
+		static object[] AddPackageWorkCases = {
+				new string[] {"add", "linq2db", "--version", "4.0.0-preview.10"},
+				new string[] {"add", "linq2db"},
+		};
+
+		static object[] EntityFrameWorkCases = {
+				new string[] {"ef", "add-migration", "initial" },
+				new string[] {"ef", "remove-migration"},
+				new string[] {"ef", "list-migration" },
+				new string[] {"ef", "update-database"},
+		};
 		static object[] CommandCases = {
 				new string[] {"g", "repository", "Categoria" },
 				new string[] {"repository-di"},
-			    new string[] {"new", "App"},
+				new string[] {"new", "App"},
 				new string[] {"g", "ssl"},
 		};
 		static object[] CommandServices = {
@@ -31,14 +43,11 @@ namespace Tests
 				new string[] {"generate", "controller-crud", "--model", "ModelExample"},
 				new string[] {"generate", "controller-crud", "--model", "ModelExample", "--secure"},
 		};
-		
+
 		static object[] CommandCasesFails = {
-			//	new string[] {"g", "model", "User" },
 				new string[] {"generate", "controller-crud", "--models", "ModelExample"},
 				new string[] {"generate", "controller-crud", "--model", "ModelExample", "--secures"},
 				new string[] {"g", "repository", "Categoriax" },
-			//	new string[] {"g", "controller", "User" },
-			//	new string[] {"g", "service", "User" },
 		};
 
 		static object[] ModelCommandCases = {
@@ -81,6 +90,12 @@ namespace Tests
 		private ICreateServiceCrudService? _createServiceCrudService;
 
 		ICreateControllerService? _createControllerService;
+
+		IEntityFrameworkService? _entityFrameworkService;
+		IAddPackageService? _addPackageService;
+		#endregion
+
+		#region  Setup
 		[SetUp]
 		public void Setup()
 		{
@@ -89,6 +104,14 @@ namespace Tests
 			mock.Setup(x => x.ExecuteCommand("dotnet", "new sln -n teste-api")).Returns(true);
 			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --clean")).Returns(true);
 			mock.Setup(x => x.ExecuteCommand("dotnet", "dev-certs https --trust")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "ef migrations add initial --project Api.csproj --startup-project Api.csproj")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "ef migrations remove")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "ef migrations list")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "ef database update --project Api.csproj --startup-project Api.csproj")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("cd", "Api")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("cd", "..")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "add package linq2db --version 4.0.0-preview.10")).Returns(true);
+			mock.Setup(x => x.ExecuteCommand("dotnet", "add package linq2db")).Returns(true);
 
 			var code = new FileCode
 			{
@@ -145,8 +168,11 @@ namespace ConsoleApp1
 			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
 			_createServiceCrudService = new CreateServiceCrudService(_codeGenerator, _methodDefinition, _directoryHandler);
 			_createControllerService = new CreateControllerService(_codeGenerator, _methodDefinition, _directoryHandler);
+			_entityFrameworkService = new EntityFrameworkService(_shellCommandExecutor);
+			_addPackageService = new AddPackageService(_shellCommandExecutor);
+
 			_generateModelByScript = new GenerateModelByScript(
-						_codeGenerator, 
+						_codeGenerator,
 						_methodDefinition,
 						_autoMapperCommandService,
 						_dbContextCommandService);
@@ -163,9 +189,13 @@ namespace ConsoleApp1
 				_createRepositoryService,
 				_generateRepositoryExtensions,
 				_createServiceCrudService,
-				_createControllerService
+				_createControllerService,
+				_entityFrameworkService,
+				_addPackageService
 				);
 		}
+
+		#endregion
 		[Test]
 		[TestCaseSource(nameof(CommandServices))]
 		public void ServiceCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
@@ -176,8 +206,35 @@ namespace ConsoleApp1
 
 				Assert.Greater(result, 0);
 			}
+		}
+
+		[Test]
+		[TestCaseSource(nameof(EntityFrameWorkCases))]
+		public void EnttityFrameworkCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+
+				var result = _commandLineUI.ExecuteCommmand(args);
+
+				Assert.Greater(result, 0);
 			}
+		}
 		
+		[Test]
+		[TestCaseSource(nameof(AddPackageWorkCases))]
+		public void AddPackageCommmand_ReturnExpect_MoreThanZero(string[] args)
+		{
+			if (_commandLineUI != null)
+			{
+
+				var result = _commandLineUI.ExecuteCommmand(args);
+
+				Assert.Greater(result, 0);
+			}
+		}
+
+
 		[Test]
 		[TestCaseSource(nameof(CommandControllers))]
 		public void ControllerCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
@@ -202,7 +259,7 @@ namespace ConsoleApp1
 			}
 		}
 
-		
+
 		[Test]
 		[TestCaseSource(nameof(CommandCasesFails))]
 		public void Fail_ExecuteCommmand(string[] args)

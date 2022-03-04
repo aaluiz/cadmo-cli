@@ -5,8 +5,8 @@ namespace Api.Models
 {
     public class ResponseModel
     {
-        public bool Operacao { get; set; }
-        public List<string>? Menssagem { get; set; }
-        public object? Dado { get; set; }
+        public bool Operation { get; set; }
+        public List<string>? Messages { get; set; }
+        public object? Data { get; set; }
     }
 }

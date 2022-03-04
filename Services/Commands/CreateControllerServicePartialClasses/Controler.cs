@@ -123,9 +123,9 @@ namespace Services.Commands
 		{
 			var annotations = new List<string>();
 
-			annotations.Add($"[HttpGet]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status200OK)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status404NotFound)]\n");
+			annotations.Add($"HttpGet");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)\n");
 
 			var result = _methodDefinition.Builder
 			.Annotations(annotations.ToImmutableList())
@@ -158,9 +158,9 @@ namespace Services.Commands
 		{
 			var annotations = new List<string>();
 
-			annotations.Add("[HttpGet(\"{id}\")]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status200OK)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status404NotFound)]\n");
+			annotations.Add("HttpGet(\"{id}\")");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)\n");
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"int",
@@ -199,11 +199,11 @@ namespace Services.Commands
 		{
 			var annotations = new List<string>();
 
-			annotations.Add($"[HttpPost]");
-			annotations.Add("[Consumes(MediaTypeNames.Application.Json)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status200OK)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status404NotFound)]");
-			annotations.Add("[ServiceFilter(typeof(ValidationFilterAttribute))]\n");
+			annotations.Add($"HttpPost");
+			annotations.Add("Consumes(MediaTypeNames.Application.Json)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
+			annotations.Add("ServiceFilter(typeof(ValidationFilterAttribute))\n");
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"[FromBody] {modelName}NewViewModel",
@@ -241,11 +241,11 @@ namespace Services.Commands
 		{
 			var annotations = new List<string>();
 
-			annotations.Add("[HttpPut(\"{id}\")]");
-			annotations.Add("[Consumes(MediaTypeNames.Application.Json)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status200OK)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status404NotFound)]");
-			annotations.Add("[ServiceFilter(typeof(ValidationFilterAttribute))]\n");
+			annotations.Add("HttpPut(\"{id}\")");
+			annotations.Add("Consumes(MediaTypeNames.Application.Json)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
+			annotations.Add("ServiceFilter(typeof(ValidationFilterAttribute))\n");
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"[FromBody] {modelName}UpdateViewModel",
@@ -283,11 +283,11 @@ namespace Services.Commands
 		{
 			var annotations = new List<string>();
 
-			annotations.Add("[HttpDelete(\"{id}\")]");
-			annotations.Add("[Consumes(MediaTypeNames.Application.Json)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status200OK)]");
-			annotations.Add($"[ProducesResponseType(StatusCodes.Status404NotFound)]");
-			annotations.Add("[ServiceFilter(typeof(ValidationFilterAttribute))]\n");
+			annotations.Add("HttpDelete(\"{id}\")");
+			annotations.Add("Consumes(MediaTypeNames.Application.Json)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+			annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
+			annotations.Add("ServiceFilter(typeof(ValidationFilterAttribute))\n");
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"int",

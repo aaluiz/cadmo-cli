@@ -10,6 +10,7 @@ namespace Services.Commands.Tools
 		public static string[] PackagesForApi()
 		{
 			return new string[]{
+			GenerateAddPackageCommand("AutoMapper"),
 			GenerateAddPackageCommand("Microsoft.AspNetCore.Authentication.JwtBearer --version 6.0.2"),
 			GenerateAddPackageCommand("Microsoft.AspNetCore.Identity.EntityFrameworkCore"),
 			GenerateAddPackageCommand("Microsoft.EntityFrameworkCore"),
