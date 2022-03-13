@@ -30,7 +30,7 @@ namespace Api
             services.AddScoped<ValidationFilterAttribute>();
             // services.ConfigureLoggerService(); // NLog
             services.ConfigureRepository();
-            services.ConfigureServices();
+            services.ConfigureService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

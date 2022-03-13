@@ -34,7 +34,7 @@ namespace Services.Commands
 				.FileBuilder
 					.WriteFile(GetInterfaceFileCode(model),
 					$"{CurrentDirectory}/Contracts/Repository/");
-			System.Console.WriteLine($"GENERATED ..Contracts/Repository/{model}Repository.cs");
+			System.Console.WriteLine($"GENERATED ..Contracts/Repository/I{model}Repository.cs");
 
 		}
 

@@ -23,6 +23,7 @@ namespace Services.Startup
 		private readonly ICreateControllerService _createControllerService;
 		private readonly IEntityFrameworkService _entityFrameworkService;
 		private readonly IAddPackageService _addPackageService;
+		private readonly IGenerateServiceExtensions _generateServiceDI;
 
 		public CommandLineUI(ICreateProjectService createProjectService,
 			IHelpService helpService,
@@ -38,7 +39,8 @@ namespace Services.Startup
 			ICreateServiceCrudService createServiceCrudService,
 			ICreateControllerService createControllerService,
 			IEntityFrameworkService entityFrameworkService,
-			IAddPackageService addPackageService)
+			IAddPackageService addPackageService,
+			IGenerateServiceExtensions generateServicesDI)
 		{
 			_createProjectService = createProjectService;
 			_helpService = helpService;
@@ -55,6 +57,7 @@ namespace Services.Startup
 			_createControllerService = createControllerService;
 			_entityFrameworkService = entityFrameworkService;
 			_addPackageService = addPackageService;
+			_generateServiceDI = generateServicesDI;
 		}
 
 		public int ExecuteCommmand(string[] args)
@@ -74,6 +77,7 @@ namespace Services.Startup
 					case "build": return _buildCommandSevice;
 					case "serve": return _serveCommandService;
 					case "repository-di": return _generateRepositoyExtensions;
+					case "service-di": return _generateServiceDI;
 					case "g": return GetService(args);
 					case "ef": return GetService(args);
 					case "add": return _addPackageService;

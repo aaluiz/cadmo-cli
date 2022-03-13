@@ -38,6 +38,7 @@ namespace Tests
 		static object[] CommandServices = {
 				new string[] {"g", "service-crud", "--models", "ModelExample,Categoria"},
 				new string[] {"generate", "service-crud", "--models", "ModelExample"},
+				new string[] {"service-di"}
 		};
 		static object[] CommandControllers = {
 				new string[] {"generate", "controller-crud", "--model", "ModelExample"},
@@ -86,6 +87,7 @@ namespace Tests
 		IGenerateModelByScript? _generateModelByScript;
 		ICreateRepositoryService? _createRepositoryService;
 		IGenerateRepositoryExtensions? _generateRepositoryExtensions;
+		private GenerateServiceExtensions? _generateServicesExtensions;
 		IDirectoryHandler? _directoryHandler;
 		private ICreateServiceCrudService? _createServiceCrudService;
 
@@ -166,6 +168,7 @@ namespace ConsoleApp1
 
 
 			_generateRepositoryExtensions = new GenerateRepositoryExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
+			_generateServicesExtensions = new GenerateServiceExtensions(_codeGenerator, _methodDefinition, _directoryHandler);
 			_createServiceCrudService = new CreateServiceCrudService(_codeGenerator, _methodDefinition, _directoryHandler);
 			_createControllerService = new CreateControllerService(_codeGenerator, _methodDefinition, _directoryHandler);
 			_entityFrameworkService = new EntityFrameworkService(_shellCommandExecutor);
@@ -191,7 +194,8 @@ namespace ConsoleApp1
 				_createServiceCrudService,
 				_createControllerService,
 				_entityFrameworkService,
-				_addPackageService
+				_addPackageService,
+				_generateServicesExtensions
 				);
 		}
 

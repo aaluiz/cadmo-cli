@@ -37,7 +37,7 @@ namespace Services.Commands
 				"ServiceCrudAbstract",
 				$"I{models.First()}Service"
 			}.ToImmutableList();
-			
+
 			var properties = new Property[]{
 				new Property {
 					Name = $"_{models.First()}Repository",
@@ -46,7 +46,7 @@ namespace Services.Commands
 				}
 			}.ToImmutableList();
 
-			var result =_codeGenerator
+			var result = _codeGenerator
 				.ClassGenerator
 					.CreateClass(
 						imports,
@@ -59,9 +59,10 @@ namespace Services.Commands
 
 			return result;
 		}
-// ---------------------------------Methods ---------------------------------------
-		private ImmutableList<IMethodDefinition> GetMethods(string modelName){
-			return new IMethodDefinition[] { 
+		// ---------------------------------Methods ---------------------------------------
+		private ImmutableList<IMethodDefinition> GetMethods(string modelName)
+		{
+			return new IMethodDefinition[] {
 				ConstructoWithBaseObjectAction(modelName),
 				NewRecordMethod(modelName),
 				UpdateRecordMethod(modelName),
@@ -70,7 +71,7 @@ namespace Services.Commands
 				DeleteRecordMethod(modelName)
 			}.ToImmutableList();
 		}
-// ---------------------------------Methods ---------------------------------------
+		// ---------------------------------Methods ---------------------------------------
 		private IMethodDefinition ConstructoWithBaseObjectAction(string modelName)
 		{
 			var baseObject = new string[]{
@@ -105,9 +106,10 @@ namespace Services.Commands
 			})
 			.Create();
 			return constructor;
-		} 
+		}
 
-		private IMethodDefinition NewRecordMethod(string modelName){
+		private IMethodDefinition NewRecordMethod(string modelName)
+		{
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"{modelName}NewViewModel",
@@ -128,15 +130,17 @@ namespace Services.Commands
 			return result;
 		}
 
-		private string NewRecordMethodLogic(string modelName){
+		private string NewRecordMethodLogic(string modelName)
+		{
 			var result = new StringBuilder();
 			result.AppendLine("CleanErrors();");
 			result.AppendLine($"var newRecord = _Mapper.Map<{modelName}>(ViewModel);");
 			result.AppendLine($"return _{modelName}Repository.Insert(newRecord);");
 			return result.ToString();
 		}
-		
-		private IMethodDefinition UpdateRecordMethod(string modelName){
+
+		private IMethodDefinition UpdateRecordMethod(string modelName)
+		{
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = $"{modelName}UpdateViewModel",
@@ -157,14 +161,16 @@ namespace Services.Commands
 			return result;
 		}
 
-		private string UpdateRecordMethodLogic(string modelName){
+		private string UpdateRecordMethodLogic(string modelName)
+		{
 			var result = new StringBuilder();
 			result.AppendLine("CleanErrors();");
 			result.AppendLine($"var newRecord = _Mapper.Map<{modelName}>(ViewModel);");
 			result.AppendLine($"return _{modelName}Repository.Insert(newRecord);");
 			return result.ToString();
 		}
-		private IMethodDefinition DeleteRecordMethod(string modelName){
+		private IMethodDefinition DeleteRecordMethod(string modelName)
+		{
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = "int",
@@ -185,12 +191,14 @@ namespace Services.Commands
 			return result;
 		}
 
-		private string DeleteRecordMethodLogic(string modelName){
+		private string DeleteRecordMethodLogic(string modelName)
+		{
 			var result = new StringBuilder();
 			result.AppendLine($"return _{modelName}Repository.Delete(id);");
 			return result.ToString();
 		}
-		private IMethodDefinition ListRecordMethod(string modelName){
+		private IMethodDefinition ListRecordMethod(string modelName)
+		{
 
 			var result = _methodDefinition.Builder
 			.Name("SelectAllViews")
@@ -204,12 +212,14 @@ namespace Services.Commands
 			return result;
 		}
 
-		private string ListRecordMethodLogic(string modelName){
+		private string ListRecordMethodLogic(string modelName)
+		{
 			var result = new StringBuilder();
 			result.AppendLine($"return _Mapper.Map<List<{modelName}ViewModel>>(_{modelName}Repository.SelectAll());");
 			return result.ToString();
 		}
-		private IMethodDefinition SelectViewModelByIdRecordMethod(string modelName){
+		private IMethodDefinition SelectViewModelByIdRecordMethod(string modelName)
+		{
 			var parameters = new Parameter[]{
 				new Parameter{
 					Type = "int",
@@ -230,11 +240,12 @@ namespace Services.Commands
 			return result;
 		}
 
-		private string SelectByIdRecordMethodLogic(string modelName){
+		private string SelectByIdRecordMethodLogic(string modelName)
+		{
 			var result = new StringBuilder();
 			result.AppendLine($"return _Mapper.Map<{modelName}ViewModel>(_{modelName}Repository.SelectById(Id));");
 			return result.ToString();
 		}
 	}
-	
+
 }

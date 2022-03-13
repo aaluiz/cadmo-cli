@@ -297,6 +297,7 @@ namespace Services.Commands
 
 			var result = _methodDefinition.Builder
 			.Name("Delete")
+			.Annotations(annotations.ToImmutableList())
 			.Parameters(parameters)
 			.LogiContent(DeleteMethodLogic(modelName))
 			.ReturnDefinition(new ReturnDefinition

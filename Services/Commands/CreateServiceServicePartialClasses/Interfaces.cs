@@ -17,6 +17,7 @@ namespace Services.Commands
 				"IDelete",
 				$"ISelectAllViews<{mainModel}ViewModel>",
 				$"ISelectOneView<{mainModel}ViewModel>",
+				"IControlError"
 			 }.ToImmutableList();
 
 			var fileCode = _codeGenerator
