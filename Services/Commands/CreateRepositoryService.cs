@@ -115,6 +115,8 @@ namespace Services.Commands
 			var result = _codeGenerator.ClassGenerator
 				.CreateClass(imports, $"I{modelName}Repository<Model>", "Contracts.Repository", inharitage);
 
+			result.FileName = $"I{modelName}Repository.cs";
+
 			return result;
 		}
 
