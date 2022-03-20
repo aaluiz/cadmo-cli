@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
+using Spectre.Console;
 
 
 namespace corecli
@@ -23,7 +24,7 @@ namespace corecli
 					IServiceProvider provider = serviceScope.ServiceProvider;
 					ICommandLineUI commandLineUI = provider.GetRequiredService<ICommandLineUI>();
 					var result = commandLineUI.ExecuteCommmand(args);
-					if (result == -1) System.Console.WriteLine(Commands());
+					if (result == -1) AnsiConsole.Markup(Commands());
 				}
 				return host.StartAsync();
 			}
@@ -41,7 +42,7 @@ namespace corecli
 
 		static string Commands()
 		{
-			return @"command not found, try help";
+			return "[red]Command not found, try help. [/]\n";
 		}
 
 		static MemoryStream GetJsonInMemory()
