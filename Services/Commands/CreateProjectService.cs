@@ -314,7 +314,7 @@ namespace Contracts.Repository.Abstract
 
 	private void WaitOneSecond()
 	{
-		Thread.Sleep(1000);
+		Thread.Sleep(1500);
 	}
 
 	public string GetAssetContent(string fileName)

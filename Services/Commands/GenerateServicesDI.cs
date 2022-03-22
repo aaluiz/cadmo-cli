@@ -38,6 +38,7 @@ namespace Services.Commands
                     );
 					System.Console.WriteLine("GENERATED Service Dependency Injection Extension File.");
 					System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/ServicesExtensions.cs");
+					System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/ServicesExtensions.cs");
 		}
 		private FileCode GetFileCode()
 		{
@@ -83,10 +84,13 @@ namespace Services.Commands
 		{
 			StringBuilder result = new StringBuilder();
 
+
 			_diretoryHandler.GetServiceNames(CurrentDirectory).ForEach((service) =>
 			{
 				result.AppendLine($"services.AddTransient<I{service}, {service}>();");
+				System.Console.WriteLine(service);
 			});
+			System.Console.Write(result.ToString());
 
 			return result.ToString();
 		}

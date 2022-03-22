@@ -95,6 +95,8 @@ namespace Tests
 
 		IEntityFrameworkService? _entityFrameworkService;
 		IAddPackageService? _addPackageService;
+
+		IVersionService? _versionService;
 		#endregion
 
 		#region  Setup
@@ -173,6 +175,7 @@ namespace ConsoleApp1
 			_createControllerService = new CreateControllerService(_codeGenerator, _methodDefinition, _directoryHandler);
 			_entityFrameworkService = new EntityFrameworkService(_shellCommandExecutor);
 			_addPackageService = new AddPackageService(_shellCommandExecutor);
+			_versionService = new VersionService();
 
 			_generateModelByScript = new GenerateModelByScript(
 						_codeGenerator,
@@ -195,7 +198,8 @@ namespace ConsoleApp1
 				_createControllerService,
 				_entityFrameworkService,
 				_addPackageService,
-				_generateServicesExtensions
+				_generateServicesExtensions,
+				_versionService 
 				);
 		}
 

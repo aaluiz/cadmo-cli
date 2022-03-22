@@ -43,6 +43,7 @@ cd Services
 dotnet add reference ../Constracts/Constracts.csproj
 dotnet add reference ../Models/Models.csproj
 dotnet add reference ../Tools/Tools.csproj
+dotnet add reference ../Crea.Tools.ActiveDirectory/Crea.Tools.ActiveDirectory.csproj
 cd ..
 dotnet sln CadmoSolution.sln add cadmo-cli/cadmo-cli.csproj
 dotnet sln CadmoSolution.sln add Constracts/Constracts.csproj
