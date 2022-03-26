@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Services.Generators;
 using Services.Commands.Tools;
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace Tests
 {
@@ -199,7 +202,7 @@ namespace ConsoleApp1
 				_entityFrameworkService,
 				_addPackageService,
 				_generateServicesExtensions,
-				_versionService 
+				_versionService
 				);
 		}
 
@@ -228,7 +231,7 @@ namespace ConsoleApp1
 				Assert.Greater(result, 0);
 			}
 		}
-		
+
 		[Test]
 		[TestCaseSource(nameof(AddPackageWorkCases))]
 		public void AddPackageCommmand_ReturnExpect_MoreThanZero(string[] args)
@@ -301,6 +304,19 @@ namespace ConsoleApp1
 
 				Assert.AreEqual(result, true);
 			}
+		}
+
+		[Test]
+		public void DirectoryHandler_ReturnFilesInFolderSevice()
+		{
+			var services = _directoryHandler!.GetServiceNames("/Users/alanluiz/lab/api/demo/");
+		
+
+			services.ForEach((s) => { Console.WriteLine(s); });
+
+
+			Assert.Greater(services.Count, 1);
+
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace Services.Commands
     {
         public int Execute(string[] args)
         {
-            string version = "1.1.2-alpha";
+            string version = "1.1.3-alpha";
             AnsiConsole.Write(
                 new FigletText("CADMO-CLI")
                     .LeftAligned()

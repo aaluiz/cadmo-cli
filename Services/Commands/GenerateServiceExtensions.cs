@@ -27,14 +27,15 @@ namespace Services.Commands
 			return 1;
 		}
 
-        private void WriteFile(){
+		private void WriteFile()
+		{
 			_codeGenerator
-                .FileBuilder
-                    .WriteFile(GetFileCode(), 
-                    $"{CurrentDirectory}/Api/Extensions/"
-                    );
-					System.Console.WriteLine("GENERATED Service Dependency Injection Extension File.");
-					System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/ServiceExtensions.cs");
+				.FileBuilder
+					.WriteFile(GetFileCode(),
+					$"{CurrentDirectory}/Api/Extensions/"
+					);
+			System.Console.WriteLine("GENERATED Service Dependency Injection Extension File.");
+			System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/ServiceExtensions.cs");
 		}
 		private FileCode GetFileCode()
 		{
@@ -83,11 +84,10 @@ namespace Services.Commands
 
 			result.AppendLine("Services.AddTransient<ILoggerManager, LoggerManager>();");
 
-			_directoryHandler.GetModelNames(CurrentDirectory).ForEach((model) =>
+			_directoryHandler.GetServiceNames(CurrentDirectory).ForEach((model) =>
 			{
 				result.AppendLine($"Services.AddTransient<I{model}Service, {model}Service>();");
 			});
-
 			return result.ToString();
 		}
 
