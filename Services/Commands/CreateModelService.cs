@@ -2,6 +2,7 @@ using Contracts.Interfaces;
 using Models;
 using Services.Abstract;
 using System.Collections.Immutable;
+using Spectre.Console;
 
 [AddService]
 public class CreateModelService : AbstractService, ICreateModelService
@@ -26,11 +27,11 @@ public class CreateModelService : AbstractService, ICreateModelService
             _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
             _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
 		}
-		System.Console.WriteLine("Models and BasicViewModels created!");
-		System.Console.WriteLine($"{CurrentDirectory}/Entities/Models/{args[2]}.cs");
-		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}UpdateViewModel.cs");
-		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}NewViewModel.cs");
-		System.Console.WriteLine($"{CurrentDirectory}/Entities/ViewModels/{args[2]}ViewModel.cs");
+		AnsiConsole.Markup("[green] CREATED [/] Models and BasicViewModels.");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/Models/[blue]{args[2]}.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}UpdateViewModel.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}NewViewModel.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}ViewModel.cs[/]");
 		return 1;
 	}
 
