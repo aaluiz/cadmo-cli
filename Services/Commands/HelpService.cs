@@ -12,7 +12,7 @@ public class HelpService : IHelpService
         panel.Expand();
 
         AnsiConsole.Write(panel);
-//        AnsiConsole.Markup(Help());
+        //        AnsiConsole.Markup(Help());
         return 1;
     }
 
@@ -60,20 +60,20 @@ public class HelpService : IHelpService
 or 
 [blue]cm add[/] [hotpink]<PACKAGE_NAME>[/] [teal]--verison[/] [hotpink]<VERSION_NUMBER>[/]
 ");
-       commandsHelp.AppendLine(@"[bold]Entity Framework Commands[/]
+        commandsHelp.AppendLine(@"[bold]Entity Framework Commands[/]
 [yellow]Warning:[/] require dotnet-ef installed and execute on [yellow]Api[/] folder:file_folder:. 
 ");
         commandsHelp.AppendLine(@"Add Migration:
-[blue]cm add-migration[/] [hotpink]<MIGRATION_NAME>[/]
+[blue]cm ef add-migration[/] [hotpink]<MIGRATION_NAME>[/]
 ");
         commandsHelp.AppendLine(@"Remove Migration:
-[blue]cm remove-migration[/] 
+[blue]cm ef remove-migration[/] 
 ");
         commandsHelp.AppendLine(@"List Migration:
-[blue]cm list-migration[/]
+[blue]cm ef list-migration[/]
 ");
         commandsHelp.AppendLine(@"List Migration:
-[blue]cm update-database[/]");
-         return commandsHelp.ToString();
+[blue]cm ef update-database[/]");
+        return commandsHelp.ToString();
     }
 }
