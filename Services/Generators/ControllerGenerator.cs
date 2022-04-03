@@ -27,7 +27,7 @@ namespace Services
             if (_namespaceHandler == null) return GetResultNull();
             if (_pathManager == null) return GetResultNull();
             if (_fileBuilder == null) return GetResultNull();
-
+            
             var result = GenerateCode(GetConfigurationToClasses(_namespaceHandler.GetClasses()));
             _fileBuilder.WriteFiles(result, string.IsNullOrEmpty(_pathManager.GetPath()) ? "Controllers" : _pathManager.GetPath());
             return result;
@@ -35,8 +35,6 @@ namespace Services
 
         public override ImmutableList<FileCode> GenerateCode(ImmutableList<ClassElements> classElements)
         {
-
-
             var result = classElements.Select(x =>
             {
                 var methodsList = x.Methods!.ToList();
@@ -176,8 +174,7 @@ namespace Services
 
             return result;
         }
-
-
+        
         private string FreeOfDuplicatedName(ImmutableList<MethodInfo> methods, MethodInfo method)
         {
             if (method.GetParameters().Count() == 0) return method.Name;
@@ -186,7 +183,6 @@ namespace Services
             {
                 return GenSingleName(method);
             }
-
             return method.Name;
         }
 

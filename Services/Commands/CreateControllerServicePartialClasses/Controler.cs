@@ -123,7 +123,7 @@ namespace Services.Commands
             var annotations = new List<string>();
 
             annotations.Add($"HttpGet");
-            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<{modelName}ViewModel>))");
             annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)\n");
 
             var result = _methodDefinition.Builder
@@ -158,7 +158,7 @@ namespace Services.Commands
             var annotations = new List<string>();
 
             annotations.Add("HttpGet(\"{id}\")");
-            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK, Type = typeof({modelName}ViewModel))");
             annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)\n");
             var parameters = new Parameter[]{
                 new Parameter{
@@ -200,7 +200,7 @@ namespace Services.Commands
 
             annotations.Add($"HttpPost");
             annotations.Add("Consumes(MediaTypeNames.Application.Json)");
-            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))");
             annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
             annotations.Add("ServiceFilter(typeof(ValidationFilterAttribute))\n");
             var parameters = new Parameter[]{
@@ -242,7 +242,7 @@ namespace Services.Commands
 
             annotations.Add("HttpPut");
             annotations.Add("Consumes(MediaTypeNames.Application.Json)");
-            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))");
             annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
             annotations.Add("ServiceFilter(typeof(ValidationFilterAttribute))\n");
             var parameters = new Parameter[]{
@@ -284,7 +284,7 @@ namespace Services.Commands
 
             annotations.Add("HttpDelete(\"{id}\")");
             annotations.Add("Consumes(MediaTypeNames.Application.Json)");
-            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK)");
+            annotations.Add($"ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))");
             annotations.Add($"ProducesResponseType(StatusCodes.Status404NotFound)");
             var parameters = new Parameter[]{
                 new Parameter{
