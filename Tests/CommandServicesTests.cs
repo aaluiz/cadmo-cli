@@ -316,7 +316,19 @@ namespace ConsoleApp1
 
 
 			Assert.Greater(services.Count, 1);
-
 		}
+
+		[Test]
+		public void DirectoryHandler_ReturnFilesInFolderRepositories()
+		{
+			var services = _directoryHandler!.GetRespoistoryNames("/Users/alanluiz/work/agendamento/backend");
+		
+
+			services.ForEach((s) => { Console.WriteLine(s); });
+
+
+			Assert.Greater(services.Count, 1);
+		}
+		
 	}
 }

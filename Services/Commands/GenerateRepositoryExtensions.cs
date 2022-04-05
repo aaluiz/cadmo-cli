@@ -27,14 +27,15 @@ namespace Services.Commands
 			return 1;
 		}
 
-        private void WriteFile(){
+		private void WriteFile()
+		{
 			_codeGenerator
-                .FileBuilder
-                    .WriteFile(GetFileCode(), 
-                    $"{CurrentDirectory}/Api/Extensions/"
-                    );
-					System.Console.WriteLine("GENERATED Repository Dependency Injection Extension File.");
-					System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/RepositoryExtensions.cs");
+				.FileBuilder
+					.WriteFile(GetFileCode(),
+					$"{CurrentDirectory}/Api/Extensions/"
+					);
+			System.Console.WriteLine("GENERATED Repository Dependency Injection Extension File.");
+			System.Console.WriteLine($"{CurrentDirectory}/Api/Extensions/RepositoryExtensions.cs");
 		}
 		private FileCode GetFileCode()
 		{
@@ -80,12 +81,34 @@ namespace Services.Commands
 		{
 			StringBuilder result = new StringBuilder();
 
-			_directoryHandler.GetModelNames(CurrentDirectory).ForEach((model) =>
+			if (AlreadyExitsSomeRepository(CurrentDirectory))
 			{
-				result.AppendLine($"Services.AddTransient<I{model}Repository<{model}>, {model}Repository>();");
-			});
+				_directoryHandler.GetRespoistoryNames(CurrentDirectory).ForEach((repositoryName) =>
+				{
+					string model = ExtractModelName(repositoryName);
+					result.AppendLine($"Services.AddTransient<I{repositoryName}<{model}>, {repositoryName}>();");
+				});
+			}
+			else
+			{
+				_directoryHandler.GetModelNames(CurrentDirectory).ForEach((model) =>
+				{
+					result.AppendLine($"Services.AddTransient<I{model}Repository<{model}>, {model}Repository>();");
+				});
+			}
+
 
 			return result.ToString();
+		}
+
+		private string ExtractModelName(string repositoryName){
+			return repositoryName.Replace("Repository", "");
+		}
+
+		private bool AlreadyExitsSomeRepository(string currentDirectory)
+		{
+			int repositoryCount = _directoryHandler.GetRespoistoryNames(currentDirectory).Count();
+			return (repositoryCount > 0);
 		}
 
 		protected override bool ValidateArgs(string[] args)

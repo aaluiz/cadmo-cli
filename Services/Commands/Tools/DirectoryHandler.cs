@@ -50,5 +50,15 @@ namespace Services.Commands.Tools
 		{
 			File.Delete($"{currentDirectory}/{path}/Class1.cs");
 		}
+
+		public ImmutableList<string> GetRespoistoryNames(string currentDirectory)
+		{
+			return Directory
+				.GetFiles($"{currentDirectory}/Repositories/")
+				.Where(y => !y.Contains("csproj"))
+				.Where(z => !z.Contains("1.cs"))
+				.Select(x => Path.GetFileNameWithoutExtension(x))
+				.ToImmutableList();
+		}
 	}
 }
