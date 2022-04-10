@@ -165,8 +165,8 @@ namespace Services.Commands
 		{
 			var result = new StringBuilder();
 			result.AppendLine("CleanErrors();");
-			result.AppendLine($"var newRecord = _Mapper.Map<{modelName}>(ViewModel);");
-			result.AppendLine($"return _{modelName}Repository.Insert(newRecord);");
+			result.AppendLine($"var updateRecord = _Mapper.Map(ViewModel, _{modelName}Repository.SelectById(ViewModel.Id));");
+			result.AppendLine($"return _{modelName}Repository.Update(updateRecord);");
 			return result.ToString();
 		}
 		private IMethodDefinition DeleteRecordMethod(string modelName)
