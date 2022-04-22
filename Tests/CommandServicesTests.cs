@@ -306,29 +306,29 @@ namespace ConsoleApp1
 			}
 		}
 
-		[Test]
-		public void DirectoryHandler_ReturnFilesInFolderSevice()
-		{
-			var services = _directoryHandler!.GetServiceNames("/Users/alanluiz/lab/api/demo/");
+		// [Test]
+		// public void DirectoryHandler_ReturnFilesInFolderSevice()
+		// {
+		// 	var services = _directoryHandler!.GetServiceNames("/Users/alanluiz/lab/api/demo/");
 		
 
-			services.ForEach((s) => { Console.WriteLine(s); });
+		// 	services.ForEach((s) => { Console.WriteLine(s); });
 
 
-			Assert.Greater(services.Count, 1);
-		}
+		// 	Assert.Greater(services.Count, 1);
+		// }
 
-		[Test]
-		public void DirectoryHandler_ReturnFilesInFolderRepositories()
-		{
-			var services = _directoryHandler!.GetRespoistoryNames("/Users/alanluiz/work/agendamento/backend");
+		// [Test]
+		// public void DirectoryHandler_ReturnFilesInFolderRepositories()
+		// {
+		// 	var services = _directoryHandler!.GetRespoistoryNames("/Users/alanluiz/work/agendamento/backend");
 		
 
-			services.ForEach((s) => { Console.WriteLine(s); });
+		// 	services.ForEach((s) => { Console.WriteLine(s); });
 
 
-			Assert.Greater(services.Count, 1);
-		}
+		// 	Assert.Greater(services.Count, 1);
+		// }
 		
 	}
 }

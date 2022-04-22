@@ -144,7 +144,7 @@ namespace Services.Commands
             var result = new StringBuilder();
             result.AppendLine($"var data = _{modelName}Service.SelectAllViews();");
             result.AppendLine("if (data?.Count > 0)");
-            result.AppendLine($"return Ok(ResponseAction(data, _{modelName}Service.HasErro,_{modelName}Service.ErrorMessages ));");
+            result.AppendLine($"return ResponseAction(data, _{modelName}Service.HasErro,_{modelName}Service.ErrorMessages );");
             result.AppendLine("return NotFound();");
             return result.ToString();
         }
@@ -186,7 +186,7 @@ namespace Services.Commands
             var result = new StringBuilder();
             result.AppendLine($"var data = _{modelName}Service.SelectOneViewById(id);");
             result.AppendLine("if (data != null)");
-            result.AppendLine($"return Ok(ResponseAction(data, _{modelName}Service.HasErro,_{modelName}Service.ErrorMessages ));");
+            result.AppendLine($"return ResponseAction(data, _{modelName}Service.HasErro,_{modelName}Service.ErrorMessages );");
             result.AppendLine("return NotFound();");
             return result.ToString();
         }
