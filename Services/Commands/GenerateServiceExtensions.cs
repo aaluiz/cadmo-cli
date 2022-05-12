@@ -66,7 +66,7 @@ namespace Services.Commands
             }.ToImmutableList();
 
             var method = _methodDefiniton.Builder
-            .Name("ConfigureService")
+            .Name("ConfigureServices")
             .Parameters(parameters)
             .LogiContent(LogiContent())
             .ReturnDefinition(new ReturnDefinition
