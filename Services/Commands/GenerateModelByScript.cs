@@ -16,17 +16,20 @@ namespace Services.Commands
 		private readonly IMethodDefinition _methodDefinition;
 		private readonly IAutoMapperCommandService _autoMapperCommandService;
 		private readonly IDbContextCommandService _dbContextCommandService;
+		private readonly IShellCommandExecutor _shellCommandExecutor;
 
 		public GenerateModelByScript(
 			ICodeGenerator codeGenerator,
 			IMethodDefinition methodDefinition,
 			IAutoMapperCommandService autoMapperCommandService,
-			IDbContextCommandService dbContextCommandService)
+			IDbContextCommandService dbContextCommandService,
+			IShellCommandExecutor shellCommandExecutor)
 		{
 			_codeGenerator = codeGenerator;
 			_methodDefinition = methodDefinition;
 			_autoMapperCommandService = autoMapperCommandService;
 			_dbContextCommandService = dbContextCommandService;
+			_shellCommandExecutor = shellCommandExecutor;
 
 		}
 
@@ -74,9 +77,13 @@ namespace Services.Commands
 		private int GenerateModel(string scriptModelName, bool safe)
 		{
 			SaveFileOnDisk(GeneraBasicModelCode(scriptModelName), "Models", safe);
-			SaveFileOnDisk(GenerateViewModel(scriptModelName), "ViewModels", safe);
-			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, true), "ViewModels", safe);
-			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, false), "ViewModels", safe);
+
+
+			_shellCommandExecutor.ExecuteCommand("mkdir", $"{CurrentDirectory}/Entities/Models/ViewModels/{scriptModelName}");
+
+			SaveFileOnDisk(GenerateViewModel(scriptModelName), $"ViewModels/{scriptModelName}", safe);
+			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, true), $"ViewModels/{scriptModelName}", safe);
+			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, false), $"ViewModels/{scriptModelName}", safe);
 			if (!safe)
 			{
 				_autoMapperCommandService.Execute(new string[] { "g", "automapper" });

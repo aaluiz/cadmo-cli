@@ -7,31 +7,35 @@ using Spectre.Console;
 [AddService]
 public class CreateModelService : AbstractService, ICreateModelService
 {
-
-
 	ICodeGenerator _codeGenerator;
-	public CreateModelService(ICodeGenerator codeGenerator)
+	private readonly IShellCommandExecutor _shellCommandExecutor;
+
+	public CreateModelService(ICodeGenerator codeGenerator, IShellCommandExecutor shellCommandExecutor)
 	{
 		_codeGenerator = codeGenerator;
+		_shellCommandExecutor = shellCommandExecutor;
 	}
 	public int Execute(string[] args)
 	{
-        if (!ValidateArgs(args)) return -1;
+		if (!ValidateArgs(args)) return -1;
 
 		if (args[2].Contains("-")) return -1;
 
 		if (IsDefaultPath(args[0]))
 		{
-            _codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");
-            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
-            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
-            _codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels");
+			_codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");
+
+			_shellCommandExecutor.ExecuteCommand("mkdir", $"{CurrentDirectory}/Entities/ViewModels/{args[2]}");
+
+			_codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels/{args[2]}/");
+			_codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels/{args[2]}/");
+			_codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}ViewModel"), $"{CurrentDirectory}/Entities/ViewModels/{args[2]}/");
 		}
 		AnsiConsole.Markup("[green] CREATED [/] Models and BasicViewModels.");
-		AnsiConsole.Markup($"{CurrentDirectory}/Entities/Models/[blue]{args[2]}.cs[/]");
-		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}UpdateViewModel.cs[/]");
-		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}NewViewModel.cs[/]");
-		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/[blue]{args[2]}ViewModel.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/Models[blue]{args[2]}.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/{args[2]}/[blue]{args[2]}UpdateViewModel.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/{args[2]}/[blue]{args[2]}NewViewModel.cs[/]");
+		AnsiConsole.Markup($"{CurrentDirectory}/Entities/ViewModels/{args[2]}/[blue]{args[2]}ViewModel.cs[/]");
 		return 1;
 	}
 
@@ -57,7 +61,7 @@ public class CreateModelService : AbstractService, ICreateModelService
 			"IEntity"
 		}.ToImmutableList();
 
-		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.Models", property, inharitance);
+		var result = _codeGenerator.ClassGenerator.CreateClass(imports, name, "Entities.Models", property, inharitance);
 		return result;
 	}
 
@@ -82,7 +86,7 @@ public class CreateModelService : AbstractService, ICreateModelService
 			"IEntityViewModel"
 		}.ToImmutableList();
 
-		var result = _codeGenerator.ClassGenerator.CreateClass( imports ,name, "Entities.ViewModels", property, inharitance);
+		var result = _codeGenerator.ClassGenerator.CreateClass(imports, name, "Entities.ViewModels", property, inharitance);
 		return result;
 	}
 

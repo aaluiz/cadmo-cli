@@ -165,7 +165,7 @@ namespace ConsoleApp1
 			_autoMapperCommandService = new AutoMapperCommandService(_codeGenerator, _methodDefinition);
 			_directoryHandler = new DirectoryHandler();
 			_createProjectService = new CreateProjectService(_shellCommandExecutor, _codeGenerator, _directoryHandler, _autoMapperCommandService);
-			_createModelService = new CreateModelService(_codeGenerator);
+			_createModelService = new CreateModelService(_codeGenerator, _shellCommandExecutor);
 			_buildCommandSevice = new BuildCommandService(_shellCommandExecutor);
 			_serveCommandService = new ServeCommandService(_shellCommandExecutor);
 			_dbContextCommandService = new DbContextCommandService(_codeGenerator, _methodDefinition);
@@ -184,7 +184,8 @@ namespace ConsoleApp1
 						_codeGenerator,
 						_methodDefinition,
 						_autoMapperCommandService,
-						_dbContextCommandService);
+						_dbContextCommandService,
+						_shellCommandExecutor);
 			_commandLineUI = new CommandLineUI(
 				_createProjectService,
 				_helpService,
