@@ -25,7 +25,6 @@ public class CreateModelService : AbstractService, ICreateModelService
 		{
 			_codeGenerator.FileBuilder!.WriteFile(BasicModel(args[2]), $"{CurrentDirectory}/Entities/Models");
 
-			_shellCommandExecutor.ExecuteCommand("mkdir", $"{CurrentDirectory}/Entities/ViewModels/{args[2]}");
 
 			_codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}UpdateViewModel"), $"{CurrentDirectory}/Entities/ViewModels/{args[2]}/");
 			_codeGenerator.FileBuilder!.WriteFile(BasicViewModel($"{args[2]}NewViewModel"), $"{CurrentDirectory}/Entities/ViewModels/{args[2]}/");

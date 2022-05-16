@@ -78,9 +78,6 @@ namespace Services.Commands
 		{
 			SaveFileOnDisk(GeneraBasicModelCode(scriptModelName), "Models", safe);
 
-
-			_shellCommandExecutor.ExecuteCommand("mkdir", $"{CurrentDirectory}/Entities/Models/ViewModels/{scriptModelName}");
-
 			SaveFileOnDisk(GenerateViewModel(scriptModelName), $"ViewModels/{scriptModelName}", safe);
 			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, true), $"ViewModels/{scriptModelName}", safe);
 			SaveFileOnDisk(GenerateViewModelUpdateOrNew(scriptModelName, false), $"ViewModels/{scriptModelName}", safe);
