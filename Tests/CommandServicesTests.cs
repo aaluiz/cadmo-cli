@@ -13,6 +13,7 @@ using Services.Commands.Tools;
 using System;
 using System.Reflection;
 using System.IO;
+using static Services.Commands.Tools.SyntaxAnaliser;
 
 namespace Tests
 {
@@ -100,6 +101,7 @@ namespace Tests
 		IAddPackageService? _addPackageService;
 
 		IVersionService? _versionService;
+
 		#endregion
 
 		#region  Setup
@@ -209,6 +211,34 @@ namespace ConsoleApp1
 
 		#endregion
 		[Test]
+		public void SystaxLab()
+		{
+			const string programText =
+@"using System;
+using System.Collections;
+using System.Linq;
+using System.Text;
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(""Hello, World!"");
+        }
+
+		static void Method1(){};
+
+		static void Method2(){};
+    }
+}";
+
+			var result = GetMethods(programText);
+
+			Assert.IsTrue(result.Count > 0);
+		}
+
+		[Test]
 		[TestCaseSource(nameof(CommandServices))]
 		public void ServiceCrudCommmand_ReturnExpect_MoreThanZero(string[] args)
 		{
@@ -311,7 +341,7 @@ namespace ConsoleApp1
 		// public void DirectoryHandler_ReturnFilesInFolderSevice()
 		// {
 		// 	var services = _directoryHandler!.GetServiceNames("/Users/alanluiz/lab/api/demo/");
-		
+
 
 		// 	services.ForEach((s) => { Console.WriteLine(s); });
 
@@ -323,13 +353,13 @@ namespace ConsoleApp1
 		// public void DirectoryHandler_ReturnFilesInFolderRepositories()
 		// {
 		// 	var services = _directoryHandler!.GetRespoistoryNames("/Users/alanluiz/work/agendamento/backend");
-		
+
 
 		// 	services.ForEach((s) => { Console.WriteLine(s); });
 
 
 		// 	Assert.Greater(services.Count, 1);
 		// }
-		
+
 	}
 }
