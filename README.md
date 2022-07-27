@@ -1,4 +1,6 @@
 # News
+
+## Code Analysed with SonarCloud 
 ## Fix Release error in this feature on windows os, fail in mkdir command fixed
 This version we introduce the view models grouped in a folder, this folder is named with the name of model. 
 Commands affected:
