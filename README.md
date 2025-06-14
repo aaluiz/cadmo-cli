@@ -18,7 +18,7 @@ Create New Web Api:
 cm new <APP_NAME>
 ```
 
-Create Model (And ViewModels) Templeate: 
+Create Model (And ViewModels) Template:
 ```bash
 cm (g|generate) model <MODEL_NAME>
 ````
@@ -66,9 +66,9 @@ Update Service Extension to dependency injection mapping:
 cm service-di
 ```
 
-Add Packge in current project: 
+Add Package in current project:
 ```bash
-cm add <PACKAGE_NAME> or cm add <PACKAGE_NAME> --verison <VERSION_NUMBER>
+cm add <PACKAGE_NAME> or cm add <PACKAGE_NAME> --version <VERSION_NUMBER>
 ```
 
 ## Entity Framework Commands 
