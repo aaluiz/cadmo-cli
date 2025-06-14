@@ -100,20 +100,27 @@ namespace Services.Commands
 
 		private void SaveFileOnDisk(FileCode fileCode, string path, bool safe)
 		{
-			if (safe)
-			{
-				if (File.Exists($"{CurrentDirectory}/Entities/{path}/{fileCode.FileName}"))
-				{
-					System.Console.WriteLine($"{fileCode.FileName} already exits, if you wish overwrite it use option --force");
-				}
-			}
-			else
-			{
-				_codeGenerator
-					.FileBuilder!
-					.WriteFile(fileCode, $"{CurrentDirectory}/Entities/{path}");
-				System.Console.WriteLine($"GENERATED {CurrentDirectory}/Entities/{path}/{fileCode.FileName}");
-			}
+            if (safe)
+            {
+                if (File.Exists($"{CurrentDirectory}/Entities/{path}/{fileCode.FileName}"))
+                {
+                    System.Console.WriteLine($"{fileCode.FileName} already exits, if you wish overwrite it use option --force");
+                }
+                else
+                {
+                    _codeGenerator
+                        .FileBuilder!
+                        .WriteFile(fileCode, $"{CurrentDirectory}/Entities/{path}");
+                    System.Console.WriteLine($"GENERATED {CurrentDirectory}/Entities/{path}/{fileCode.FileName}");
+                }
+            }
+            else
+            {
+                _codeGenerator
+                        .FileBuilder!
+                        .WriteFile(fileCode, $"{CurrentDirectory}/Entities/{path}");
+                System.Console.WriteLine($"GENERATED {CurrentDirectory}/Entities/{path}/{fileCode.FileName}");
+            }
 
 		}
 
